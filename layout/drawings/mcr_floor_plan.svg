@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="600" viewBox="0 0 1080 600" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1080" height="600" fill="white"/>
+
+  <!-- Title -->
+  <text x="30" y="34" font-size="22" font-weight="bold" fill="#1b2a36">Aegis-40 — Main Control Room (MCR) Layout</text>
+  <text x="30" y="52" font-size="13" fill="#55606a">FER §8.7 §4.1 (ergonomic MCR) + §8.10 R3. Scale 1:40 (30 px/m). Room ≈ 15 × 12 m.</text>
+  <text x="30" y="68" font-size="11" fill="#b3261e">[CONCEPTUAL] console arrangement per ic_architecture.md §4.1 (NUREG-0700) — positions illustrative.</text>
+
+  <!-- Scaled group: 1 unit = 1 m, scale 30 -->
+  <g transform="translate(80,100) scale(30)">
+
+    <!-- Room outline -->
+    <rect x="0" y="0" width="15" height="12" fill="#fbfdff" stroke="#33414d" stroke-width="3" vector-effect="non-scaling-stroke"/>
+
+    <!-- Large overview Display Panel (LDP) along north wall, 4 screens -->
+    <rect x="3" y="0.25" width="9" height="0.7" fill="#23323f" stroke="#0d3550" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    <g stroke="#5b7186" stroke-width="1" vector-effect="non-scaling-stroke">
+      <line x1="5.25" y1="0.25" x2="5.25" y2="0.95"/>
+      <line x1="7.5" y1="0.25" x2="7.5" y2="0.95"/>
+      <line x1="9.75" y1="0.25" x2="9.75" y2="0.95"/>
+    </g>
+
+    <!-- Primary console (reactor operator) -->
+    <path d="M3,4.6 a3.5,1.6 0 0 1 4,0 Z" fill="#cfe8ff" stroke="#1b4965" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <rect x="3" y="4.1" width="4" height="0.7" fill="#cfe8ff" stroke="#1b4965" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="5" cy="5.6" r="0.4" fill="#9fb6c6" stroke="#1b4965" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- Hardwired safety panel (§4.4) next to primary console -->
+    <rect x="3.3" y="2.7" width="3.4" height="0.7" fill="#ffdede" stroke="#b3261e" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+
+    <!-- Secondary console (BOP / turbine operator) -->
+    <path d="M8.5,4.6 a3,1.5 0 0 1 3.4,0 Z" fill="#ffe8b3" stroke="#9a6700" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <rect x="8.5" y="4.1" width="3.4" height="0.7" fill="#ffe8b3" stroke="#9a6700" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="10.2" cy="5.55" r="0.4" fill="#d8b877" stroke="#9a6700" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- STA station (read-only, corner) -->
+    <rect x="11.8" y="8.3" width="2.7" height="1.3" fill="#e7e0f3" stroke="#7d3c98" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="13.1" cy="7.7" r="0.35" fill="#c4b1de" stroke="#7d3c98" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- Paper procedure cabinet (west wall) -->
+    <rect x="0.3" y="8.2" width="0.8" height="2.6" fill="#d8d2c4" stroke="#6b6354" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+
+    <!-- Shift supervisor desk -->
+    <rect x="0.5" y="4.2" width="1.6" height="1.0" fill="#eef1f4" stroke="#55606a" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+
+    <!-- Entry door (south wall) -->
+    <rect x="6.3" y="11.6" width="1.6" height="0.4" fill="white" stroke="#33414d" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    <path d="M6.3,12 a1.6,1.6 0 0 0 1.6,-1.6" fill="none" stroke="#9aa6b0" stroke-width="0.8" vector-effect="non-scaling-stroke"/>
+    <!-- Emergency egress (east wall) -->
+    <rect x="14.6" y="2.2" width="0.4" height="1.4" fill="white" stroke="#2d6a4f" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <!-- Callouts -->
+  <g font-size="12" fill="#33414d">
+    <line x1="430" y1="118" x2="380" y2="128" stroke="#7a8691" stroke-width="1"/>
+    <text x="435" y="115">Large overview display panel (4 × 80")</text>
+    <text x="435" y="130" font-size="10" fill="#0d3550">SPDS + CSF + alarm overview</text>
+
+    <line x1="250" y1="250" x2="230" y2="218" stroke="#b3261e" stroke-width="1"/>
+    <text x="60" y="250" fill="#b3261e">hardwired scram / ESFAS (§4.4)</text>
+
+    <line x1="250" y1="330" x2="220" y2="250" stroke="#7a8691" stroke-width="1"/>
+    <text x="55" y="334">primary console — reactor operator</text>
+
+    <line x1="700" y1="270" x2="610" y2="250" stroke="#7a8691" stroke-width="1"/>
+    <text x="705" y="274">secondary console — BOP / turbine</text>
+
+    <line x1="760" y1="400" x2="490" y2="368" stroke="#7a8691" stroke-width="1"/>
+    <text x="765" y="404">STA station (read-only mirror)</text>
+
+    <line x1="60" y1="430" x2="100" y2="372" stroke="#7a8691" stroke-width="1"/>
+    <text x="40" y="446">paper-procedure cabinet</text>
+
+    <line x1="120" y1="460" x2="118" y2="248" stroke="#7a8691" stroke-width="1"/>
+    <text x="40" y="476">shift supervisor desk</text>
+
+    <line x1="330" y1="470" x2="290" y2="452" stroke="#7a8691" stroke-width="1"/>
+    <text x="335" y="474">main entry</text>
+
+    <line x1="730" y1="160" x2="525" y2="170" stroke="#2d6a4f" stroke-width="1"/>
+    <text x="735" y="164" fill="#2d6a4f">emergency egress</text>
+  </g>
+
+  <!-- Scale bar 5 m = 150 px -->
+  <g transform="translate(80,540)">
+    <rect x="0" y="0" width="75" height="8" fill="#1b2a36"/>
+    <rect x="75" y="0" width="75" height="8" fill="white" stroke="#1b2a36" stroke-width="1"/>
+    <text x="-2" y="24" font-size="11" fill="#1b2a36">0</text>
+    <text x="68" y="24" font-size="11" fill="#1b2a36">2.5</text>
+    <text x="140" y="24" font-size="11" fill="#1b2a36">5 m</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(770,430)">
+    <rect x="0" y="0" width="290" height="150" fill="#fbfcfd" stroke="#c5ced6" stroke-width="1"/>
+    <text x="14" y="22" font-size="13" font-weight="bold" fill="#1b2a36">MCR design basis</text>
+    <g font-size="10.5" fill="#33414d">
+      <text x="14" y="42">• NUREG-0700 HFE · ISA 18.2 alarms</text>
+      <text x="14" y="59">• Two-operator min + STA</text>
+      <text x="14" y="76">• Hardwired scram/ESFAS independent</text>
+      <text x="14" y="90" fill="#b3261e">  of computer health (IEEE 603 §5.8)</text>
+      <text x="14" y="107">• Alarms ≤10 in any 10-min window</text>
+      <text x="14" y="124">• Located in Control Building (CB),</text>
+      <text x="14" y="138">  Seismic Cat I — building_list.md</text>
+    </g>
+  </g>
+</svg>

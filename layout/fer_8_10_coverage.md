@@ -44,9 +44,9 @@ Already audited in `building_list.md` §5 — all four categories populated (RXB
 |---|---|---|---|
 | 3a | 2D building-level layout | `block_layout.png` (3 islands color-coded) | ✓ |
 | 3b | Connections between buildings | `block_layout` 6 labeled inter-system connections + `flow_arrows.png` | ✓ |
-| 3c | **True-to-scale 2D plan** | block diagram is schematic, not metric-scale | △ |
+| 3c | **True-to-scale 2D plan** | ✅ `drawings/site_plot_plan.png` (1:333) + `rxb_floor_plan.png` (1:50) + `mcr_floor_plan.png` (1:40) | ✓ |
 
-**△ on 3c:** the FER "2D plans" can be read as wanting a scaled site plan, not only a schematic block diagram. We have positions + relative geometry but not a metric drawing. **Recommended:** `scale_plan_2d.png` (draw.io, stretch item) in W3. Footprints already exist in `building_list.md` to drive it.
+**✓ on 3c (W3, 2026-06-08):** to-scale drawings now exist — site plot plan (all 14 buildings to footprint, EPZ, H₂ stand-off), RXB interior floor plan, and MCR layout. Hand-authored SVG → PNG. Upgrades R3 from △ to ✓.
 
 ---
 
@@ -54,9 +54,9 @@ Already audited in `building_list.md` §5 — all four categories populated (RXB
 
 | # | Requirement | Where | ✓ |
 |---|---|---|---|
-| 4a | 3D plans of main buildings + connections | none yet | △ **W3** |
+| 4a | 3D plans of main buildings + connections | `drawings/site_elevation.png` (vertical section) — partial | △ |
 
-**△ deferred (planned):** decision L6 in `W2_Layout_Plan.md` explicitly scopes 3D to an isometric draw.io view in W2/W3, full CAD later. Honest deferral, not a silent gap. **No 3D artifact exists today** — must not claim otherwise in FER.
+**△ partial (W3, 2026-06-08):** a to-scale **vertical section/elevation** (`site_elevation.png`) now shows building heights, the below-grade reactor, and the seismic story — a 2.5D bridge toward R4. **A true axonometric/3D model is still not produced** (user deferred this round; would install OpenSCAD). Don't claim full 3D in the FER yet — claim "elevation + section provided; isometric 3D in progress."
 
 ---
 

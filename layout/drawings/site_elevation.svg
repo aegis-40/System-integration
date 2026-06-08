@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="600" viewBox="0 0 1120 600" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1120" height="600" fill="white"/>
+
+  <!-- Title -->
+  <text x="30" y="34" font-size="22" font-weight="bold" fill="#1b2a36">Aegis-40 — Site Elevation / Section</text>
+  <text x="30" y="52" font-size="13" fill="#55606a">FER §8.10 R3→R4. Vertical TRUE scale (1:125, 8 px/m). Horizontal schematic — not plan distance.</text>
+  <text x="30" y="68" font-size="11" fill="#9a6700">Heights from layout/building_list.md · below-grade reactor per zones.md decision Z8 · 2026-06-08</text>
+
+  <!-- Sky -->
+  <rect x="70" y="120" width="1010" height="260" fill="#fcfdff"/>
+  <!-- Soil below grade (hatched) -->
+  <rect x="70" y="380" width="1010" height="150" fill="#efe6d8"/>
+  <defs>
+    <pattern id="soil" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#c9b48f" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect x="70" y="380" width="1010" height="150" fill="url(#soil)" opacity="0.6"/>
+
+  <!-- ===== Vertical scale (left), 8 px/m, grade at y=380 ===== -->
+  <g font-size="10" fill="#55606a">
+    <line x1="64" y1="140" x2="64" y2="500" stroke="#9aa6b0" stroke-width="1"/>
+    <!-- +30 -->
+    <line x1="60" y1="140" x2="68" y2="140" stroke="#9aa6b0"/><text x="34" y="144">+30</text>
+    <line x1="60" y1="220" x2="68" y2="220" stroke="#9aa6b0"/><text x="34" y="224">+20</text>
+    <line x1="60" y1="300" x2="68" y2="300" stroke="#9aa6b0"/><text x="34" y="304">+10</text>
+    <line x1="60" y1="380" x2="68" y2="380" stroke="#1b2a36" stroke-width="1.5"/><text x="30" y="384" font-weight="bold" fill="#1b2a36">0 m</text>
+    <line x1="60" y1="460" x2="68" y2="460" stroke="#9aa6b0"/><text x="32" y="464">−10</text>
+  </g>
+
+  <!-- ===== Grade line ===== -->
+  <line x1="70" y1="380" x2="1080" y2="380" stroke="#1b2a36" stroke-width="2.5"/>
+  <text x="1010" y="374" font-size="11" font-weight="bold" fill="#1b2a36">GRADE</text>
+
+  <!-- ===== Buildings (vertical to scale) ===== -->
+  <!-- CI amber -->
+  <g fill="#ffe8b3" stroke="#9a6700" stroke-width="1.5">
+    <rect x="92" y="220" width="74" height="160"/>   <!-- CTW 20 m -->
+    <rect x="184" y="260" width="92" height="120"/>  <!-- TB 15 m -->
+  </g>
+  <!-- NI blue -->
+  <g fill="#cfe8ff" stroke="#1b4965" stroke-width="1.5">
+    <rect x="452" y="260" width="72" height="120"/>  <!-- AB 15 m -->
+    <rect x="540" y="300" width="52" height="80"/>   <!-- DGB 10 m -->
+    <rect x="612" y="284" width="60" height="96"/>   <!-- WMB 12 m -->
+  </g>
+  <!-- RXB (NI, tall + below grade) -->
+  <rect x="338" y="140" width="96" height="240" fill="#aad4f5" stroke="#0d3550" stroke-width="2"/>   <!-- 30 m above -->
+  <rect x="354" y="380" width="64" height="120" fill="#cfe8ff" stroke="#0d3550" stroke-width="2"/>   <!-- 15 m below: reactor cavity -->
+  <!-- containment dome hint -->
+  <path d="M338,160 Q386,128 434,160" fill="#aad4f5" stroke="#0d3550" stroke-width="2"/>
+  <!-- RPV inside below-grade cavity -->
+  <rect x="378" y="392" width="16" height="70" fill="#7fb5e0" stroke="#0d3550" stroke-width="1.5"/>
+  <line x1="386" y1="420" x2="386" y2="420" />
+  <!-- RPV head ~5 m below grade marker -->
+  <line x1="354" y1="420" x2="418" y2="420" stroke="#b3261e" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="422" y="423" font-size="9" fill="#b3261e">RPV head ≈5 m below grade</text>
+
+  <!-- off-gas stack on WMB -->
+  <rect x="660" y="140" width="12" height="240" fill="#cfe8ff" stroke="#1b4965" stroke-width="1.5"/>
+
+  <!-- II green -->
+  <g fill="#d8f3dc" stroke="#2d6a4f" stroke-width="1.5">
+    <rect x="772" y="284" width="90" height="96"/>   <!-- TES 12 m -->
+    <rect x="872" y="300" width="70" height="80"/>   <!-- SOE 10 m -->
+  </g>
+  <rect x="952" y="332" width="56" height="48" fill="#ffdede" stroke="#b3261e" stroke-width="1.5"/> <!-- H2S 6 m -->
+
+  <!-- ===== 100 m buffer between NI and II ===== -->
+  <line x1="685" y1="500" x2="765" y2="500" stroke="#b3261e" stroke-width="1.2" stroke-dasharray="2 2"/>
+  <path d="M685,498 l4,2 l-4,2 M765,498 l-4,2 l4,2" fill="#b3261e"/>
+  <text x="725" y="494" font-size="10" fill="#b3261e" text-anchor="middle">100 m H₂ stand-off</text>
+
+  <!-- ===== Building labels + heights ===== -->
+  <g font-size="11" fill="#1b2a36" text-anchor="middle">
+    <text x="129" y="212">CTW</text><text x="129" y="200" font-size="9" fill="#9a6700">20 m</text>
+    <text x="230" y="252">TB</text><text x="230" y="240" font-size="9" fill="#9a6700">15 m</text>
+    <text x="386" y="132" font-weight="bold">RXB</text><text x="386" y="122" font-size="9" fill="#0d3550">30 m (+15 below)</text>
+    <text x="488" y="252">AB</text><text x="488" y="240" font-size="9" fill="#1b4965">15 m</text>
+    <text x="566" y="292">DGB</text><text x="566" y="280" font-size="9" fill="#1b4965">10 m</text>
+    <text x="642" y="276">WMB</text><text x="642" y="264" font-size="9" fill="#1b4965">12 m</text>
+    <text x="666" y="132" font-size="9" fill="#1b4965">stack ≥30 m</text>
+    <text x="817" y="276">TES</text><text x="817" y="264" font-size="9" fill="#2d6a4f">12 m</text>
+    <text x="907" y="292">SOE</text><text x="907" y="280" font-size="9" fill="#2d6a4f">10 m</text>
+    <text x="980" y="324">H₂S</text><text x="980" y="312" font-size="9" fill="#b3261e">6 m</text>
+  </g>
+
+  <!-- reactor cavity label -->
+  <text x="386" y="476" font-size="10" fill="#0d3550" text-anchor="middle">reactor cavity</text>
+  <text x="386" y="488" font-size="9" fill="#0d3550" text-anchor="middle">(seismic + missile shield)</text>
+
+  <!-- island band labels -->
+  <g font-size="12" font-weight="bold">
+    <text x="200" y="540" fill="#9a6700" text-anchor="middle">CONVENTIONAL ISLAND</text>
+    <text x="500" y="540" fill="#1b4965" text-anchor="middle">NUCLEAR ISLAND</text>
+    <text x="880" y="540" fill="#2d6a4f" text-anchor="middle">INDUSTRIAL ISLAND</text>
+  </g>
+
+  <!-- Legend / note -->
+  <g transform="translate(70,556)">
+    <text x="0" y="14" font-size="10" fill="#55606a">Vertical to scale (8 px/m). Horizontal positions schematic — true plan layout is in site_plot_plan.png. Dome on RXB is indicative.</text>
+  </g>
+</svg>

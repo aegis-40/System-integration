@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="660" viewBox="0 0 1120 660" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1120" height="660" fill="white"/>
+
+  <!-- Title -->
+  <text x="30" y="34" font-size="22" font-weight="bold" fill="#1b2a36">Aegis-40 — Reactor Building (RXB) Floor Plan</text>
+  <text x="30" y="52" font-size="13" fill="#55606a">FER §8.10 R3. Scale 1:50 (20 px/m). Refuelling-floor level. North up (consistent with site plot plan).</text>
+  <text x="30" y="68" font-size="11" fill="#b3261e">[CONCEPTUAL] internal arrangement is illustrative — RPV Ø &amp; containment Ø are real; equipment positions await mechanical design.</text>
+
+  <!-- Scaled group: 1 unit = 1 m, scale 20 -->
+  <g transform="translate(60,92) scale(20)">
+
+    <!-- RXB outer wall (reinforced concrete) -->
+    <rect x="0" y="0" width="25" height="25" fill="#c8d2da" stroke="#1b4965" stroke-width="3" vector-effect="non-scaling-stroke"/>
+    <rect x="1" y="1" width="23" height="23" fill="white" stroke="#1b4965" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- Polar crane swing radius -->
+    <circle cx="12.5" cy="12.5" r="9.5" fill="none" stroke="#9a6700" stroke-width="1" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+
+    <!-- Containment shell (steel-lined RC, Ø15 m) -->
+    <circle cx="12.5" cy="12.5" r="7.5" fill="#eef6fb" stroke="#0d3550" stroke-width="3" vector-effect="non-scaling-stroke"/>
+    <circle cx="12.5" cy="12.5" r="7.15" fill="none" stroke="#2471a3" stroke-width="1" stroke-dasharray="2 1.5" vector-effect="non-scaling-stroke"/>
+
+    <!-- Refuelling cavity (floods during refuel) -->
+    <circle cx="12.5" cy="12.5" r="4.2" fill="#d6ecfb" stroke="#2471a3" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- RPV (Ø2.44 m) + core -->
+    <circle cx="12.5" cy="12.5" r="1.22" fill="#aad4f5" stroke="#0d3550" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="12.5" cy="12.5" r="0.85" fill="#7fb5e0" stroke="#0d3550" stroke-width="1" vector-effect="non-scaling-stroke"/>
+
+    <!-- Fuel transfer canal -> SFB (exits WEST wall) -->
+    <rect x="0" y="11.4" width="5.3" height="2.2" fill="#d6ecfb" stroke="#2471a3" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+
+    <!-- Penetration zone -> AB (EAST wall) -->
+    <rect x="23" y="8" width="2" height="9" fill="#ffe8b3" stroke="#9a6700" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+    <path d="M23,8 L25,10 M23,11 L25,13 M23,14 L25,16" stroke="#9a6700" stroke-width="0.5" vector-effect="non-scaling-stroke" opacity="0.6"/>
+
+    <!-- Equipment hatch (SOUTH wall) -->
+    <rect x="9.5" y="23" width="5" height="2" fill="#cfe8ff" stroke="#0d3550" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+
+    <!-- Personnel airlock (NORTH wall) -->
+    <rect x="11" y="0" width="3" height="1.8" fill="#cfe8ff" stroke="#0d3550" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+
+    <!-- IRWST annulus marker -->
+    <text x="12.5" y="6.0" font-size="0.7" fill="#1b4965" text-anchor="middle">IRWST annulus</text>
+
+    <!-- Labels (meter coords, font in meters) -->
+    <g font-size="0.85" fill="#0d3550" text-anchor="middle">
+      <text x="12.5" y="12.0">RPV</text>
+      <text x="12.5" y="13.6" font-size="0.6">Ø2.44 m</text>
+    </g>
+  </g>
+
+  <!-- Callout labels (px space, with leader lines) -->
+  <g font-size="12" fill="#33414d">
+    <!-- core -->
+    <line x1="360" y1="345" x2="470" y2="430" stroke="#7a8691" stroke-width="1"/>
+    <text x="250" y="345">core — 21 FA, 17×17 [rev_3]</text>
+
+    <line x1="300" y1="300" x2="405" y2="345" stroke="#7a8691" stroke-width="1"/>
+    <text x="150" y="300">refuelling cavity (Ø≈8.4 m)</text>
+
+    <line x1="150" y1="500" x2="70" y2="345" stroke="#7a8691" stroke-width="1"/>
+    <text x="95" y="516" text-anchor="middle">fuel transfer</text>
+    <text x="95" y="530" text-anchor="middle">canal → SFB</text>
+
+    <line x1="760" y1="250" x2="585" y2="290" stroke="#7a8691" stroke-width="1"/>
+    <text x="765" y="248">penetration zone → AB</text>
+    <text x="765" y="262" font-size="10" fill="#9a6700">(consolidated, AB side)</text>
+
+    <line x1="430" y1="600" x2="320" y2="555" stroke="#7a8691" stroke-width="1"/>
+    <text x="435" y="600">equipment hatch</text>
+
+    <line x1="430" y1="100" x2="305" y2="100" stroke="#7a8691" stroke-width="1"/>
+    <text x="435" y="104">personnel airlock</text>
+
+    <line x1="120" y1="160" x2="250" y2="230" stroke="#9a6700" stroke-width="1"/>
+    <text x="60" y="156" fill="#9a6700">polar crane swing</text>
+
+    <line x1="760" y1="380" x2="560" y2="320" stroke="#7a8691" stroke-width="1"/>
+    <text x="765" y="384">containment Ø15 m</text>
+    <text x="765" y="398" font-size="10" fill="#0d3550">(steel-lined RC, dry)</text>
+  </g>
+
+  <!-- North arrow -->
+  <g transform="translate(640,470)">
+    <circle r="20" fill="white" stroke="#1b2a36" stroke-width="1"/>
+    <path d="M0,-16 L5,7 L0,2 L-5,7 Z" fill="#1b2a36"/>
+    <text x="0" y="-20" font-size="10" font-weight="bold" text-anchor="middle" fill="#1b2a36">N</text>
+    <text x="0" y="32" font-size="9" text-anchor="middle" fill="#55606a">W→SFB · E→AB</text>
+  </g>
+
+  <!-- Scale bar 5 m = 100 px -->
+  <g transform="translate(60,610)">
+    <rect x="0" y="0" width="50" height="8" fill="#1b2a36"/>
+    <rect x="50" y="0" width="50" height="8" fill="white" stroke="#1b2a36" stroke-width="1"/>
+    <text x="-2" y="24" font-size="11" fill="#1b2a36">0</text>
+    <text x="44" y="24" font-size="11" fill="#1b2a36">2.5</text>
+    <text x="92" y="24" font-size="11" fill="#1b2a36">5 m</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(820,440)">
+    <rect x="0" y="0" width="270" height="190" fill="#fbfcfd" stroke="#c5ced6" stroke-width="1"/>
+    <text x="14" y="22" font-size="13" font-weight="bold" fill="#1b2a36">Key dimensions [rev_3 / building_list]</text>
+    <g font-size="11" fill="#33414d">
+      <text x="14" y="44">RXB footprint — 25 × 25 m</text>
+      <text x="14" y="62">Containment — Ø 15 m, dry steel-lined RC</text>
+      <text x="14" y="80">RPV — Ø 2.44 m (rev_3 geometry.xml)</text>
+      <text x="14" y="98">Core — 21 FA × 17×17, 200 cm active</text>
+      <text x="14" y="116">Refuel cavity — Ø ≈ 8.4 m (floods)</text>
+      <text x="14" y="134">Polar crane — swing Ø ≈ 19 m</text>
+    </g>
+    <text x="14" y="160" font-size="10" fill="#b3261e">[CONCEPTUAL] equipment positions illustrative;</text>
+    <text x="14" y="174" font-size="10" fill="#b3261e">await RPV final height + CRDM type (Samira).</text>
+  </g>
+</svg>
