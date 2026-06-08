@@ -3,145 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aegis-40 · Layout Viewer</title>
+<title>Aegis-40 · Facility Layout</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0e13;--panel:#0e151d;--panel2:#121b25;--line:#1d2a37;--line2:#2a3c4e;
-  --ink:#e9eff5;--ink2:#9db0c1;--ink3:#5f7184;
-  --ni:#56a8ec;--ci:#e9b84e;--ii:#4ccd8c;--hz:#ec5f4c;--cyan:#37cad9;
-  --disp:'Chakra Petch',sans-serif;--body:'Manrope',sans-serif;--mono:'JetBrains Mono',monospace;
+  --bg:#eef0ea;--paper:#ffffff;--panel:#f7f8f4;--panel2:#eceee6;
+  --line:#d6dace;--line2:#c1c7b6;--ink:#222c33;--ink2:#566069;--ink3:#8b958c;
+  --ni:#386fa4;--ni-f:#dbe7f3;--ni-s:#2c5680;
+  --ci:#a9762a;--ci-f:#f1e6cb;--ci-s:#7e571c;
+  --ii:#3c8a62;--ii-f:#d9ecdf;--ii-s:#2c6a4a;
+  --hz:#b23a2b;--hz-f:#f3dad4;
+  --accent:#2c5d86;--grass:#bcd29a;--grass2:#a9c382;--road:#cfd3c8;
+  --disp:'Spectral',serif;--body:'Archivo',sans-serif;--mono:'JetBrains Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);height:100vh;overflow:hidden;
   -webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(900px 600px at 78% -8%,rgba(86,168,236,.10),transparent 60%),
-             radial-gradient(700px 500px at 5% 100%,rgba(76,205,140,.07),transparent 60%)}
-::selection{background:var(--cyan);color:#04181c}
+::selection{background:#bcd0e6;color:#13232f}
 
-/* header */
 header{display:flex;align-items:center;justify-content:space-between;gap:20px;
-  padding:14px clamp(16px,3vw,30px);border-bottom:1px solid var(--line);flex-shrink:0;
-  background:rgba(10,14,19,.7);backdrop-filter:blur(12px);z-index:10}
+  padding:13px clamp(16px,3vw,30px);border-bottom:1px solid var(--line);flex-shrink:0;background:var(--paper);z-index:10}
 .brand{display:flex;align-items:center;gap:11px}
-.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(55,202,217,.18);animation:pulse 2.6s infinite}
-@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(55,202,217,.04)}}
-.brand b{font-family:var(--disp);font-weight:700;letter-spacing:.04em;font-size:15px}
+.brand .mk{width:22px;height:22px;border:1.5px solid var(--accent);border-radius:3px;position:relative;flex-shrink:0}
+.brand .mk::after{content:"";position:absolute;inset:4px;border:1.5px solid var(--accent);border-radius:50%}
+.brand b{font-family:var(--disp);font-weight:700;letter-spacing:.01em;font-size:17px}
 .brand small{font-family:var(--mono);color:var(--ink3);font-size:11px}
 .hmeta{font-family:var(--mono);font-size:11px;color:var(--ink3);text-align:right;line-height:1.7}
 .hmeta b{color:var(--ink2);font-weight:500}
 
-/* tabs */
-.tabs{display:flex;gap:4px;padding:12px clamp(16px,3vw,30px) 0;flex-wrap:wrap;flex-shrink:0}
-.tab{font-family:var(--disp);font-weight:600;font-size:13.5px;letter-spacing:.01em;
-  padding:11px 18px;border-radius:10px 10px 0 0;border:1px solid transparent;border-bottom:0;
-  background:transparent;color:var(--ink3);cursor:pointer;transition:.22s;display:flex;align-items:center;gap:9px;position:relative}
-.tab .tn{font-family:var(--mono);font-size:10px;opacity:.6}
-.tab:hover{color:var(--ink2);background:var(--panel)}
-.tab.on{color:var(--ink);background:var(--panel);border-color:var(--line)}
-.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--cyan)}
+.tabs{display:flex;gap:2px;padding:0 clamp(16px,3vw,30px);flex-shrink:0;background:var(--paper);border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{font-family:var(--body);font-weight:600;font-size:13.5px;padding:13px 17px;border:0;border-bottom:2px solid transparent;
+  background:transparent;color:var(--ink3);cursor:pointer;transition:.18s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.tab .tn{font-family:var(--mono);font-size:10px;opacity:.7}
+.tab:hover{color:var(--ink2)}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* main */
-main{flex:1;display:grid;grid-template-columns:1fr 318px;gap:0;min-height:0;
-  border-top:1px solid var(--line)}
-.stagewrap{position:relative;background:
-  linear-gradient(var(--panel),var(--panel2));overflow:hidden;min-height:0}
-.gridbg{position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(rgba(55,202,217,.05) 1px,transparent 1px),
-            linear-gradient(90deg,rgba(55,202,217,.05) 1px,transparent 1px);
-  background-size:30px 30px;mask-image:radial-gradient(120% 100% at 50% 40%,#000 55%,transparent 100%)}
+main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
+.stagewrap{position:relative;background:var(--paper);overflow:hidden;min-height:0}
+.gridbg{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:linear-gradient(rgba(90,110,130,.07) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(90,110,130,.07) 1px,transparent 1px),
+            linear-gradient(rgba(90,110,130,.13) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(90,110,130,.13) 1px,transparent 1px);
+  background-size:24px 24px,24px 24px,120px 120px,120px 120px}
 .stage{position:absolute;inset:0;display:none;cursor:grab;touch-action:none}
-.stage.on{display:block;animation:fade .5s cubic-bezier(.2,.7,.2,1)}
+.stage.on{display:block;animation:fade .45s ease}
 .stage.grabbing{cursor:grabbing}
-@keyframes fade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 .stage svg{width:100%;height:100%;display:block}
-.title-ov{position:absolute;top:18px;left:22px;pointer-events:none}
-.title-ov .t{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2vw,21px)}
-.title-ov .s{font-family:var(--mono);font-size:11.5px;color:var(--cyan);margin-top:3px;letter-spacing:.06em}
+.title-ov{position:absolute;top:16px;left:22px;pointer-events:none}
+.title-ov .t{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2vw,23px);color:var(--ink)}
+.title-ov .s{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-top:2px}
+.scalestamp{position:absolute;top:18px;right:20px;font-family:var(--mono);font-size:10.5px;color:var(--ink3);
+  border:1px solid var(--line);border-radius:6px;padding:6px 10px;background:var(--paper);text-align:right;line-height:1.5;pointer-events:none}
 
-/* zoom controls */
 .zc{position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;gap:6px;z-index:5}
-.zc button{width:38px;height:38px;border-radius:9px;border:1px solid var(--line2);
-  background:rgba(14,21,29,.85);backdrop-filter:blur(6px);color:var(--ink);font-size:18px;cursor:pointer;transition:.18s;font-family:var(--mono)}
-.zc button:hover{border-color:var(--cyan);color:var(--cyan)}
-.hint{position:absolute;left:22px;bottom:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink3);letter-spacing:.04em}
+.zc button{width:36px;height:36px;border-radius:7px;border:1px solid var(--line2);background:var(--paper);
+  color:var(--ink2);font-size:17px;cursor:pointer;transition:.18s;font-family:var(--mono)}
+.zc button:hover{border-color:var(--accent);color:var(--accent)}
+.hint{position:absolute;left:22px;bottom:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
 
-/* side panel */
 .side{background:var(--panel);border-left:1px solid var(--line);overflow-y:auto;padding:22px}
-.side h3{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink3);margin-bottom:14px;display:flex;align-items:center;gap:9px}
-.side h3::before{content:"";width:18px;height:1px;background:var(--ink3)}
-/* selected detail */
-.detail{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:22px;min-height:128px;transition:.3s}
-.detail .pic{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--cyan)}
-.detail h4{font-family:var(--disp);font-weight:600;font-size:19px;margin:6px 0}
-.detail .row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.side h3{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:13px;display:flex;align-items:center;gap:9px}
+.side h3::before{content:"";width:16px;height:1px;background:var(--ink3)}
+.detail{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:18px;margin-bottom:24px;min-height:128px}
+.detail .pic{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent)}
+.detail h4{font-family:var(--disp);font-weight:600;font-size:20px;margin:5px 0 8px}
+.detail .row{display:flex;justify-content:space-between;gap:14px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
 .detail .row:last-child{border:0}
-.detail .row span:first-child{color:var(--ink3);font-family:var(--mono);font-size:11.5px}
-.detail .row span:last-child{color:var(--ink);font-weight:500;text-align:right;max-width:62%}
+.detail .row span:first-child{color:var(--ink3);font-family:var(--mono);font-size:11.5px;flex-shrink:0}
+.detail .row span:last-child{color:var(--ink);text-align:right}
 .detail .empty{color:var(--ink3);font-size:13px;line-height:1.6}
-/* legend */
-.lg{display:flex;flex-direction:column;gap:3px;margin-bottom:22px}
-.lgi{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:9px;cursor:pointer;transition:.18s;border:1px solid transparent}
-.lgi:hover{background:var(--panel2);border-color:var(--line)}
-.lgi.mut{opacity:.32}
-.sw{width:15px;height:15px;border-radius:4px;flex-shrink:0;border:1.5px solid}
-.sw.ni{background:rgba(86,168,236,.25);border-color:var(--ni)}
-.sw.ci{background:rgba(233,184,78,.25);border-color:var(--ci)}
-.sw.ii{background:rgba(76,205,140,.25);border-color:var(--ii)}
+.lg{display:flex;flex-direction:column;gap:2px;margin-bottom:24px}
+.lgi{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.16s;border:1px solid transparent}
+.lgi:hover{background:var(--paper);border-color:var(--line)}
+.sw{width:14px;height:14px;border-radius:3px;flex-shrink:0;border:1.5px solid}
+.sw.ni{background:var(--ni-f);border-color:var(--ni)} .sw.ci{background:var(--ci-f);border-color:var(--ci)} .sw.ii{background:var(--ii-f);border-color:var(--ii)}
 .lgi .lt{font-size:13.5px;font-weight:600}
 .lgi .lc{font-family:var(--mono);font-size:10.5px;color:var(--ink3);margin-left:auto}
-.facts{display:flex;flex-direction:column;gap:0}
-.fact{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--line)}
+.fact{display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
 .fact:last-child{border:0}
 .fact span:first-child{color:var(--ink3);font-family:var(--mono);font-size:11.5px}
 .fact b{font-family:var(--disp);font-weight:600}
 .fact .full{color:var(--ii)} .fact .part{color:var(--ci)} .fact .gap{color:var(--hz)}
 
-/* svg shared classes */
 .zone{transition:.3s}
-.zlabel{font-family:var(--mono);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.zlabel{font-family:var(--mono);font-weight:500;letter-spacing:.03em;text-transform:uppercase}
 .bld{cursor:pointer}
-.bld rect,.bld circle,.bld path{transition:fill .2s,stroke .2s,filter .2s,transform .2s}
-.bld:hover{filter:url(#glow)}
-.bld .br{transition:.2s}
-.bld:hover .br{transform:translateY(-1px)}
+.bld rect,.bld circle,.bld path,.bld polygon{transition:fill .15s,stroke .15s,filter .15s}
+.bld:hover .br{stroke-width:1.1;filter:drop-shadow(0 1px 3px rgba(40,70,100,.5))}
 .bld text{font-family:var(--mono);font-weight:500;pointer-events:none;text-anchor:middle}
-.dim{opacity:.16!important;transition:.3s}
+.dim{opacity:.18!important;transition:.3s}
 .anno{font-family:var(--mono);fill:var(--ink3)}
-.lead{stroke:var(--line2);stroke-width:.4;fill:none}
-.callt{font-family:var(--mono);fill:var(--ink2)}
+.callt{font-family:var(--body);fill:var(--ink2);font-weight:500}
+.lead{stroke:var(--ink3);stroke-width:.4;fill:none}
 
-/* tooltip */
-.tip{position:fixed;z-index:60;pointer-events:none;background:rgba(8,12,17,.94);backdrop-filter:blur(8px);
-  border:1px solid var(--line2);border-radius:10px;padding:11px 14px;opacity:0;transform:translateY(6px);
-  transition:opacity .16s,transform .16s;max-width:240px;box-shadow:0 16px 40px -16px #000}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--paper);
+  border:1px solid var(--line2);border-radius:9px;padding:11px 14px;opacity:0;transform:translateY(5px);
+  transition:opacity .15s,transform .15s;max-width:250px;box-shadow:0 12px 30px -12px rgba(40,55,70,.35)}
 .tip.show{opacity:1;transform:none}
-.tip .tp{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--cyan)}
-.tip .th{font-family:var(--disp);font-weight:600;font-size:15px;margin:3px 0 5px}
+.tip .tp{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--accent)}
+.tip .th{font-family:var(--disp);font-weight:600;font-size:16px;margin:2px 0 5px}
 .tip .td{font-size:12.5px;color:var(--ink2);line-height:1.5}
 .tip .tf{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-top:6px}
 
 @media(max-width:820px){
   main{grid-template-columns:1fr;grid-template-rows:1fr auto}
-  .side{border-left:0;border-top:1px solid var(--line);max-height:42vh}
+  .side{border-left:0;border-top:1px solid var(--line);max-height:40vh}
   .hmeta{display:none}
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand"><span class="dot"></span><b>AEGIS-40</b><small>/ facility layout viewer</small></div>
-  <div class="hmeta">40 MWe + 125 MWth iPWR · <b>3-island scheme</b><br>FER §8.10 · interactive plans</div>
+  <div class="brand"><span class="mk"></span><b>Aegis-40</b><small>/ facility layout</small></div>
+  <div class="hmeta">40 MWe + 125 MWth integral PWR · <b>three-island scheme</b><br>FER §8.10 Facility Layout · interactive site plans</div>
 </header>
 
 <div class="tabs" id="tabs">
-  <button class="tab on" data-v="site"><span class="tn">01</span> Site Plot Plan</button>
+  <button class="tab on" data-v="iso"><span class="tn">00</span> Bird’s-eye 3D</button>
+  <button class="tab" data-v="site"><span class="tn">01</span> Site Plot Plan</button>
   <button class="tab" data-v="rxb"><span class="tn">02</span> Reactor Building</button>
-  <button class="tab" data-v="elev"><span class="tn">03</span> Elevation / Section</button>
+  <button class="tab" data-v="elev"><span class="tn">03</span> Elevation</button>
   <button class="tab" data-v="mcr"><span class="tn">04</span> Control Room</button>
 </div>
 
@@ -149,152 +135,137 @@ main{flex:1;display:grid;grid-template-columns:1fr 318px;gap:0;min-height:0;
   <div class="stagewrap">
     <div class="gridbg"></div>
 
+    <!-- ============ ISO BIRD'S-EYE ============ -->
+    <div class="stage on" data-v="iso">
+      <div class="title-ov"><div class="t">Site Overview — Bird’s-eye</div><div class="s">stylised axonometric massing · all buildings to footprint + height</div></div>
+      <div class="scalestamp">AXONOMETRIC 30°<br>not to single scale</div>
+      <svg viewBox="0 0 820 520" preserveAspectRatio="xMidYMid meet"><g class="pz" id="iso-root"></g></svg>
+    </div>
+
     <!-- ============ SITE PLAN ============ -->
-    <div class="stage on" data-v="site">
-      <div class="title-ov"><div class="t">Site Plot Plan</div><div class="s">three-island scheme · ~250 × 180 m developed</div></div>
-      <svg viewBox="0 0 300 210" preserveAspectRatio="xMidYMid meet"><g class="pz">
-        <!-- zones -->
+    <div class="stage" data-v="site">
+      <div class="title-ov"><div class="t">Site Plot Plan</div><div class="s">three-island scheme · plan view</div></div>
+      <div class="scalestamp">SCALE 1 : 333<br>north ↑</div>
+      <svg viewBox="0 0 300 212" preserveAspectRatio="xMidYMid meet"><g class="pz">
         <g id="zones-site">
-          <rect class="zone z-ci" x="20" y="10" width="80" height="80" rx="5" fill="rgba(233,184,78,.05)" stroke="rgba(233,184,78,.4)" stroke-width=".5" stroke-dasharray="2 2"/>
-          <rect class="zone z-ni" x="20" y="110" width="100" height="80" rx="5" fill="rgba(86,168,236,.05)" stroke="rgba(86,168,236,.4)" stroke-width=".5" stroke-dasharray="2 2"/>
-          <rect class="zone z-ii" x="220" y="118" width="60" height="68" rx="5" fill="rgba(76,205,140,.05)" stroke="rgba(76,205,140,.4)" stroke-width=".5" stroke-dasharray="2 2"/>
-          <text class="zlabel z-ci" x="22" y="7" font-size="3.4" fill="var(--ci)">Conventional · Cat II</text>
-          <text class="zlabel z-ni" x="22" y="107" font-size="3.4" fill="var(--ni)">Nuclear · Cat I</text>
-          <text class="zlabel z-ii" x="222" y="115" font-size="3.4" fill="var(--ii)">Industrial · non-safety</text>
+          <rect class="zone z-ci" x="20" y="10" width="80" height="80" rx="4" fill="var(--ci-f)" fill-opacity=".35" stroke="var(--ci)" stroke-width=".5" stroke-dasharray="2 2"/>
+          <rect class="zone z-ni" x="20" y="110" width="100" height="80" rx="4" fill="var(--ni-f)" fill-opacity=".35" stroke="var(--ni)" stroke-width=".5" stroke-dasharray="2 2"/>
+          <rect class="zone z-ii" x="220" y="118" width="60" height="68" rx="4" fill="var(--ii-f)" fill-opacity=".35" stroke="var(--ii)" stroke-width=".5" stroke-dasharray="2 2"/>
+          <text class="zlabel z-ci" x="22" y="7" font-size="3.4" fill="var(--ci-s)">Conventional · Cat II</text>
+          <text class="zlabel z-ni" x="22" y="107" font-size="3.4" fill="var(--ni-s)">Nuclear · Cat I</text>
+          <text class="zlabel z-ii" x="222" y="115" font-size="3.4" fill="var(--ii-s)">Industrial · non-safety</text>
         </g>
-        <!-- H2 standoff -->
         <g id="anno-site">
           <line x1="120" y1="150" x2="220" y2="150" stroke="var(--hz)" stroke-width=".5" stroke-dasharray="2 1.5"/>
           <text class="anno" x="170" y="147" font-size="3.2" fill="var(--hz)" text-anchor="middle">100 m H₂ stand-off</text>
-          <text class="anno" x="150" y="205" font-size="3" text-anchor="middle">EPZ ≤ 0.5 km · whole site within radius</text>
+          <text class="anno" x="150" y="207" font-size="3" text-anchor="middle">EPZ ≤ 0.5 km · whole site within radius</text>
         </g>
-        <!-- piping -->
         <g id="pipe-site">
-          <path d="M45,42 L45,100 L62,135" class="pp" fill="none" stroke="var(--hz)" stroke-width=".7" opacity=".7"/>
-          <path d="M70,135 L70,100 L70,42" class="pp" fill="none" stroke="var(--ni)" stroke-width=".7" opacity=".7"/>
-          <path d="M105,148 L224,140" class="pp" fill="none" stroke="#a172c9" stroke-width=".7" stroke-dasharray="3 2" opacity=".7"/>
-          <text class="anno" x="165" y="138" font-size="2.6" text-anchor="middle" fill="#a172c9">process steam → TES</text>
+          <path d="M45,42 L45,100 L62,135" fill="none" stroke="var(--hz)" stroke-width=".7" opacity=".75"/>
+          <path d="M70,135 L70,100 L70,42" fill="none" stroke="var(--ni)" stroke-width=".7" opacity=".75"/>
+          <path d="M105,148 L224,140" fill="none" stroke="#8a5fae" stroke-width=".7" stroke-dasharray="3 2" opacity=".75"/>
+          <text class="anno" x="165" y="138" font-size="2.6" text-anchor="middle" fill="#7a4fa0">process steam → TES</text>
         </g>
         <g id="site-buildings"></g>
-        <!-- north + scale -->
-        <g transform="translate(284,20)"><circle r="8" fill="rgba(14,21,29,.7)" stroke="var(--line2)" stroke-width=".4"/><path d="M0,-6 L2.2,3 L0,1 L-2.2,3 Z" fill="var(--ink)"/><text x="0" y="-9" font-size="3.4" text-anchor="middle" fill="var(--ink)" font-family="var(--disp)">N</text></g>
-        <g transform="translate(20,202)"><rect width="25" height="2" fill="var(--ink2)"/><rect x="25" width="25" height="2" fill="none" stroke="var(--ink2)" stroke-width=".4"/><text x="0" y="-2" font-size="3" fill="var(--ink2)" font-family="var(--mono)">0</text><text x="46" y="-2" font-size="3" fill="var(--ink2)" font-family="var(--mono)">50 m</text></g>
+        <g transform="translate(284,20)"><circle r="8" fill="var(--paper)" stroke="var(--line2)" stroke-width=".4"/><path d="M0,-6 L2.2,3 L0,1 L-2.2,3 Z" fill="var(--ink)"/><text x="0" y="-9" font-size="3.4" text-anchor="middle" fill="var(--ink)" font-family="var(--disp)">N</text></g>
+        <g transform="translate(20,204)"><rect width="25" height="2" fill="var(--ink2)"/><rect x="25" width="25" height="2" fill="none" stroke="var(--ink2)" stroke-width=".4"/><text x="0" y="-2" font-size="3" fill="var(--ink2)" font-family="var(--mono)">0</text><text x="46" y="-2" font-size="3" fill="var(--ink2)" font-family="var(--mono)">50 m</text></g>
       </g></svg>
     </div>
 
     <!-- ============ RXB ============ -->
     <div class="stage" data-v="rxb">
       <div class="title-ov"><div class="t">Reactor Building — Floor Plan</div><div class="s">containment Ø15 m · RPV Ø2.44 m · 21-FA core [rev_3]</div></div>
+      <div class="scalestamp">SCALE 1 : 50</div>
       <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><g class="pz">
         <defs>
-          <radialGradient id="cont" cx="50%" cy="42%" r="60%"><stop offset="0%" stop-color="rgba(86,168,236,.13)"/><stop offset="100%" stop-color="rgba(86,168,236,.02)"/></radialGradient>
-          <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="1.4" flood-color="#37cad9" flood-opacity=".9"/></filter>
+          <radialGradient id="cont" cx="50%" cy="42%" r="60%"><stop offset="0%" stop-color="var(--ni-f)"/><stop offset="100%" stop-color="#eef4fb"/></radialGradient>
         </defs>
-        <!-- outer wall -->
-        <rect x="14" y="14" width="72" height="72" rx="2.5" fill="rgba(86,168,236,.04)" stroke="var(--ni)" stroke-width="1.4"/>
-        <rect x="16.5" y="16.5" width="67" height="67" rx="1.5" fill="none" stroke="rgba(86,168,236,.3)" stroke-width=".4"/>
-        <!-- polar crane -->
-        <circle cx="50" cy="48" r="28" fill="none" stroke="var(--ci)" stroke-width=".5" stroke-dasharray="2 1.6" opacity=".6"/>
-        <!-- containment -->
-        <g class="bld" data-name="Containment" data-pic="Ø15 m" data-foot="dry steel-lined RC" data-fn="Leak-tight pressure boundary, 4.14 bar design. Houses the RPV, primary loop, IRWST annulus." data-fer="FER §8.10 / Table 1">
-          <circle class="br" cx="50" cy="48" r="22" fill="url(#cont)" stroke="var(--ni)" stroke-width="1.2"/>
-          <circle cx="50" cy="48" r="21" fill="none" stroke="rgba(86,168,236,.35)" stroke-width=".35" stroke-dasharray="1.4 1"/>
+        <rect x="14" y="14" width="72" height="72" rx="2.5" fill="#f2f6fb" stroke="var(--ni)" stroke-width="1.2"/>
+        <rect x="16.5" y="16.5" width="67" height="67" rx="1.5" fill="none" stroke="var(--ni)" stroke-width=".3" opacity=".5"/>
+        <circle cx="50" cy="48" r="28" fill="none" stroke="var(--ci)" stroke-width=".5" stroke-dasharray="2 1.6" opacity=".7"/>
+        <g class="bld" data-name="Containment" data-pic="Ø15 m" data-foot="dry steel-lined RC" data-fn="Leak-tight pressure boundary, 4.14 bar design. Houses the RPV, primary loop, IRWST annulus." data-fer="FER Table 1">
+          <circle class="br" cx="50" cy="48" r="22" fill="url(#cont)" stroke="var(--ni)" stroke-width="1.1"/>
+          <circle cx="50" cy="48" r="21" fill="none" stroke="var(--ni)" stroke-width=".35" stroke-dasharray="1.4 1" opacity=".5"/>
         </g>
-        <!-- refuel cavity -->
         <g class="bld" data-name="Refuelling cavity" data-pic="Ø ≈ 8.4 m" data-foot="floods during refuel" data-fn="Water-filled cavity above the vessel — shield + coolant during fuel moves." data-fer="">
-          <circle class="br" cx="50" cy="48" r="12.5" fill="rgba(55,202,217,.08)" stroke="var(--cyan)" stroke-width=".6"/>
+          <circle class="br" cx="50" cy="48" r="12.5" fill="#dff0f6" stroke="#3f97a8" stroke-width=".6"/>
         </g>
-        <!-- transfer canal -->
         <g class="bld" data-name="Fuel transfer canal" data-pic="→ SFB" data-foot="flooded channel" data-fn="Carries assemblies from the refuel cavity to the spent-fuel pool. Water-shielded." data-fer="">
-          <rect class="br" x="14" y="44.5" width="16" height="7" fill="rgba(55,202,217,.10)" stroke="var(--cyan)" stroke-width=".6"/>
+          <rect class="br" x="14" y="44.5" width="16" height="7" fill="#dff0f6" stroke="#3f97a8" stroke-width=".6"/>
         </g>
-        <!-- penetrations -->
         <g class="bld" data-name="Penetration zone" data-pic="→ AB" data-foot="consolidated, AB side" data-fn="All containment penetrations grouped on the Auxiliary-Building face for isolation + access." data-fer="">
-          <rect class="br" x="83" y="38" width="3" height="20" fill="rgba(233,184,78,.18)" stroke="var(--ci)" stroke-width=".6"/>
+          <rect class="br" x="83" y="38" width="3" height="20" fill="var(--ci-f)" stroke="var(--ci)" stroke-width=".6"/>
         </g>
-        <!-- RPV -->
-        <g class="bld" data-name="Reactor Pressure Vessel" data-pic="Ø 2.44 m · rev_3" data-foot="21 FA · 17×17 lattice" data-fn="Integral PWR vessel. 200 cm active height. Core holds 21 assemblies at 4.95/4.70/4.40 wt%." data-fer="rev_3 geometry.xml">
-          <circle class="br" cx="50" cy="48" r="3.6" fill="rgba(86,168,236,.6)" stroke="#cfe8ff" stroke-width=".7"/>
-          <circle cx="50" cy="48" r="2.5" fill="rgba(86,168,236,.85)" stroke="#cfe8ff" stroke-width=".4"/>
-          <text x="50" y="49.4" font-size="2.2" fill="#04181c" font-weight="700">RPV</text>
+        <g class="bld" data-name="Reactor Pressure Vessel" data-pic="Ø 2.44 m · rev_3" data-foot="21 FA · 17×17 lattice" data-fn="Integral PWR vessel. 200 cm active height. 21 assemblies at 4.95/4.70/4.40 wt%." data-fer="rev_3 geometry.xml">
+          <circle class="br" cx="50" cy="48" r="3.6" fill="var(--ni)" stroke="#fff" stroke-width=".7"/>
+          <circle cx="50" cy="48" r="2.5" fill="var(--ni-s)" stroke="#fff" stroke-width=".4"/>
+          <text x="50" y="49.4" font-size="2.2" fill="#fff" font-weight="700">RPV</text>
         </g>
-        <!-- hatch + airlock -->
-        <g class="bld" data-name="Equipment hatch" data-pic="south wall" data-foot="" data-fn="Large-component access for refuelling outages." data-fer=""><rect class="br" x="44" y="84" width="12" height="3.2" rx=".6" fill="rgba(86,168,236,.25)" stroke="var(--ni)" stroke-width=".5"/></g>
-        <g class="bld" data-name="Personnel airlock" data-pic="north wall" data-foot="" data-fn="Crew access to containment under pressure." data-fer=""><rect class="br" x="46" y="12.8" width="8" height="3" rx=".6" fill="rgba(86,168,236,.25)" stroke="var(--ni)" stroke-width=".5"/></g>
-        <!-- labels -->
-        <text class="anno" x="50" y="29" font-size="2.4" text-anchor="middle" fill="var(--ni)">IRWST annulus</text>
-        <text class="anno" x="22" y="74" font-size="2.2" fill="var(--ci)">polar crane swing</text>
+        <g class="bld" data-name="Equipment hatch" data-pic="south wall" data-foot="" data-fn="Large-component access for refuelling outages." data-fer=""><rect class="br" x="44" y="84" width="12" height="3.2" rx=".6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".5"/></g>
+        <g class="bld" data-name="Personnel airlock" data-pic="north wall" data-foot="" data-fn="Crew access to containment under pressure." data-fer=""><rect class="br" x="46" y="12.8" width="8" height="3" rx=".6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".5"/></g>
+        <text class="anno" x="50" y="29" font-size="2.4" text-anchor="middle" fill="var(--ni-s)">IRWST annulus</text>
+        <text class="anno" x="22" y="74" font-size="2.2" fill="var(--ci-s)">polar crane swing</text>
       </g></svg>
     </div>
 
     <!-- ============ ELEVATION ============ -->
     <div class="stage" data-v="elev">
       <div class="title-ov"><div class="t">Site Elevation / Section</div><div class="s">vertical true scale · below-grade reactor</div></div>
+      <div class="scalestamp">VERT 1 : 125</div>
       <svg viewBox="0 0 360 162" preserveAspectRatio="xMidYMid meet"><g class="pz">
-        <!-- sky/soil -->
-        <rect x="10" y="20" width="342" height="100" fill="rgba(86,168,236,.015)"/>
-        <rect x="10" y="120" width="342" height="36" fill="rgba(140,120,90,.10)"/>
+        <rect x="10" y="20" width="342" height="100" fill="#f3f7fb"/>
+        <rect x="10" y="120" width="342" height="36" fill="#e7e0d0"/>
         <line x1="10" y1="120" x2="352" y2="120" stroke="var(--ink2)" stroke-width=".8"/>
         <text class="anno" x="348" y="117" font-size="3" text-anchor="end" fill="var(--ink2)">GRADE 0 m</text>
-        <!-- scale ticks -->
         <g font-family="var(--mono)" font-size="2.6" fill="var(--ink3)">
           <line x1="14" y1="40" x2="352" y2="40" stroke="var(--line)" stroke-width=".25"/><text x="10" y="41" text-anchor="end">+30</text>
           <line x1="14" y1="80" x2="352" y2="80" stroke="var(--line)" stroke-width=".25"/><text x="10" y="81" text-anchor="end">+10</text>
         </g>
         <g id="elev-buildings"></g>
-        <!-- below grade reactor (under RXB @150..180) -->
         <g class="bld" data-name="Reactor cavity" data-pic="−15 m" data-foot="below grade" data-fn="Below-grade reactor placement — seismic + missile shield. RPV head ≈5 m below grade." data-fer="zones.md Z2">
-          <rect class="br" x="156" y="120" width="18" height="36" fill="rgba(86,168,236,.10)" stroke="var(--ni)" stroke-width=".7"/>
-          <rect x="162" y="123" width="6" height="26" fill="rgba(86,168,236,.5)" stroke="#cfe8ff" stroke-width=".4"/>
+          <rect class="br" x="156" y="120" width="18" height="36" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".7"/>
+          <rect x="162" y="123" width="6" height="26" fill="var(--ni)" stroke="#fff" stroke-width=".4"/>
         </g>
         <line x1="156" y1="134" x2="174" y2="134" stroke="var(--hz)" stroke-width=".4" stroke-dasharray="2 1.4"/>
         <text class="anno" x="176" y="135" font-size="2.6" fill="var(--hz)">RPV head ≈5 m below grade</text>
-        <!-- 100m buffer NI->II -->
         <line x1="272" y1="150" x2="306" y2="150" stroke="var(--hz)" stroke-width=".4" stroke-dasharray="1.6 1.4"/>
         <text class="anno" x="289" y="148" font-size="2.6" text-anchor="middle" fill="var(--hz)">100 m H₂ stand-off</text>
-        <!-- island bands -->
-        <text class="zlabel z-ci" x="64" y="160" font-size="2.8" fill="var(--ci)" text-anchor="middle">CONVENTIONAL</text>
-        <text class="zlabel z-ni" x="206" y="160" font-size="2.8" fill="var(--ni)" text-anchor="middle">NUCLEAR</text>
-        <text class="zlabel z-ii" x="332" y="160" font-size="2.8" fill="var(--ii)" text-anchor="middle">INDUSTRIAL</text>
+        <text class="zlabel z-ci" x="64" y="160" font-size="2.8" fill="var(--ci-s)" text-anchor="middle">CONVENTIONAL</text>
+        <text class="zlabel z-ni" x="206" y="160" font-size="2.8" fill="var(--ni-s)" text-anchor="middle">NUCLEAR</text>
+        <text class="zlabel z-ii" x="332" y="160" font-size="2.8" fill="var(--ii-s)" text-anchor="middle">INDUSTRIAL</text>
       </g></svg>
     </div>
 
     <!-- ============ MCR ============ -->
     <div class="stage" data-v="mcr">
       <div class="title-ov"><div class="t">Main Control Room</div><div class="s">two-operator console layout · per I&C architecture §4.1</div></div>
+      <div class="scalestamp">SCALE 1 : 40</div>
       <svg viewBox="0 0 160 130" preserveAspectRatio="xMidYMid meet"><g class="pz">
-        <rect x="14" y="14" width="132" height="102" rx="3" fill="rgba(86,168,236,.02)" stroke="var(--ink2)" stroke-width="1.2"/>
-        <!-- LDP -->
+        <rect x="14" y="14" width="132" height="102" rx="3" fill="#f4f7fa" stroke="var(--ink2)" stroke-width="1.1"/>
         <g class="bld" data-name="Large overview display" data-pic="4 × 80″" data-foot="north wall" data-fn="Plant mimic + SPDS + critical-safety-function + alarm overview, visible to the whole room." data-fer="NUREG-0700">
-          <rect class="br" x="44" y="16" width="72" height="6" rx="1" fill="#1b2a36" stroke="var(--cyan)" stroke-width=".6"/>
-          <line x1="62" y1="16" x2="62" y2="22" stroke="var(--line2)" stroke-width=".4"/><line x1="80" y1="16" x2="80" y2="22" stroke="var(--line2)" stroke-width=".4"/><line x1="98" y1="16" x2="98" y2="22" stroke="var(--line2)" stroke-width=".4"/>
+          <rect class="br" x="44" y="16" width="72" height="6" rx="1" fill="#2b3a4a" stroke="var(--accent)" stroke-width=".6"/>
+          <line x1="62" y1="16" x2="62" y2="22" stroke="#5b7186" stroke-width=".4"/><line x1="80" y1="16" x2="80" y2="22" stroke="#5b7186" stroke-width=".4"/><line x1="98" y1="16" x2="98" y2="22" stroke="#5b7186" stroke-width=".4"/>
         </g>
-        <!-- hardwired panel -->
         <g class="bld" data-name="Hardwired safety panel" data-pic="§4.4" data-foot="non-software" data-fn="Manual scram / ESFAS / MSIV — independent of computer health (IEEE 603 §5.8)." data-fer="IEEE 603">
-          <rect class="br" x="40" y="30" width="34" height="6" rx="1.2" fill="rgba(236,95,76,.18)" stroke="var(--hz)" stroke-width=".7"/>
+          <rect class="br" x="40" y="30" width="34" height="6" rx="1.2" fill="var(--hz-f)" stroke="var(--hz)" stroke-width=".7"/>
         </g>
-        <!-- primary console -->
         <g class="bld" data-name="Primary console" data-pic="reactor operator" data-foot="" data-fn="Reactor-operator station — touch displays + hardwired switches, facing the overview panel." data-fer="">
-          <rect class="br" x="34" y="46" width="34" height="11" rx="3.5" fill="rgba(86,168,236,.18)" stroke="var(--ni)" stroke-width=".8"/>
-          <rect x="37" y="46.5" width="28" height="2.6" fill="#1b2a36"/>
-          <circle cx="44" cy="60" r="2.6" fill="rgba(86,168,236,.4)" stroke="var(--ni)" stroke-width=".4"/><circle cx="58" cy="60" r="2.6" fill="rgba(86,168,236,.4)" stroke="var(--ni)" stroke-width=".4"/>
+          <rect class="br" x="34" y="46" width="34" height="11" rx="3.5" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".8"/>
+          <rect x="37" y="46.5" width="28" height="2.6" fill="#2b3a4a"/>
+          <circle cx="44" cy="60" r="2.6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".4"/><circle cx="58" cy="60" r="2.6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".4"/>
         </g>
-        <!-- secondary console -->
         <g class="bld" data-name="Secondary console" data-pic="BOP / turbine" data-foot="" data-fn="Balance-of-plant operator — turbine, feedwater, electrical, cogeneration dispatch." data-fer="">
-          <rect class="br" x="86" y="46" width="30" height="11" rx="3.5" fill="rgba(233,184,78,.18)" stroke="var(--ci)" stroke-width=".8"/>
+          <rect class="br" x="86" y="46" width="30" height="11" rx="3.5" fill="var(--ci-f)" stroke="var(--ci)" stroke-width=".8"/>
           <rect x="89" y="46.5" width="24" height="2.6" fill="#5c4a1f"/>
-          <circle cx="95" cy="60" r="2.6" fill="rgba(233,184,78,.4)" stroke="var(--ci)" stroke-width=".4"/><circle cx="108" cy="60" r="2.6" fill="rgba(233,184,78,.4)" stroke="var(--ci)" stroke-width=".4"/>
+          <circle cx="95" cy="60" r="2.6" fill="var(--ci-f)" stroke="var(--ci)" stroke-width=".4"/><circle cx="108" cy="60" r="2.6" fill="var(--ci-f)" stroke="var(--ci)" stroke-width=".4"/>
         </g>
-        <!-- STA -->
         <g class="bld" data-name="STA station" data-pic="read-only mirror" data-foot="" data-fn="Shift Technical Advisor — diagnostic mirror of plant state, no actuation." data-fer="">
-          <rect class="br" x="116" y="84" width="26" height="12" rx="2.5" fill="rgba(161,114,201,.18)" stroke="#a172c9" stroke-width=".8"/>
+          <rect class="br" x="116" y="84" width="26" height="12" rx="2.5" fill="#eadff3" stroke="#8a5fae" stroke-width=".8"/>
         </g>
-        <!-- engineer desk -->
         <g class="bld" data-name="Reactor-engineer / SPDS desk" data-pic="" data-foot="" data-fn="Reactor-engineering support + safety-parameter display." data-fer="">
-          <rect class="br" x="63" y="76" width="26" height="11" rx="2.5" fill="rgba(157,176,193,.14)" stroke="var(--ink2)" stroke-width=".7"/>
+          <rect class="br" x="63" y="76" width="26" height="11" rx="2.5" fill="#eceee6" stroke="var(--ink2)" stroke-width=".7"/>
         </g>
-        <!-- entry -->
-        <rect x="63" y="114" width="16" height="3" fill="var(--panel)" stroke="var(--ink2)" stroke-width=".5"/>
+        <rect x="63" y="114" width="16" height="3" fill="var(--paper)" stroke="var(--ink2)" stroke-width=".5"/>
         <text class="anno" x="71" y="124" font-size="2.6" text-anchor="middle">main entry</text>
       </g></svg>
     </div>
@@ -303,27 +274,22 @@ main{flex:1;display:grid;grid-template-columns:1fr 318px;gap:0;min-height:0;
     <div class="hint">drag to pan · scroll to zoom · hover elements for detail</div>
   </div>
 
-  <!-- SIDE -->
   <aside class="side">
     <h3>Selection</h3>
-    <div class="detail" id="detail">
-      <div class="empty">Hover or tap any building, zone, or component on the plan to inspect it here.</div>
-    </div>
+    <div class="detail" id="detail"><div class="empty">Hover or tap any building, zone, or component to inspect it here.</div></div>
     <h3 id="lg-h">Islands</h3>
     <div class="lg" id="legend">
-      <div class="lgi" data-z="ni"><span class="sw ni"></span><span class="lt">Nuclear Island</span><span class="lc">6 bldg · Cat I</span></div>
-      <div class="lgi" data-z="ci"><span class="sw ci"></span><span class="lt">Conventional Island</span><span class="lc">4 bldg · Cat II</span></div>
-      <div class="lgi" data-z="ii"><span class="sw ii"></span><span class="lt">Industrial Island</span><span class="lc">3 bldg · NFPA 2</span></div>
+      <div class="lgi" data-z="ni"><span class="sw ni"></span><span class="lt">Nuclear Island</span><span class="lc">6 · Cat I</span></div>
+      <div class="lgi" data-z="ci"><span class="sw ci"></span><span class="lt">Conventional Island</span><span class="lc">4 · Cat II</span></div>
+      <div class="lgi" data-z="ii"><span class="sw ii"></span><span class="lt">Industrial Island</span><span class="lc">3 · NFPA 2</span></div>
     </div>
     <h3>Key facts</h3>
-    <div class="facts">
-      <div class="fact"><span>Built area</span><b>~9,275 m²</b></div>
-      <div class="fact"><span>Site : built</span><b>≈ 8 : 1</b></div>
-      <div class="fact"><span>EPZ radius</span><b>≤ 0.5 km</b></div>
-      <div class="fact"><span>H₂ stand-off</span><b>100 m</b></div>
-      <div class="fact"><span>FER §8.10 R3</span><b class="full">met ✓</b></div>
-      <div class="fact"><span>FER §8.10 R4</span><b class="part">partial △</b></div>
-    </div>
+    <div class="fact"><span>Built area</span><b>~9,275 m²</b></div>
+    <div class="fact"><span>Site : built</span><b>≈ 8 : 1</b></div>
+    <div class="fact"><span>EPZ radius</span><b>≤ 0.5 km</b></div>
+    <div class="fact"><span>H₂ stand-off</span><b>100 m</b></div>
+    <div class="fact"><span>FER §8.10 R3</span><b class="full">met ✓</b></div>
+    <div class="fact"><span>FER §8.10 R4</span><b class="part">partial △</b></div>
   </aside>
 </main>
 
@@ -332,147 +298,167 @@ main{flex:1;display:grid;grid-template-columns:1fr 318px;gap:0;min-height:0;
 <script>
 (function(){
 'use strict';
-/* ---------- data ---------- */
-const sites=[
- {id:'RXB',x:55,y:135,w:25,h:25,z:'ni',name:'Reactor Building',foot:'625 m² · Cat I',fn:'Houses the RPV, primary loop, containment, refuelling pool and polar crane.',fer:'§8.10 R2'},
- {id:'AB',x:80,y:138,w:25,h:20,z:'ni',name:'Auxiliary Building',foot:'500 m² · Cat I',fn:'CVCS, sampling, primary makeup, radwaste sumps. Consolidated penetration interface.',fer:'§8.8'},
- {id:'CB',x:24,y:120,w:30,h:25,z:'ni',name:'Control Building',foot:'750 m² · Cat I',fn:'Main control room, I&C divisions A–D in separated rooms, switchgear, batteries.',fer:'§8.7'},
- {id:'SFB',x:34,y:150,w:20,h:15,z:'ni',name:'Spent Fuel Building',foot:'300 m² · Cat I',fn:'Water-shielded pool, transfer canal, handling machine, dry-cask staging.',fer:'§8.8'},
- {id:'DGB',x:100,y:165,w:15,h:10,z:'ni',name:'Diesel Generator Building',foot:'150 m² · Cat I',fn:'2× emergency diesel generators, day tanks, control panels.',fer:'§8.8 A5'},
- {id:'WMB',x:24,y:168,w:25,h:15,z:'ni',name:'Waste Management Building',foot:'375 m² · Cat I',fn:'Liquid/solid/gaseous radwaste; off-gas stack ≥30 m rises here.',fer:'§8.8'},
- {id:'TB',x:22,y:16,w:30,h:20,z:'ci',name:'Turbine Building',foot:'600 m² · Cat II',fn:'Steam turbine + 40 MWe generator, condenser, feedwater pumps.',fer:'§8.10 R2'},
- {id:'EHB',x:56,y:14,w:40,h:28,z:'ci',name:'Electrical / Switchyard',foot:'~2,500 m² · Cat II',fn:'Main + unit-aux transformers, station service, 33 kV grid interface.',fer:'§8.8 A5'},
- {id:'EHB·b',x:24,y:42,w:15,h:10,z:'ci',name:'Electrical Building',foot:'150 m² · Cat II',fn:'Medium/low-voltage switchgear and distribution.',fer:'§8.8 A5'},
- {id:'CTW',x:55,y:50,w:30,h:30,z:'ci',name:'Cooling Tower',foot:'900 m² · Cat III',fn:'Mechanical-draft heat rejection [ASSUMED] pending heat-sink decision.',fer:'§8.10 R2'},
- {id:'WSB',x:24,y:58,w:20,h:15,z:'ci',name:'Workshop / Service',foot:'300 m² · Cat III',fn:'Maintenance shops, warehouse, hot-tool storage.',fer:'§8.10 R2'},
- {id:'TES',x:224,y:124,w:30,h:30,z:'ii',name:'Thermal Energy Storage',foot:'900 m² [ALISHER]',fn:'Storage modules + charge/discharge HX for district heat.',fer:'§5 originality'},
- {id:'SOE',x:224,y:156,w:25,h:25,z:'ii',name:'Solid-Oxide Electrolyser',foot:'625 m² [ALISHER]',fn:'High-temperature electrolyser stacks, water purification, H₂ separation.',fer:'§5 originality'},
- {id:'H₂S',x:256,y:140,w:20,h:30,z:'ii',name:'H₂ Storage Yard',foot:'600 m² · NFPA 2',fn:'Compressed-gas tanks, ≥100 m from nearest safety building.',fer:'§8.10 R1'},
-];
-const fillz={ni:'rgba(86,168,236,.22)',ci:'rgba(233,184,78,.22)',ii:'rgba(76,205,140,.22)'};
-const strz={ni:'#56a8ec',ci:'#e9b84e',ii:'#4ccd8c'};
-const hz={H2S:1};
-const elevs=[ // x,w,heightM,z,id,name  (viewBox 0..360)
- [30,30,20,'ci','CTW','Cooling Tower'],[68,30,15,'ci','TB','Turbine Building'],
- [150,30,30,'ni','RXB','Reactor Building'],[188,26,15,'ni','AB','Auxiliary Building'],
- [220,20,10,'ni','DGB','Diesel Gen'],[246,26,12,'ni','WMB','Waste Mgmt'],
- [259,4,30,'ni','STK','Off-gas stack'],
- [308,28,12,'ii','TES','Thermal Storage'],[340,16,10,'ii','SOE','Electrolyser'],
-];
-
-/* ---------- build SITE buildings ---------- */
 const NS='http://www.w3.org/2000/svg';
+const sites=[
+ {id:'RXB',x:55,y:135,w:25,h:25,H:30,z:'ni',name:'Reactor Building',foot:'625 m² · Cat I',fn:'Houses the RPV, primary loop, containment, refuelling pool and polar crane.',fer:'§8.10 R2'},
+ {id:'AB',x:80,y:138,w:25,h:20,H:15,z:'ni',name:'Auxiliary Building',foot:'500 m² · Cat I',fn:'CVCS, sampling, primary makeup, radwaste sumps. Penetration interface.',fer:'§8.8'},
+ {id:'CB',x:24,y:120,w:30,h:25,H:12,z:'ni',name:'Control Building',foot:'750 m² · Cat I',fn:'Main control room, I&C divisions A–D, switchgear, batteries.',fer:'§8.7'},
+ {id:'SFB',x:34,y:150,w:20,h:15,H:15,z:'ni',name:'Spent Fuel Building',foot:'300 m² · Cat I',fn:'Water-shielded pool, transfer canal, handling machine, dry-cask staging.',fer:'§8.8'},
+ {id:'DGB',x:100,y:165,w:15,h:10,H:10,z:'ni',name:'Diesel Generator Building',foot:'150 m² · Cat I',fn:'2× emergency diesel generators, day tanks, control panels.',fer:'§8.8 A5'},
+ {id:'WMB',x:24,y:168,w:25,h:15,H:12,z:'ni',name:'Waste Management Building',foot:'375 m² · Cat I',fn:'Liquid/solid/gaseous radwaste; off-gas stack ≥30 m.',fer:'§8.8'},
+ {id:'TB',x:22,y:16,w:30,h:20,H:15,z:'ci',name:'Turbine Building',foot:'600 m² · Cat II',fn:'Steam turbine + 40 MWe generator, condenser, feedwater pumps.',fer:'§8.10 R2'},
+ {id:'EHB',x:56,y:14,w:40,h:28,H:8,z:'ci',name:'Electrical / Switchyard',foot:'~2,500 m² · Cat II',fn:'Main + unit-aux transformers, station service, 33 kV grid interface.',fer:'§8.8 A5'},
+ {id:'CTW',x:55,y:50,w:30,h:30,H:20,z:'ci',name:'Cooling Tower',foot:'900 m² · Cat III',fn:'Mechanical-draft heat rejection [ASSUMED] pending heat-sink decision.',fer:'§8.10 R2'},
+ {id:'WSB',x:24,y:58,w:20,h:15,H:8,z:'ci',name:'Workshop / Service',foot:'300 m² · Cat III',fn:'Maintenance shops, warehouse, hot-tool storage.',fer:'§8.10 R2'},
+ {id:'TES',x:224,y:124,w:30,h:30,H:12,z:'ii',name:'Thermal Energy Storage',foot:'900 m² [ALISHER]',fn:'Storage modules + charge/discharge HX for district heat.',fer:'§5 originality'},
+ {id:'SOE',x:224,y:156,w:25,h:25,H:10,z:'ii',name:'Solid-Oxide Electrolyser',foot:'625 m² [ALISHER]',fn:'High-temperature electrolyser stacks, water purification, H₂ separation.',fer:'§5 originality'},
+ {id:'H₂S',x:256,y:140,w:20,h:30,H:6,z:'ii',name:'H₂ Storage Yard',foot:'600 m² · NFPA 2',fn:'Compressed-gas tanks, ≥100 m from nearest safety building.',fer:'§8.10 R1'},
+];
+const F={ni:'#dbe7f3',ci:'#f1e6cb',ii:'#d9ecdf'},S={ni:'#386fa4',ci:'#a9762a',ii:'#3c8a62'};
+const isH2=b=>b.id==='H₂S';
+
+/* ---------- SITE PLAN buildings ---------- */
 const sg=document.getElementById('site-buildings');
 sites.forEach(b=>{
-  const g=document.createElementNS(NS,'g');g.setAttribute('class','bld');g.dataset.z=b.z;
-  g.dataset.name=b.name;g.dataset.pic=b.id;g.dataset.foot=b.foot;g.dataset.fn=b.fn;g.dataset.fer=b.fer;
-  const isH2=b.id==='H₂S';
-  const r=document.createElementNS(NS,'rect');r.setAttribute('class','br');
-  r.setAttribute('x',b.x);r.setAttribute('y',b.y);r.setAttribute('width',b.w);r.setAttribute('height',b.h);
-  r.setAttribute('rx','1.4');r.setAttribute('fill',isH2?'rgba(236,95,76,.22)':fillz[b.z]);
-  r.setAttribute('stroke',isH2?'#ec5f4c':strz[b.z]);r.setAttribute('stroke-width','.6');
-  const t=document.createElementNS(NS,'text');t.setAttribute('x',b.x+b.w/2);t.setAttribute('y',b.y+b.h/2+1.2);
-  t.setAttribute('font-size','3');t.setAttribute('fill','var(--ink)');t.textContent=b.id;
-  g.appendChild(r);g.appendChild(t);sg.appendChild(g);
+  const g=mk('g',{class:'bld'});setData(g,b);
+  g.appendChild(mk('rect',{class:'br',x:b.x,y:b.y,width:b.w,height:b.h,rx:1.4,
+    fill:isH2(b)?'#f3dad4':F[b.z],stroke:isH2(b)?'#b23a2b':S[b.z],'stroke-width':.6}));
+  g.appendChild(txt(b.x+b.w/2,b.y+b.h/2+1.2,3,'var(--ink)',b.id));
+  sg.appendChild(g);
 });
-/* RXB special: containment ring + core dot for richness */
 (function(){const rxb=[...sg.children].find(g=>g.dataset.pic==='RXB');
-  const c=document.createElementNS(NS,'circle');c.setAttribute('cx','67.5');c.setAttribute('cy','147.5');
-  c.setAttribute('r','9');c.setAttribute('fill','none');c.setAttribute('stroke','#cfe8ff');c.setAttribute('stroke-width','.4');c.setAttribute('stroke-dasharray','1.4 1');c.setAttribute('pointer-events','none');
-  const d=document.createElementNS(NS,'circle');d.setAttribute('cx','67.5');d.setAttribute('cy','147.5');d.setAttribute('r','1.4');d.setAttribute('fill','#cfe8ff');d.setAttribute('pointer-events','none');
-  rxb.appendChild(c);rxb.appendChild(d);
-})();
+  rxb.appendChild(mk('circle',{cx:67.5,cy:147.5,r:9,fill:'none',stroke:'var(--ni-s)','stroke-width':.4,'stroke-dasharray':'1.4 1','pointer-events':'none'}));
+  rxb.appendChild(mk('circle',{cx:67.5,cy:147.5,r:1.4,fill:'var(--ni-s)','pointer-events':'none'}));})();
 
-/* ---------- build ELEVATION ---------- */
-const eg=document.getElementById('elev-buildings');
-const grade=120, ppm=(120-40)/30; // px per metre vertical (40px = +30m) -> 80/30
-elevs.forEach(e=>{
-  const [x,w,m,z,id,name]=e;const top=grade-m*ppm;
-  const g=document.createElementNS(NS,'g');g.setAttribute('class','bld');g.dataset.z=z;
-  g.dataset.name=name;g.dataset.pic=id;g.dataset.foot=m+' m tall';g.dataset.fn='Building height '+m+' m above grade (vertical true scale).';g.dataset.fer='';
-  const r=document.createElementNS(NS,'rect');r.setAttribute('class','br');
-  r.setAttribute('x',x);r.setAttribute('y',top);r.setAttribute('width',w);r.setAttribute('height',m*ppm);
-  r.setAttribute('rx','.8');r.setAttribute('fill',fillz[z]);r.setAttribute('stroke',strz[z]);r.setAttribute('stroke-width','.6');
-  const t=document.createElementNS(NS,'text');t.setAttribute('x',x+w/2);t.setAttribute('y',top-2);
-  t.setAttribute('font-size','2.6');t.setAttribute('fill','var(--ink2)');t.textContent=id;
-  const hh=document.createElementNS(NS,'text');hh.setAttribute('x',x+w/2);hh.setAttribute('y',top+ (m*ppm)/2+1);
-  hh.setAttribute('font-size','2.4');hh.setAttribute('fill','var(--ink)');hh.setAttribute('text-anchor','middle');hh.textContent=m+'m';
-  g.appendChild(r);g.appendChild(t);g.appendChild(hh);eg.appendChild(g);
-});
+/* ---------- ELEVATION ---------- */
+const elevs=[[30,30,20,'ci','CTW','Cooling Tower'],[68,30,15,'ci','TB','Turbine Building'],
+ [150,30,30,'ni','RXB','Reactor Building'],[188,26,15,'ni','AB','Auxiliary Building'],
+ [220,20,10,'ni','DGB','Diesel Gen'],[246,26,12,'ni','WMB','Waste Mgmt'],[259,4,30,'ni','STK','Off-gas stack'],
+ [308,28,12,'ii','TES','Thermal Storage'],[340,16,10,'ii','SOE','Electrolyser']];
+const eg=document.getElementById('elev-buildings'),grade=120,ppm=80/30;
+elevs.forEach(e=>{const[x,w,m,z,id,name]=e,top=grade-m*ppm;
+  const g=mk('g',{class:'bld'});setData(g,{name,pic:id,foot:m+' m tall',fn:'Building height '+m+' m above grade (vertical true scale).',fer:''});
+  g.appendChild(mk('rect',{class:'br',x,y:top,width:w,height:m*ppm,rx:.8,fill:F[z],stroke:S[z],'stroke-width':.6}));
+  g.appendChild(txt(x+w/2,top-2,2.6,'var(--ink2)',id,'start'==0?'':undefined));
+  g.appendChild(txt(x+w/2,top+m*ppm/2+1,2.4,'var(--ink)',m+'m'));
+  eg.appendChild(g);});
+
+/* ---------- ISO BIRD'S-EYE ---------- */
+buildIso();
+function buildIso(){
+  const root=document.getElementById('iso-root');
+  const K=1.0, A=Math.cos(Math.PI/6), B=Math.sin(Math.PI/6); // 30°
+  const sc=1.15, vH=0.9;                 // scale + vertical exaggeration of height
+  const ox=410, oy=150;                  // screen origin
+  function P(gx,gy,gz){return [ox+(gx-gy)*A*sc, oy+((gx+gy)*B - gz*vH)*sc];}
+  // ground plane (big diamond) covering 0..300 x 0..205
+  const gc=[[ -10,-5],[310,-5],[310,210],[-10,210]].map(p=>P(p[0],p[1],0));
+  root.appendChild(mk('polygon',{points:pts(gc),fill:'var(--grass)',stroke:'var(--grass2)','stroke-width':1}));
+  // subtle inner field tone
+  // protected-area fence around NI+CI (x18..122, y8..192)
+  const fc=[[18,8],[122,8],[122,192],[18,192]].map(p=>P(p[0],p[1],0));
+  root.appendChild(mk('polygon',{points:pts(fc),fill:'#ffffff','fill-opacity':.5,stroke:'var(--ink3)','stroke-width':.8,'stroke-dasharray':'4 3'}));
+  // island ground pads
+  pad(root,P,20,10,80,80,'#f3ecd8'); pad(root,P,20,110,100,80,'#e7eef6'); pad(root,P,220,118,60,68,'#e3f0e7');
+  // simple roads (spine + ring)
+  road(root,P,[[2,150],[20,150],[20,100],[120,100]]);
+  road(root,P,[[120,150],[220,150]]);
+  // buildings, painter-sorted back→front by (x+y)
+  const order=[...sites].sort((a,b)=>(a.x+a.y+a.w/2+a.h/2)-(b.x+b.y+b.w/2+b.h/2));
+  order.forEach(b=>{
+    const g=mk('g',{class:'bld'});setData(g,b);
+    const H=b.H*vH;
+    const c=k=>({ // base corners
+      A:P(b.x,b.y,k),B:P(b.x+b.w,b.y,k),C:P(b.x+b.w,b.y+b.h,k),D:P(b.x,b.y+b.h,k)});
+    const lo=c(0),hi=c(b.H);
+    const baseF=isH2(b)?'#f3dad4':F[b.z], strk=isH2(b)?'#b23a2b':S[b.z];
+    const shade=(hex,f)=>shadeColor(hex,f);
+    // left face (y=y+h): D->C
+    g.appendChild(mk('polygon',{class:'br',points:pts([hi.D,hi.C,lo.C,lo.D]),fill:shade(baseF,-22),stroke:strk,'stroke-width':.5,'stroke-linejoin':'round'}));
+    // right face (x=x+w): B->C
+    g.appendChild(mk('polygon',{class:'br',points:pts([hi.B,hi.C,lo.C,lo.B]),fill:shade(baseF,-10),stroke:strk,'stroke-width':.5,'stroke-linejoin':'round'}));
+    // top face
+    g.appendChild(mk('polygon',{class:'br',points:pts([hi.A,hi.B,hi.C,hi.D]),fill:baseF,stroke:strk,'stroke-width':.5,'stroke-linejoin':'round'}));
+    // id on top
+    const tc=P(b.x+b.w/2,b.y+b.h/2,b.H);
+    g.appendChild(txt(tc[0],tc[1]+2,5.4,S[b.z].replace('#','#'),b.id));
+    root.appendChild(g);
+  });
+  // leader-line callouts for the headline buildings
+  const labs=[['RXB',-1,-34,'Reactor Building'],['CTW',-1,-30,'Cooling Tower'],['TB',-1,-26,'Turbine Building'],
+    ['CB',-1,-18,'Control Building'],['EHB',1,-26,'Switchyard'],['TES',1,-18,'Thermal Storage'],
+    ['SOE',1,8,'Electrolyser'],['H₂S',1,28,'H₂ Storage'],['SFB',-1,18,'Spent Fuel'],['WMB',-1,30,'Waste Mgmt'],['DGB',1,40,'Diesel Gen'],['AB',1,-10,'Auxiliary']];
+  labs.forEach(l=>{const b=sites.find(s=>s.id===l[0]);if(!b)return;
+    const p=P(b.x+b.w/2,b.y+b.h/2,b.H);const lx=p[0]+l[1]*70,ly=p[1]+l[2];
+    root.appendChild(mk('line',{class:'lead',x1:p[0],y1:p[1],x2:lx,y2:ly}));
+    root.appendChild(mk('circle',{cx:p[0],cy:p[1],r:1.4,fill:S[b.z]}));
+    const t=txt(lx+(l[1]>0?3:-3),ly+3,9,'var(--ink)',l[3],l[1]>0?'start':'end');t.setAttribute('class','callt');root.appendChild(t);});
+}
+function pad(root,P,x,y,w,h,fill){const c=[[x,y],[x+w,y],[x+w,y+h],[x,y+h]].map(p=>P(p[0],p[1],0));
+  root.appendChild(mk('polygon',{points:pts(c),fill,stroke:'#ffffff','stroke-width':.6,'fill-opacity':.85}));}
+function road(root,P,nodes){const d=nodes.map((n,i)=>{const p=P(n[0],n[1],0);return (i?'L':'M')+p[0]+','+p[1];}).join(' ');
+  root.appendChild(mk('path',{d,fill:'none',stroke:'var(--road)','stroke-width':7,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  root.appendChild(mk('path',{d,fill:'none',stroke:'#fff','stroke-width':.5,'stroke-dasharray':'3 4',opacity:.8}));}
+
+/* ---------- helpers ---------- */
+function mk(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function txt(x,y,fs,fill,s,anchor){const t=mk('text',{x,y,'font-size':fs,fill,'text-anchor':anchor||'middle'});t.textContent=s;return t;}
+function pts(arr){return arr.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');}
+function setData(g,b){g.dataset.name=b.name;g.dataset.pic=b.pic||b.id||'';g.dataset.foot=b.foot||'';g.dataset.fn=b.fn||'';g.dataset.fer=b.fer||'';g.dataset.z=b.z||'';}
+function shadeColor(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return '#'+(0x1000000+r*0x10000+g*0x100+b).toString(16).slice(1);}
 
 /* ---------- tooltip + detail ---------- */
 const tip=document.getElementById('tip'),detail=document.getElementById('detail');
-function fillDetail(d){
-  detail.innerHTML=`<div class="pic">${d.pic||'component'}</div><h4>${d.name}</h4>
+function fillDetail(d){detail.innerHTML=`<div class="pic">${d.pic||'component'}</div><h4>${d.name}</h4>
    ${d.foot?`<div class="row"><span>spec</span><span>${d.foot}</span></div>`:''}
    <div class="row"><span>role</span><span>${d.fn}</span></div>
-   ${d.fer?`<div class="row"><span>FER</span><span>${d.fer}</span></div>`:''}`;
-}
-function showTip(d,x,y){
-  tip.innerHTML=`<div class="tp">${d.pic||''}</div><div class="th">${d.name}</div>
-   <div class="td">${d.fn}</div>${d.foot?`<div class="tf">${d.foot}</div>`:''}`;
-  tip.classList.add('show');moveTip(x,y);
-}
+   ${d.fer?`<div class="row"><span>FER</span><span>${d.fer}</span></div>`:''}`;}
+function showTip(d,x,y){tip.innerHTML=`<div class="tp">${d.pic||''}</div><div class="th">${d.name}</div>
+   <div class="td">${d.fn}</div>${d.foot?`<div class="tf">${d.foot}</div>`:''}`;tip.classList.add('show');moveTip(x,y);}
 function moveTip(x,y){const r=tip.getBoundingClientRect();let nx=x+16,ny=y+16;
-  if(nx+r.width>innerWidth-10)nx=x-r.width-16;if(ny+r.height>innerHeight-10)ny=y-r.height-16;
-  tip.style.left=nx+'px';tip.style.top=ny+'px';}
-document.querySelectorAll('main').forEach(m=>{
-  m.addEventListener('mouseover',e=>{const g=e.target.closest('.bld');if(!g)return;
-    const d=g.dataset;showTip(d,e.clientX,e.clientY);fillDetail(d);});
-  m.addEventListener('mousemove',e=>{if(tip.classList.contains('show'))moveTip(e.clientX,e.clientY);});
-  m.addEventListener('mouseout',e=>{if(e.target.closest('.bld'))tip.classList.remove('show');});
-  m.addEventListener('click',e=>{const g=e.target.closest('.bld');if(g)fillDetail(g.dataset);});
-});
+  if(nx+r.width>innerWidth-10)nx=x-r.width-16;if(ny+r.height>innerHeight-10)ny=y-r.height-16;tip.style.left=nx+'px';tip.style.top=ny+'px';}
+const mainEl=document.querySelector('main');
+mainEl.addEventListener('mouseover',e=>{const g=e.target.closest('.bld');if(!g)return;showTip(g.dataset,e.clientX,e.clientY);fillDetail(g.dataset);});
+mainEl.addEventListener('mousemove',e=>{if(tip.classList.contains('show'))moveTip(e.clientX,e.clientY);});
+mainEl.addEventListener('mouseout',e=>{if(e.target.closest('.bld'))tip.classList.remove('show');});
+mainEl.addEventListener('click',e=>{const g=e.target.closest('.bld');if(g)fillDetail(g.dataset);});
 
 /* ---------- tabs ---------- */
-function setTab(v){
-  const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.v===v);if(!t)return;
+function setTab(v){const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.v===v);if(!t)return;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
   document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('on',s.dataset.v===v));
-  document.getElementById('lg-h').textContent = v==='site'?'Islands':'Components';
-  tip.classList.remove('show');
-  if(location.hash.slice(1)!==v)history.replaceState(null,'','#'+v);
-}
-document.getElementById('tabs').addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t)setTab(t.dataset.v);
-});
-setTab(['site','rxb','elev','mcr'].includes(location.hash.slice(1))?location.hash.slice(1):'site');
+  document.getElementById('lg-h').textContent=(v==='site'||v==='iso')?'Islands':'Components';
+  tip.classList.remove('show');if(location.hash.slice(1)!==v)history.replaceState(null,'','#'+v);}
+document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t)setTab(t.dataset.v);});
+setTab(['iso','site','rxb','elev','mcr'].includes(location.hash.slice(1))?location.hash.slice(1):'iso');
 
-/* ---------- legend highlight (site only) ---------- */
+/* ---------- legend highlight ---------- */
 document.querySelectorAll('.lgi').forEach(li=>{
-  li.addEventListener('mouseenter',()=>{const z=li.dataset.z;
-    document.querySelectorAll('.stage[data-v="site"] .bld').forEach(b=>b.classList.toggle('dim',b.dataset.z!==z));
-    document.querySelectorAll('.stage[data-v="site"] .zone,.stage[data-v="site"] .zlabel').forEach(zz=>{
-      zz.classList.toggle('dim', !zz.classList.contains('z-'+z));});
-  });
-  li.addEventListener('mouseleave',()=>{
-    document.querySelectorAll('.dim').forEach(b=>b.classList.remove('dim'));});
-});
+  li.addEventListener('mouseenter',()=>{const z=li.dataset.z,st=document.querySelector('.stage.on');
+    st.querySelectorAll('.bld').forEach(b=>b.classList.toggle('dim',b.dataset.z&&b.dataset.z!==z));
+    st.querySelectorAll('.zone,.zlabel').forEach(zz=>{if(zz.classList.contains('z-ni')||zz.classList.contains('z-ci')||zz.classList.contains('z-ii'))zz.classList.toggle('dim',!zz.classList.contains('z-'+z));});});
+  li.addEventListener('mouseleave',()=>document.querySelectorAll('.dim').forEach(b=>b.classList.remove('dim')));});
 
-/* ---------- pan & zoom (per stage) ---------- */
+/* ---------- pan & zoom ---------- */
 document.querySelectorAll('.stage').forEach(stage=>{
   const svg=stage.querySelector('svg'),g=stage.querySelector('.pz');
-  let scale=1,tx=0,ty=0,dragging=false,sx,sy;
+  let scale=1,tx=0,ty=0,drag=false,sx,sy;
   function apply(){g.setAttribute('transform',`translate(${tx} ${ty}) scale(${scale})`);}
-  stage._zoom=k=>{scale=Math.min(6,Math.max(.6,scale*k));apply();};
+  stage._zoom=k=>{scale=Math.min(7,Math.max(.5,scale*k));apply();};
   stage._reset=()=>{scale=1;tx=0;ty=0;apply();};
   svg.addEventListener('wheel',e=>{e.preventDefault();
     const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
-    const ctm=g.getScreenCTM().inverse();const p=pt.matrixTransform(ctm);
-    const k=e.deltaY<0?1.12:1/1.12;const ns=Math.min(6,Math.max(.6,scale*k));
-    tx = p.x - (p.x - tx) * (ns/scale);
-    ty = p.y - (p.y - ty) * (ns/scale);
-    scale=ns;apply();
-  },{passive:false});
-  svg.addEventListener('pointerdown',e=>{dragging=true;stage.classList.add('grabbing');
-    sx=e.clientX;sy=e.clientY;svg.setPointerCapture(e.pointerId);});
-  svg.addEventListener('pointermove',e=>{if(!dragging)return;
-    const f=2.6/ (svg.getBoundingClientRect().width); // px->viewBox approx
-    tx+=(e.clientX-sx)*(svg.viewBox.baseVal.width/svg.getBoundingClientRect().width);
-    ty+=(e.clientY-sy)*(svg.viewBox.baseVal.height/svg.getBoundingClientRect().height);
+    const p=pt.matrixTransform(g.getScreenCTM().inverse());
+    const ns=Math.min(7,Math.max(.5,scale*(e.deltaY<0?1.12:1/1.12)));
+    tx=p.x-(p.x-tx)*(ns/scale);ty=p.y-(p.y-ty)*(ns/scale);scale=ns;apply();},{passive:false});
+  svg.addEventListener('pointerdown',e=>{drag=true;stage.classList.add('grabbing');sx=e.clientX;sy=e.clientY;svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect();
+    tx+=(e.clientX-sx)*(svg.viewBox.baseVal.width/r.width);ty+=(e.clientY-sy)*(svg.viewBox.baseVal.height/r.height);
     sx=e.clientX;sy=e.clientY;apply();});
-  svg.addEventListener('pointerup',e=>{dragging=false;stage.classList.remove('grabbing');});
-  svg.addEventListener('pointerleave',()=>{dragging=false;stage.classList.remove('grabbing');});
+  svg.addEventListener('pointerup',()=>{drag=false;stage.classList.remove('grabbing');});
+  svg.addEventListener('pointerleave',()=>{drag=false;stage.classList.remove('grabbing');});
 });
 function active(){return document.querySelector('.stage.on');}
 document.getElementById('zin').onclick=()=>active()._zoom(1.25);
