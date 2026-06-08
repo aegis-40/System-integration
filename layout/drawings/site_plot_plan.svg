@@ -7,7 +7,7 @@
   <text x="30" y="68" font-size="11" fill="#9a6700">All footprints from layout/building_list.md · piping routes [ASSUMED] pending Adilbek NPS · 2026-06-08</text>
 
   <!-- ===== Scaled drawing group: 1 user-unit = 1 m, scale(3) ===== -->
-  <g transform="translate(-10,56) scale(3)">
+  <g transform="translate(-10,64) scale(3)">
 
     <!-- Island envelopes (dashed) -->
     <rect x="20" y="10" width="80" height="80" fill="#fff8ec" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
@@ -15,9 +15,9 @@
     <rect x="220" y="118" width="60" height="68" fill="#f0faf2" stroke="#2d6a4f" stroke-width="1.2" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
 
     <!-- Island captions -->
-    <text x="22" y="8" font-size="4.2" font-weight="bold" fill="#9a6700">CONVENTIONAL ISLAND — Cat II (80×80 m)</text>
-    <text x="22" y="108" font-size="4.2" font-weight="bold" fill="#1b4965">NUCLEAR ISLAND — Seismic Cat I (100×80 m)</text>
-    <text x="220" y="116" font-size="4.2" font-weight="bold" fill="#2d6a4f">INDUSTRIAL ISLAND — non-safety (60×60 m)</text>
+    <text x="22" y="7.5" font-size="4" font-weight="bold" fill="#9a6700">CONVENTIONAL ISLAND (Cat II)</text>
+    <text x="22" y="107.5" font-size="4" font-weight="bold" fill="#1b4965">NUCLEAR ISLAND (Seismic Cat I)</text>
+    <text x="220" y="115.5" font-size="4" font-weight="bold" fill="#2d6a4f">INDUSTRIAL ISLAND (non-safety)</text>
 
     <!-- ===== Conventional Island buildings (amber) ===== -->
     <g fill="#ffe8b3" stroke="#9a6700" stroke-width="1.5" vector-effect="non-scaling-stroke">
