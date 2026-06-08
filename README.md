@@ -1,25 +1,137 @@
-# System-integration
+# System Integration — Aegis-40
 
-# ⚙️ 4. `system-integration` (TES + Hydrogen + I&C)
+**Repo:** `aegis-40/System-integration` · **Owner:** Azamhon
+**Project:** TEKNOFEST 2026 Nuclear Energy Technologies Design Competition — Detailed Design (40 MWe Modular PWR).
+**Reactor:** Aegis-40 — 40 MWe net electric + 125 MWth thermal cogeneration integral PWR.
 
-# System Integration – Aegis-40
+This repository is the **system-integration scope**: it ties the subsystem physics together and owns the safety, I&C, layout, and figure-of-merit deliverables that cut across every team.
 
-This repository integrates:
-- TES (Thermochemical Energy Storage)
-- Hydrogen production (SOE)
-- System-level models
-- I&C logic
+**Integrates:**
+- TES (thermal energy storage) + Hydrogen production (SOE) coupling
+- I&C logic (instrumentation, control, protection)
+- System-level energy balance + scoring (FOM)
+- 3S Safety / facility layout / auxiliary systems
 
-## 📌 Scope
-- Energy balance modeling
-- TES simulation
-- Hydrogen production modeling
-- System coupling
+---
 
-## 🛠 Requirements
+## Quick map
+
+| Path | What lives here | Touch frequency |
+|---|---|---|
+| `README.md` | this file — start here | rare |
+| `docs/` | **source documents** — FER template, PER, references. Read-only. | rare |
+| `planning/` | weekly plans, supervisor brief, process methodology | weekly |
+| `planning/briefings/` | meeting-ready scripts (MB_D*, MB_W*, MB_Progress) | daily/weekly |
+| `safety/` | FER §8.5 + §8.6 deliverables (criteria, trips, event trees) | active |
+| `ic/` | FER §8.7 deliverables (architecture, sensors, block diagram) | active |
+| `fom/` | cross-cutting Figure-of-Merit integration | next |
+| `layout/` | FER §8.10 + §8.8 deliverables (NPP layout + aux systems) | active |
+| `Aegis-40 2D test/` | Samira's OpenMC working folder (source xml + scripts; binary run outputs gitignored) | read-only |
+
+> **Note on `Aegis-40 2D test/`:** the OpenMC source (`geometry.xml`, `materials.xml`, scripts) is tracked; the heavy run outputs (`.h5` statepoints, `depletion_results.h5`, `tallies.out`) are **gitignored** — regeneratable, ~233 MB. See `.gitignore`.
+
+---
+
+## Requirements (system model)
+
 - Python 3.10+
 - NumPy, SciPy
+- OpenMC (core neutronics, Samira's models)
 
-## ▶️ Run Model
+---
+
+## What's done (status as of 2026-06-08)
+
+**Week 2 deliverables — Facility Layout + Aux Systems (FER §8.10 + §8.8):**
+- ✅ Three-island zoning (Nuclear / Conventional / Industrial), 6 locked decisions → `layout/zones.md`
+- ✅ Building list — 14 buildings + 5 infra items, footprints + seismic class → `layout/building_list.md`
+- ✅ 2D block layout diagram (3 islands, 6 connections) → `layout/block_layout.{mmd,png}`
+- ✅ Process-flow diagram (6 streams) → `layout/flow_arrows.{mmd,png}`
+- ✅ Auxiliary systems — 8 systems, six-field metadata, §8.8 A1–A3 → `layout/aux_systems.md`
+- ✅ §8.10 + §8.8 coverage audit (7 ✓ / 8 △ / 2 ✗, 0 hard defects) → `layout/fer_8_10_coverage.md`
+- ✅ W2 briefing script → `planning/briefings/MB_W2_Layout.md`
+- ⏳ W3 backlog: scaled 2D plan, 3D/isometric, critical-piping table (Adilbek), per-system P&IDs, structural-weight table (foundation engineer)
+
+**Week 1 deliverables — Safety + I&C:**
+- ✅ Safety criteria table — 27 limits, 7 categories, DiD-mapped → `safety/safety_criteria.{yaml,md}`
+- ✅ I&C architecture + 21-channel sensor inventory → `ic/ic_architecture.md` + `ic/sensor_inventory.md`
+- ✅ I&C block diagram (5 layers + DAS) → `ic/ic_block.{mmd,png}`
+- ✅ Trip signals + ESF actuations → `safety/trip_signals.md`
+- ✅ First event tree (LOHS, 7 sequences) → `safety/event_tree_LOHS.{md,png}`
+- ✅ FER §8.7 line-by-line coverage check → `ic/fer_8_7_coverage.md` (20/25 ✓, 5/25 △, 0 gaps, 0 defects)
+- ⏳ FOM integration template (`fom_inputs.yaml`) — pending
+
+**Consolidated progress walkthrough:** `planning/briefings/MB_Progress_2026-06-05.md` (safety criteria → layout, full meeting script).
+
+**Outside this scope (other teammates):**
+- OpenMC core model (Samira) — `Aegis-40 2D test/`. Stable HIGA Gd₂O₃ baseline; planned swap to Er₂O₃ for boron-free operation.
+- OpenFOAM thermal-hydraulics (Adilbek) — first hot-channel run pending.
+- TES/SOE energy conversion (Alisher): see `docs/tasks_w1.pdf`.
+
+---
+
+## Locked design decisions (don't re-litigate)
+
+| # | Decision | Locked on | Why |
+|---|---|---|---|
+| 1 | Cladding = **Zircaloy-4** | 2026-05-26 | PWR-standard. FER Table 1's Zr-2 was illustrative. |
+| 2 | Three-zone UO₂ at **2.6 / 3.0 / 3.4 wt% U-235** | 2026-05-26 | Matches Samira's stable OpenMC. Low-leakage pattern. |
+| 3 | **Soluble-boron-free** | 2026-06-02 | Drives Er burnable absorber + ↑ rod worth + ↑ DAS weight. |
+| 4 | Burnable absorber: **Er₂O₃** (replacing Gd₂O₃ HIGA) | 2026-06-02 | Boron-free demands slow-burning absorber; Gd burns out by mid-cycle. |
+| 5 | **EFW** = gravity-driven, no pumps (not AFW) | 2026-05-27 | Genuinely passive; matches 72 h grace claim. |
+| 6 | Lead accident for §8.6 = **Loss of Heat Sink** | 2026-05-28 | Exercises passive decay-heat removal (iPWR USP). |
+| 7 | **Three-island site scheme** (Nuclear / Conventional / Industrial) | 2026-06-02 | Standard PWR practice + cogen H₂ isolation. |
+| 8 | Reactor **below-grade** | 2026-06-02 | Seismic + aircraft-impact protection. |
+
+---
+
+## Open items still pending
+
+| # | Item | Owner | Blocks |
+|---|---|---|---|
+| 1 | Long depletion with Er₂O₃ → MTC, void, ARO worth, cycle length at BOL/MOC/EOC | Samira | 5 rows in `safety/safety_criteria.yaml`; FOM inputs |
+| 2 | Fuel-assembly count (2D model 21 vs FER example 240) | Samira | RXB size + spent-fuel pool |
+| 3 | First hot-channel MDNBR + steady-state PCT | OpenFOAM team | 2 hard-constraint normalizers; FOM scoring |
+| 4 | Critical-piping NPS (steam, FW, surge, RHR) | Adilbek | FER §8.10 R6 piping table |
+| 5 | TES/SOE footprint + H₂ inventory | Alisher | industrial-island sizing + stand-off |
+| 6 | Site type (inland/coastal) + heat sink | Supervisor | cooling tower vs seawater |
+| 7 | 10 supervisor sign-offs from `planning/MEETING_BRIEF.md` §4 | Supervisor | Final FOM weights |
+| 8 | Structural weights + steel tonnage | foundation eng. | FER §8.10 R5 tables |
+| 9 | NDK (Turkish nuclear regulator) citations | Azamhon | Domesticity credit in FER §5.2 |
+
+---
+
+## Conventions
+
+- **File paths in docs** are written **repo-root-relative** (e.g. `safety/safety_criteria.yaml`).
+- **YAML = single source of truth.** Markdown renders are human-facing; never edit only the MD.
+- **Mermaid diagrams**: source `.mmd`, rendered `.png` for FER. Render command below.
+- **FER chapter mapping**: every deliverable carries a comment or section noting which FER §8.x it answers.
+- **Decisions get locked**, not litigated. Reopen only with new physics or supervisor input.
+
+### Mermaid render command
+
 ```bash
-python system_model.py
+# strips plain %% comments AND bare %% separator lines; preserves %%{init}%% directives
+grep -vE '^[[:space:]]*%%([^{]|$)' SOURCE.mmd > /tmp/clean.mmd
+npx -y @mermaid-js/mermaid-cli -i /tmp/clean.mmd -o OUTPUT.png -s 3 \
+  -p "$HOME/.claude/jobs/d94ce943/pptr.json"
+```
+*If the puppeteer config path is stale, re-create: `printf '{"executablePath":"$(ls ~/.cache/puppeteer/chrome-headless-shell/mac_arm-*/chrome-headless-shell-mac-arm64/chrome-headless-shell)","args":["--no-sandbox"]}\n'` saved as `pptr.json`.*
+
+---
+
+## How to work this repo
+
+For any new task (FER section, weekly assignment, anything):
+1. Read `planning/TASK_PROCESS.md` — the step-by-step recipe.
+2. Write a plan file in `planning/` (e.g. `W2_Layout_Plan.md`).
+3. Execute day-by-day; deliverables land in their scope folder.
+4. Self-review + audit before declaring done.
+5. Write a briefing (`planning/briefings/MB_*.md`) for supervisor / team.
+
+Each scope folder (`safety/`, `ic/`, `fom/`, `layout/`) holds an `_INDEX.md` listing its current contents.
+
+---
+
+*Last updated: 2026-06-08 — W1 (safety + I&C) and W2 (layout + aux) deliverables complete.*

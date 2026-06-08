@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model>
+  <materials>
+    <cross_sections>/mnt/d/openmc_data/endfb-viii.0-hdf5/cross_sections.xml</cross_sections>
+    <material id="5" name="HIGA 13.0 mol% Gd2O3 Gd155" depletable="true" temperature="900.0">
+      <density value="4.732177834648798" units="g/cm3"/>
+      <nuclide name="Gd155" ao="0.26"/>
+      <nuclide name="Al27" ao="1.74"/>
+      <nuclide name="O16" ao="3.0"/>
+    </material>
+    <material id="11" name="UO2 inner zone 2.6%" depletable="true" temperature="900.0">
+      <density value="10.257" units="g/cm3"/>
+      <nuclide name="U235" wo="0.023098399999999998"/>
+      <nuclide name="U238" wo="0.8653015999999999"/>
+      <nuclide name="O16" wo="0.1116"/>
+    </material>
+    <material id="12" name="UO2 middle zone 3.0%" depletable="true" temperature="900.0">
+      <density value="10.257" units="g/cm3"/>
+      <nuclide name="U235" wo="0.026652"/>
+      <nuclide name="U238" wo="0.861748"/>
+      <nuclide name="O16" wo="0.1116"/>
+    </material>
+    <material id="13" name="UO2 outer zone 3.4%" depletable="true" temperature="900.0">
+      <density value="10.257" units="g/cm3"/>
+      <nuclide name="U235" wo="0.030205600000000003"/>
+      <nuclide name="U238" wo="0.8581943999999999"/>
+      <nuclide name="O16" wo="0.1116"/>
+    </material>
+    <material id="14" name="UO2-IGD 2.0 wt% Gd155" depletable="true" temperature="900.0">
+      <density value="10.2" units="g/cm3"/>
+      <nuclide name="U235" wo="0.026052"/>
+      <nuclide name="U238" wo="0.8423479999999999"/>
+      <nuclide name="Gd155" wo="0.02"/>
+      <nuclide name="O16" wo="0.1116"/>
+    </material>
+    <material id="15" name="Helium">
+      <density value="0.000178" units="g/cm3"/>
+      <nuclide name="He3" ao="2e-06"/>
+      <nuclide name="He4" ao="0.999998"/>
+    </material>
+    <material id="16" name="Zircaloy-4">
+      <density value="6.56" units="g/cm3"/>
+      <nuclide name="Zr90" wo="0.49791886210541686"/>
+      <nuclide name="Zr91" wo="0.10979296052321377"/>
+      <nuclide name="Zr92" wo="0.16966577294238944"/>
+      <nuclide name="Zr94" wo="0.17568527731050962"/>
+      <nuclide name="Zr96" wo="0.028907127118470377"/>
+      <nuclide name="Sn112" wo="0.0001325869650089989"/>
+      <nuclide name="Sn114" wo="9.182449386307578e-05"/>
+      <nuclide name="Sn115" wo="4.771905899254867e-05"/>
+      <nuclide name="Sn116" wo="0.002058423144151509"/>
+      <nuclide name="Sn117" wo="0.001096647338091086"/>
+      <nuclide name="Sn118" wo="0.003487981278597597"/>
+      <nuclide name="Sn119" wo="0.0012475771051862216"/>
+      <nuclide name="Sn120" wo="0.004771539508846635"/>
+      <nuclide name="Sn122" wo="0.0006894094862319448"/>
+      <nuclide name="Sn124" wo="0.000876291621030382"/>
+      <nuclide name="Fe54" wo="0.00011855672267684395"/>
+      <nuclide name="Fe56" wo="0.0019299321043708116"/>
+      <nuclide name="Fe57" wo="4.5367740887167366e-05"/>
+      <nuclide name="Fe58" wo="6.143432065177235e-06"/>
+      <nuclide name="Cr50" wo="4.173686622718313e-05"/>
+      <nuclide name="Cr52" wo="0.000836993623513459"/>
+      <nuclide name="Cr53" wo="9.673586818675183e-05"/>
+      <nuclide name="Cr54" wo="2.4533642072606143e-05"/>
+      <nuclide name="Hf174" wo="6.704808015916695e-07"/>
+      <nuclide name="Hf176" wo="2.229567316807749e-05"/>
+      <nuclide name="Hf177" wo="7.928913375948295e-05"/>
+      <nuclide name="Hf178" wo="0.0001169482643179181"/>
+      <nuclide name="Hf179" wo="5.871721618451383e-05"/>
+      <nuclide name="Hf180" wo="0.00015207923176841593"/>
+    </material>
+    <material id="17" name="Light Water" temperature="557.0">
+      <density value="0.7405" units="g/cm3"/>
+      <nuclide name="H1" ao="2.0"/>
+      <nuclide name="O16" ao="1.0"/>
+      <sab name="c_H_in_H2O"/>
+    </material>
+    <material id="18" name="SS304">
+      <density value="8.03" units="g/cm3"/>
+      <nuclide name="Fe54" wo="0.039236629647812646"/>
+      <nuclide name="Fe56" wo="0.6387156250179591"/>
+      <nuclide name="Fe57" wo="0.015014561865038722"/>
+      <nuclide name="Fe58" wo="0.0020331834691896086"/>
+      <nuclide name="Cr50" wo="0.007930004583164795"/>
+      <nuclide name="Cr52" wo="0.1590287884675572"/>
+      <nuclide name="Cr53" wo="0.01837981495548285"/>
+      <nuclide name="Cr54" wo="0.004661391993795167"/>
+      <nuclide name="Ni58" wo="0.0638378200317604"/>
+      <nuclide name="Ni60" wo="0.025437164754268084"/>
+      <nuclide name="Ni61" wo="0.0011241911310318747"/>
+      <nuclide name="Ni62" wo="0.0036430811883128114"/>
+      <nuclide name="Ni64" wo="0.0009577428946268364"/>
+      <nuclide name="Mn55" wo="0.02"/>
+    </material>
+    <material id="19" name="Carbon Steel RPV">
+      <density value="7.85" units="g/cm3"/>
+      <nuclide name="Fe54" wo="0.055044192671391844"/>
+      <nuclide name="Fe56" wo="0.896039905600734"/>
+      <nuclide name="Fe57" wo="0.021063593983327706"/>
+      <nuclide name="Fe58" wo="0.002852307744546574"/>
+      <nuclide name="Mn55" wo="0.015"/>
+      <nuclide name="Si28" wo="0.004593675864141838"/>
+      <nuclide name="Si29" wo="0.0002415875146393198"/>
+      <nuclide name="Si30" wo="0.00016473662121884212"/>
+      <nuclide name="Cr50" wo="0.00020868433113591567"/>
+      <nuclide name="Cr52" wo="0.004184968117567295"/>
+      <nuclide name="Cr53" wo="0.0004836793409337592"/>
+      <nuclide name="Cr54" wo="0.00012266821036303072"/>
+    </material>
+  </materials>
+  <geometry>
+    <cell id="41" name="Fuel pin inner 2.6% fuel" material="11" region="-29" universe="20"/>
+    <cell id="42" name="Fuel pin inner 2.6% gap" material="15" region="29 -30" universe="20"/>
+    <cell id="43" name="Fuel pin inner 2.6% cladding" material="16" region="30 -31" universe="20"/>
+    <cell id="44" name="Fuel pin inner 2.6% water" material="17" region="31" universe="20"/>
+    <cell id="45" name="Fuel pin middle 3.0% fuel" material="12" region="-29" universe="21"/>
+    <cell id="46" name="Fuel pin middle 3.0% gap" material="15" region="29 -30" universe="21"/>
+    <cell id="47" name="Fuel pin middle 3.0% cladding" material="16" region="30 -31" universe="21"/>
+    <cell id="48" name="Fuel pin middle 3.0% water" material="17" region="31" universe="21"/>
+    <cell id="49" name="Fuel pin outer 3.4% fuel" material="13" region="-29" universe="22"/>
+    <cell id="50" name="Fuel pin outer 3.4% gap" material="15" region="29 -30" universe="22"/>
+    <cell id="51" name="Fuel pin outer 3.4% cladding" material="16" region="30 -31" universe="22"/>
+    <cell id="52" name="Fuel pin outer 3.4% water" material="17" region="31" universe="22"/>
+    <cell id="53" name="IGD fuel pin Gd155 fuel" material="14" region="-29" universe="23"/>
+    <cell id="54" name="IGD fuel pin Gd155 gap" material="15" region="29 -30" universe="23"/>
+    <cell id="55" name="IGD fuel pin Gd155 cladding" material="16" region="30 -31" universe="23"/>
+    <cell id="56" name="IGD fuel pin Gd155 water" material="17" region="31" universe="23"/>
+    <cell id="57" name="Guide tube water inside" material="17" region="-32" universe="24"/>
+    <cell id="58" name="Guide tube cladding" material="16" region="32 -33" universe="24"/>
+    <cell id="59" name="Guide tube surrounding water" material="17" region="33" universe="24"/>
+    <cell id="60" name="HIGA absorber pellet" material="5" region="-34" universe="25"/>
+    <cell id="61" name="HIGA helium gap" material="15" region="34 -35" universe="25"/>
+    <cell id="62" name="HIGA cladding" material="16" region="35 -36" universe="25"/>
+    <cell id="63" name="HIGA surrounding water" material="17" region="36" universe="25"/>
+    <cell id="64" material="17" universe="27"/>
+    <cell id="65" name="lattice inner 2.6% HIGA" fill="26" region="37 -38 39 -40" universe="28"/>
+    <cell id="66" name="inter-assembly water inner 2.6% HIGA" material="17" region="-37 | 38 | -39 | 40" universe="28"/>
+    <cell id="67" material="17" universe="30"/>
+    <cell id="68" name="lattice middle 3.0% HIGA" fill="29" region="41 -42 43 -44" universe="31"/>
+    <cell id="69" name="inter-assembly water middle 3.0% HIGA" material="17" region="-41 | 42 | -43 | 44" universe="31"/>
+    <cell id="70" material="17" universe="33"/>
+    <cell id="71" name="lattice outer 3.4% HIGA" fill="32" region="45 -46 47 -48" universe="34"/>
+    <cell id="72" name="inter-assembly water outer 3.4% HIGA" material="17" region="-45 | 46 | -47 | 48" universe="34"/>
+    <cell id="73" material="17" universe="35"/>
+    <cell id="74" material="17" universe="37"/>
+    <cell id="75" name="Active core" fill="36" region="-49 55 -56" universe="38"/>
+    <cell id="76" name="Lower reflector" material="17" region="-49 53 -55" universe="38"/>
+    <cell id="77" name="Upper reflector" material="17" region="-49 56 -54" universe="38"/>
+    <cell id="78" name="Core barrel" material="18" region="49 -50 53 -54" universe="38"/>
+    <cell id="79" name="Downcomer" material="17" region="50 -51 53 -54" universe="38"/>
+    <cell id="80" name="RPV" material="19" region="51 -52 53 -54" universe="38"/>
+    <lattice id="26" name="FA inner 2.6% HIGA">
+      <pitch>1.255 1.255</pitch>
+      <outer>27</outer>
+      <dimension>17 17</dimension>
+      <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+      <universes>
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 24 20 20 24 20 20 24 20 20 20 20 20 
+20 20 20 24 20 20 20 20 25 20 20 20 20 24 20 20 20 
+20 20 20 20 25 20 20 20 25 20 20 20 25 20 20 20 20 
+20 20 24 20 20 24 20 20 24 20 20 24 20 20 24 20 20 
+20 20 20 20 20 20 25 20 23 20 25 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+20 20 24 25 25 24 23 20 24 20 23 24 25 25 24 20 20 
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 25 20 23 20 25 20 20 20 20 20 20 
+20 20 24 20 20 24 20 20 24 20 20 24 20 20 24 20 20 
+20 20 20 20 25 20 20 20 25 20 20 20 25 20 20 20 20 
+20 20 20 24 20 20 20 20 25 20 20 20 20 24 20 20 20 
+20 20 20 20 20 24 20 20 24 20 20 24 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 </universes>
+    </lattice>
+    <lattice id="29" name="FA middle 3.0% HIGA">
+      <pitch>1.255 1.255</pitch>
+      <outer>30</outer>
+      <dimension>17 17</dimension>
+      <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+      <universes>
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 
+21 21 21 21 21 24 21 21 24 21 21 24 21 21 21 21 21 
+21 21 21 24 21 21 21 21 25 21 21 21 21 24 21 21 21 
+21 21 21 21 25 21 21 21 25 21 21 21 25 21 21 21 21 
+21 21 24 21 21 24 21 21 24 21 21 24 21 21 24 21 21 
+21 21 21 21 21 21 25 21 23 21 25 21 21 21 21 21 21 
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 
+21 21 24 25 25 24 23 21 24 21 23 24 25 25 24 21 21 
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 
+21 21 21 21 21 21 25 21 23 21 25 21 21 21 21 21 21 
+21 21 24 21 21 24 21 21 24 21 21 24 21 21 24 21 21 
+21 21 21 21 25 21 21 21 25 21 21 21 25 21 21 21 21 
+21 21 21 24 21 21 21 21 25 21 21 21 21 24 21 21 21 
+21 21 21 21 21 24 21 21 24 21 21 24 21 21 21 21 21 
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 
+21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 </universes>
+    </lattice>
+    <lattice id="32" name="FA outer 3.4% HIGA">
+      <pitch>1.255 1.255</pitch>
+      <outer>33</outer>
+      <dimension>17 17</dimension>
+      <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+      <universes>
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 
+22 22 22 22 22 24 22 22 24 22 22 24 22 22 22 22 22 
+22 22 22 24 22 22 22 22 25 22 22 22 22 24 22 22 22 
+22 22 22 22 25 22 22 22 25 22 22 22 25 22 22 22 22 
+22 22 24 22 22 24 22 22 24 22 22 24 22 22 24 22 22 
+22 22 22 22 22 22 25 22 23 22 25 22 22 22 22 22 22 
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 
+22 22 24 25 25 24 23 22 24 22 23 24 25 25 24 22 22 
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 
+22 22 22 22 22 22 25 22 23 22 25 22 22 22 22 22 22 
+22 22 24 22 22 24 22 22 24 22 22 24 22 22 24 22 22 
+22 22 22 22 25 22 22 22 25 22 22 22 25 22 22 22 22 
+22 22 22 24 22 22 22 22 25 22 22 22 22 24 22 22 22 
+22 22 22 22 22 24 22 22 24 22 22 24 22 22 22 22 22 
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 
+22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 </universes>
+    </lattice>
+    <lattice id="36" name="Aegis-HIGA radial-zoned core lattice">
+      <pitch>21.42 21.42</pitch>
+      <outer>37</outer>
+      <dimension>9 9</dimension>
+      <lower_left>-96.39000000000001 -96.39000000000001</lower_left>
+      <universes>
+35 35 35 35 35 35 35 35 35 
+35 35 35 34 34 34 35 35 35 
+35 35 34 31 31 31 34 35 35 
+35 34 31 28 28 28 31 34 35 
+35 34 31 28 28 28 31 34 35 
+35 34 31 28 28 28 31 34 35 
+35 35 34 31 31 31 34 35 35 
+35 35 35 34 34 34 35 35 35 
+35 35 35 35 35 35 35 35 35 </universes>
+    </lattice>
+    <surface id="29" name="Fuel pellet OR" type="z-cylinder" coeffs="0.0 0.0 0.4025"/>
+    <surface id="30" name="Clad IR" type="z-cylinder" coeffs="0.0 0.0 0.4135"/>
+    <surface id="31" name="Clad OR" type="z-cylinder" coeffs="0.0 0.0 0.4725"/>
+    <surface id="32" name="Guide tube IR" type="z-cylinder" coeffs="0.0 0.0 0.565"/>
+    <surface id="33" name="Guide tube OR" type="z-cylinder" coeffs="0.0 0.0 0.605"/>
+    <surface id="34" name="HIGA absorber pellet OR" type="z-cylinder" coeffs="0.0 0.0 0.4025"/>
+    <surface id="35" name="HIGA clad IR" type="z-cylinder" coeffs="0.0 0.0 0.4135"/>
+    <surface id="36" name="HIGA clad OR" type="z-cylinder" coeffs="0.0 0.0 0.4725"/>
+    <surface id="37" name="minimum x" type="x-plane" coeffs="-10.71"/>
+    <surface id="38" name="maximum x" type="x-plane" coeffs="10.71"/>
+    <surface id="39" name="minimum y" type="y-plane" coeffs="-10.71"/>
+    <surface id="40" name="maximum y" type="y-plane" coeffs="10.71"/>
+    <surface id="41" name="minimum x" type="x-plane" coeffs="-10.71"/>
+    <surface id="42" name="maximum x" type="x-plane" coeffs="10.71"/>
+    <surface id="43" name="minimum y" type="y-plane" coeffs="-10.71"/>
+    <surface id="44" name="maximum y" type="y-plane" coeffs="10.71"/>
+    <surface id="45" name="minimum x" type="x-plane" coeffs="-10.71"/>
+    <surface id="46" name="maximum x" type="x-plane" coeffs="10.71"/>
+    <surface id="47" name="minimum y" type="y-plane" coeffs="-10.71"/>
+    <surface id="48" name="maximum y" type="y-plane" coeffs="10.71"/>
+    <surface id="49" name="Core barrel IR" type="z-cylinder" coeffs="0.0 0.0 92.5"/>
+    <surface id="50" name="Core barrel OR" type="z-cylinder" coeffs="0.0 0.0 97.0"/>
+    <surface id="51" name="RPV IR" type="z-cylinder" coeffs="0.0 0.0 113.0"/>
+    <surface id="52" name="RPV OR" type="z-cylinder" boundary="vacuum" coeffs="0.0 0.0 122.0"/>
+    <surface id="53" name="Bottom boundary" type="z-plane" boundary="vacuum" coeffs="-117.5"/>
+    <surface id="54" name="Top boundary" type="z-plane" boundary="vacuum" coeffs="117.5"/>
+    <surface id="55" name="Fuel bottom" type="z-plane" coeffs="-95.0"/>
+    <surface id="56" name="Fuel top" type="z-plane" coeffs="95.0"/>
+  </geometry>
+  <settings>
+    <run_mode>eigenvalue</run_mode>
+    <particles>10000</particles>
+    <batches>300</batches>
+    <inactive>120</inactive>
+    <source type="independent" strength="1.0" particle="neutron">
+      <space type="box">
+        <parameters>-92.5 -92.5 -95.0 92.5 92.5 95.0</parameters>
+      </space>
+      <constraints>
+        <fissionable>true</fissionable>
+      </constraints>
+    </source>
+    <output>
+      <tallies>true</tallies>
+    </output>
+    <seed>2026</seed>
+    <entropy_mesh>5</entropy_mesh>
+    <mesh id="5" name="Entropy mesh">
+      <dimension>9 9 10</dimension>
+      <lower_left>-92.5 -92.5 -95.0</lower_left>
+      <upper_right>92.5 92.5 95.0</upper_right>
+    </mesh>
+    <temperature_default>557.0</temperature_default>
+    <temperature_method>interpolation</temperature_method>
+  </settings>
+  <tallies>
+    <!--XY midplane mesh-->
+    <mesh id="6" name="XY midplane mesh">
+      <dimension>120 120 1</dimension>
+      <lower_left>-122.0 -122.0 -2.5</lower_left>
+      <upper_right>122.0 122.0 2.5</upper_right>
+    </mesh>
+    <!--Mesh 3D flux power-->
+    <mesh id="7" name="Mesh 3D flux power">
+      <dimension>60 60 40</dimension>
+      <lower_left>-122.0 -122.0 -95.0</lower_left>
+      <upper_right>122.0 122.0 95.0</upper_right>
+    </mesh>
+    <!--Assembly power mesh-->
+    <mesh id="8" name="Assembly power mesh">
+      <dimension>9 9 1</dimension>
+      <lower_left>-96.39000000000001 -96.39000000000001 -95.0</lower_left>
+      <upper_right>96.39000000000001 96.39000000000001 95.0</upper_right>
+    </mesh>
+    <filter id="8" type="material">
+      <bins>11 12 13 14</bins>
+    </filter>
+    <filter id="7" type="energy">
+      <bins>1e-05 0.625 100000.0 20000000.0</bins>
+    </filter>
+    <filter id="9" type="material">
+      <bins>5</bins>
+    </filter>
+    <filter id="10" type="mesh">
+      <bins>6</bins>
+    </filter>
+    <filter id="11" type="mesh">
+      <bins>7</bins>
+    </filter>
+    <filter id="12" type="mesh">
+      <bins>8</bins>
+    </filter>
+    <tally id="9" name="Fuel flux (energy-resolved)">
+      <filters>8 7</filters>
+      <scores>flux</scores>
+    </tally>
+    <tally id="10" name="Fission rates">
+      <filters>8</filters>
+      <scores>fission nu-fission kappa-fission</scores>
+    </tally>
+    <tally id="11" name="Fuel heating">
+      <filters>8</filters>
+      <scores>heating</scores>
+    </tally>
+    <tally id="12" name="Total heating">
+      <scores>heating</scores>
+    </tally>
+    <tally id="13" name="HIGA absorption">
+      <filters>9 7</filters>
+      <scores>absorption</scores>
+    </tally>
+    <tally id="14" name="Mesh XY midplane">
+      <filters>10</filters>
+      <scores>flux kappa-fission heating</scores>
+    </tally>
+    <tally id="15" name="Mesh 3D flux power">
+      <filters>11</filters>
+      <scores>flux kappa-fission heating</scores>
+    </tally>
+    <tally id="16" name="Assembly power map">
+      <filters>12</filters>
+      <scores>kappa-fission heating</scores>
+    </tally>
+  </tallies>
+</model>

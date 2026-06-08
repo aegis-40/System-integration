@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<settings>
+  <run_mode>eigenvalue</run_mode>
+  <particles>10000</particles>
+  <batches>300</batches>
+  <inactive>120</inactive>
+  <source type="independent" strength="1.0" particle="neutron">
+    <space type="box">
+      <parameters>-92.5 -92.5 -95.0 92.5 92.5 95.0</parameters>
+    </space>
+    <constraints>
+      <fissionable>true</fissionable>
+    </constraints>
+  </source>
+  <output>
+    <tallies>true</tallies>
+  </output>
+  <seed>2026</seed>
+  <entropy_mesh>1</entropy_mesh>
+  <mesh id="1" name="Entropy mesh">
+    <dimension>9 9 10</dimension>
+    <lower_left>-92.5 -92.5 -95.0</lower_left>
+    <upper_right>92.5 92.5 95.0</upper_right>
+  </mesh>
+  <temperature_default>557.0</temperature_default>
+  <temperature_method>interpolation</temperature_method>
+</settings>

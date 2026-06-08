@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tallies>
+  <!--XY midplane mesh-->
+  <mesh id="2" name="XY midplane mesh">
+    <dimension>120 120 1</dimension>
+    <lower_left>-122.0 -122.0 -2.5</lower_left>
+    <upper_right>122.0 122.0 2.5</upper_right>
+  </mesh>
+  <!--Mesh 3D flux power-->
+  <mesh id="3" name="Mesh 3D flux power">
+    <dimension>60 60 40</dimension>
+    <lower_left>-122.0 -122.0 -95.0</lower_left>
+    <upper_right>122.0 122.0 95.0</upper_right>
+  </mesh>
+  <!--Assembly power mesh-->
+  <mesh id="4" name="Assembly power mesh">
+    <dimension>9 9 1</dimension>
+    <lower_left>-96.39000000000001 -96.39000000000001 -95.0</lower_left>
+    <upper_right>96.39000000000001 96.39000000000001 95.0</upper_right>
+  </mesh>
+  <filter id="2" type="material">
+    <bins>1 2 3</bins>
+  </filter>
+  <filter id="1" type="energy">
+    <bins>1e-05 0.625 100000.0 20000000.0</bins>
+  </filter>
+  <filter id="3" type="material">
+    <bins>5</bins>
+  </filter>
+  <filter id="4" type="mesh">
+    <bins>2</bins>
+  </filter>
+  <filter id="5" type="mesh">
+    <bins>3</bins>
+  </filter>
+  <filter id="6" type="mesh">
+    <bins>4</bins>
+  </filter>
+  <tally id="1" name="Fuel flux (energy-resolved)">
+    <filters>2 1</filters>
+    <scores>flux</scores>
+  </tally>
+  <tally id="2" name="Fission rates">
+    <filters>2</filters>
+    <scores>fission nu-fission kappa-fission</scores>
+  </tally>
+  <tally id="3" name="Fuel heating">
+    <filters>2</filters>
+    <scores>heating</scores>
+  </tally>
+  <tally id="4" name="Total heating">
+    <scores>heating</scores>
+  </tally>
+  <tally id="5" name="HIGA absorption">
+    <filters>3 1</filters>
+    <scores>absorption</scores>
+  </tally>
+  <tally id="6" name="Mesh XY midplane">
+    <filters>4</filters>
+    <scores>flux kappa-fission heating</scores>
+  </tally>
+  <tally id="7" name="Mesh 3D flux power">
+    <filters>5</filters>
+    <scores>flux kappa-fission heating</scores>
+  </tally>
+  <tally id="8" name="Assembly power map">
+    <filters>6</filters>
+    <scores>kappa-fission heating</scores>
+  </tally>
+</tallies>

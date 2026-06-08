@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<geometry>
+  <cell id="121" name="Fuel pin inner 2.6% fuel" material="29" region="-85" universe="58"/>
+  <cell id="122" name="Fuel pin inner 2.6% gap" material="33" region="85 -86" universe="58"/>
+  <cell id="123" name="Fuel pin inner 2.6% cladding" material="34" region="86 -87" universe="58"/>
+  <cell id="124" name="Fuel pin inner 2.6% water" material="35" region="87" universe="58"/>
+  <cell id="125" name="Fuel pin middle 3.0% fuel" material="30" region="-85" universe="59"/>
+  <cell id="126" name="Fuel pin middle 3.0% gap" material="33" region="85 -86" universe="59"/>
+  <cell id="127" name="Fuel pin middle 3.0% cladding" material="34" region="86 -87" universe="59"/>
+  <cell id="128" name="Fuel pin middle 3.0% water" material="35" region="87" universe="59"/>
+  <cell id="129" name="Fuel pin outer 3.4% fuel" material="31" region="-85" universe="60"/>
+  <cell id="130" name="Fuel pin outer 3.4% gap" material="33" region="85 -86" universe="60"/>
+  <cell id="131" name="Fuel pin outer 3.4% cladding" material="34" region="86 -87" universe="60"/>
+  <cell id="132" name="Fuel pin outer 3.4% water" material="35" region="87" universe="60"/>
+  <cell id="137" name="Guide tube water inside" material="35" region="-88" universe="62"/>
+  <cell id="138" name="Guide tube cladding" material="34" region="88 -89" universe="62"/>
+  <cell id="139" name="Guide tube surrounding water" material="35" region="89" universe="62"/>
+  <cell id="140" name="HIGA absorber pellet" material="5" region="-90" universe="63"/>
+  <cell id="141" name="HIGA helium gap" material="33" region="90 -91" universe="63"/>
+  <cell id="142" name="HIGA cladding" material="34" region="91 -92" universe="63"/>
+  <cell id="143" name="HIGA surrounding water" material="35" region="92" universe="63"/>
+  <cell id="144" material="35" universe="65"/>
+  <cell id="145" name="lattice inner 2.6% HIGA" fill="64" region="93 -94 95 -96" universe="66"/>
+  <cell id="146" name="inter-assembly water inner 2.6% HIGA" material="35" region="-93 | 94 | -95 | 96" universe="66"/>
+  <cell id="147" material="35" universe="68"/>
+  <cell id="148" name="lattice middle 3.0% HIGA" fill="67" region="97 -98 99 -100" universe="69"/>
+  <cell id="149" name="inter-assembly water middle 3.0% HIGA" material="35" region="-97 | 98 | -99 | 100" universe="69"/>
+  <cell id="150" material="35" universe="71"/>
+  <cell id="151" name="lattice outer 3.4% HIGA" fill="70" region="101 -102 103 -104" universe="72"/>
+  <cell id="152" name="inter-assembly water outer 3.4% HIGA" material="35" region="-101 | 102 | -103 | 104" universe="72"/>
+  <cell id="153" material="35" universe="73"/>
+  <cell id="154" material="35" universe="75"/>
+  <cell id="155" name="Active core" fill="74" region="-105 111 -112" universe="76"/>
+  <cell id="156" name="Lower reflector" material="35" region="-105 109 -111" universe="76"/>
+  <cell id="157" name="Upper reflector" material="35" region="-105 112 -110" universe="76"/>
+  <cell id="158" name="Core barrel" material="36" region="105 -106 109 -110" universe="76"/>
+  <cell id="159" name="Downcomer" material="35" region="106 -107 109 -110" universe="76"/>
+  <cell id="160" name="RPV" material="37" region="107 -108 109 -110" universe="76"/>
+  <lattice id="64" name="FA inner 2.6% HIGA">
+    <pitch>1.255 1.255</pitch>
+    <outer>65</outer>
+    <dimension>17 17</dimension>
+    <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+    <universes>
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 
+58 58 58 58 58 62 58 58 62 58 58 62 58 58 58 58 58 
+58 58 58 62 58 58 58 58 63 58 58 58 58 62 58 58 58 
+58 58 58 58 63 58 58 58 63 58 58 58 63 58 58 58 58 
+58 58 62 58 58 62 58 58 62 58 58 62 58 58 62 58 58 
+58 58 58 58 58 58 63 58 58 58 63 58 58 58 58 58 58 
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 
+58 58 62 63 63 62 58 58 62 58 58 62 63 63 62 58 58 
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 
+58 58 58 58 58 58 63 58 58 58 63 58 58 58 58 58 58 
+58 58 62 58 58 62 58 58 62 58 58 62 58 58 62 58 58 
+58 58 58 58 63 58 58 58 63 58 58 58 63 58 58 58 58 
+58 58 58 62 58 58 58 58 63 58 58 58 58 62 58 58 58 
+58 58 58 58 58 62 58 58 62 58 58 62 58 58 58 58 58 
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 
+58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 </universes>
+  </lattice>
+  <lattice id="67" name="FA middle 3.0% HIGA">
+    <pitch>1.255 1.255</pitch>
+    <outer>68</outer>
+    <dimension>17 17</dimension>
+    <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+    <universes>
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 
+59 59 59 59 59 62 59 59 62 59 59 62 59 59 59 59 59 
+59 59 59 62 59 59 59 59 63 59 59 59 59 62 59 59 59 
+59 59 59 59 63 59 59 59 63 59 59 59 63 59 59 59 59 
+59 59 62 59 59 62 59 59 62 59 59 62 59 59 62 59 59 
+59 59 59 59 59 59 63 59 59 59 63 59 59 59 59 59 59 
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 
+59 59 62 63 63 62 59 59 62 59 59 62 63 63 62 59 59 
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 
+59 59 59 59 59 59 63 59 59 59 63 59 59 59 59 59 59 
+59 59 62 59 59 62 59 59 62 59 59 62 59 59 62 59 59 
+59 59 59 59 63 59 59 59 63 59 59 59 63 59 59 59 59 
+59 59 59 62 59 59 59 59 63 59 59 59 59 62 59 59 59 
+59 59 59 59 59 62 59 59 62 59 59 62 59 59 59 59 59 
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 
+59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 </universes>
+  </lattice>
+  <lattice id="70" name="FA outer 3.4% HIGA">
+    <pitch>1.255 1.255</pitch>
+    <outer>71</outer>
+    <dimension>17 17</dimension>
+    <lower_left>-10.667499999999999 -10.667499999999999</lower_left>
+    <universes>
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 
+60 60 60 60 60 62 60 60 62 60 60 62 60 60 60 60 60 
+60 60 60 62 60 60 60 60 63 60 60 60 60 62 60 60 60 
+60 60 60 60 63 60 60 60 63 60 60 60 63 60 60 60 60 
+60 60 62 60 60 62 60 60 62 60 60 62 60 60 62 60 60 
+60 60 60 60 60 60 63 60 60 60 63 60 60 60 60 60 60 
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 
+60 60 62 63 63 62 60 60 62 60 60 62 63 63 62 60 60 
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 
+60 60 60 60 60 60 63 60 60 60 63 60 60 60 60 60 60 
+60 60 62 60 60 62 60 60 62 60 60 62 60 60 62 60 60 
+60 60 60 60 63 60 60 60 63 60 60 60 63 60 60 60 60 
+60 60 60 62 60 60 60 60 63 60 60 60 60 62 60 60 60 
+60 60 60 60 60 62 60 60 62 60 60 62 60 60 60 60 60 
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 
+60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 </universes>
+  </lattice>
+  <lattice id="74" name="Aegis-HIGA radial-zoned core lattice">
+    <pitch>21.42 21.42</pitch>
+    <outer>75</outer>
+    <dimension>9 9</dimension>
+    <lower_left>-96.39000000000001 -96.39000000000001</lower_left>
+    <universes>
+73 73 73 73 73 73 73 73 73 
+73 73 73 72 72 72 73 73 73 
+73 73 72 69 69 69 72 73 73 
+73 72 69 66 66 66 69 72 73 
+73 72 69 66 66 66 69 72 73 
+73 72 69 66 66 66 69 72 73 
+73 73 72 69 69 69 72 73 73 
+73 73 73 72 72 72 73 73 73 
+73 73 73 73 73 73 73 73 73 </universes>
+  </lattice>
+  <surface id="85" name="Fuel pellet OR" type="z-cylinder" coeffs="0.0 0.0 0.4025"/>
+  <surface id="86" name="Clad IR" type="z-cylinder" coeffs="0.0 0.0 0.4135"/>
+  <surface id="87" name="Clad OR" type="z-cylinder" coeffs="0.0 0.0 0.4725"/>
+  <surface id="88" name="Guide tube IR" type="z-cylinder" coeffs="0.0 0.0 0.565"/>
+  <surface id="89" name="Guide tube OR" type="z-cylinder" coeffs="0.0 0.0 0.605"/>
+  <surface id="90" name="HIGA absorber pellet OR" type="z-cylinder" coeffs="0.0 0.0 0.4025"/>
+  <surface id="91" name="HIGA clad IR" type="z-cylinder" coeffs="0.0 0.0 0.4135"/>
+  <surface id="92" name="HIGA clad OR" type="z-cylinder" coeffs="0.0 0.0 0.4725"/>
+  <surface id="93" name="minimum x" type="x-plane" coeffs="-10.71"/>
+  <surface id="94" name="maximum x" type="x-plane" coeffs="10.71"/>
+  <surface id="95" name="minimum y" type="y-plane" coeffs="-10.71"/>
+  <surface id="96" name="maximum y" type="y-plane" coeffs="10.71"/>
+  <surface id="97" name="minimum x" type="x-plane" coeffs="-10.71"/>
+  <surface id="98" name="maximum x" type="x-plane" coeffs="10.71"/>
+  <surface id="99" name="minimum y" type="y-plane" coeffs="-10.71"/>
+  <surface id="100" name="maximum y" type="y-plane" coeffs="10.71"/>
+  <surface id="101" name="minimum x" type="x-plane" coeffs="-10.71"/>
+  <surface id="102" name="maximum x" type="x-plane" coeffs="10.71"/>
+  <surface id="103" name="minimum y" type="y-plane" coeffs="-10.71"/>
+  <surface id="104" name="maximum y" type="y-plane" coeffs="10.71"/>
+  <surface id="105" name="Core barrel IR" type="z-cylinder" coeffs="0.0 0.0 92.5"/>
+  <surface id="106" name="Core barrel OR" type="z-cylinder" coeffs="0.0 0.0 97.0"/>
+  <surface id="107" name="RPV IR" type="z-cylinder" coeffs="0.0 0.0 113.0"/>
+  <surface id="108" name="RPV OR" type="z-cylinder" boundary="vacuum" coeffs="0.0 0.0 122.0"/>
+  <surface id="109" name="Bottom boundary" type="z-plane" boundary="vacuum" coeffs="-117.5"/>
+  <surface id="110" name="Top boundary" type="z-plane" boundary="vacuum" coeffs="117.5"/>
+  <surface id="111" name="Fuel bottom" type="z-plane" coeffs="-95.0"/>
+  <surface id="112" name="Fuel top" type="z-plane" coeffs="95.0"/>
+</geometry>

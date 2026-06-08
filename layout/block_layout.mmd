@@ -1,0 +1,75 @@
+%%{init: {"flowchart": {"curve": "linear", "rankSpacing": 55, "nodeSpacing": 35, "useMaxWidth": true}, "themeVariables": {"fontSize": "13px"}}}%%
+%% Aegis-40 — Site Block Layout
+%% Source for FER 8.10. Companion: zones.md, building_list.md.
+%% Owner: Azamhon. 2026-06-02.
+%% NOT a scale drawing — logical block view. Distances called out on connectors.
+%% Color: red = Nuclear Island (Cat I), blue = Conventional (Cat II), yellow = Industrial (NFPA 2).
+
+flowchart TB
+
+  subgraph NI["NUCLEAR ISLAND · Cat I · Protected Area · ~100 × 80 m"]
+    direction TB
+    RXB["<b>RXB</b> Reactor Building<br/>25×25, h=30 above + 15 below<br/>Containment Ø15 × 25 m"]
+    AB["<b>AB</b> Auxiliary Building<br/>25×20×15 m<br/>CVCS, sampling, radwaste"]
+    CB["<b>CB</b> Control Building<br/>30×25×12 m<br/>MCR + RPS divisions A/B/C/D"]
+    SFB["<b>SFB</b> Spent Fuel Building<br/>20×15×15 m<br/>Pool ~10×10×10 m"]
+    DGB["<b>DGB</b> Diesel Generator<br/>2× EDG · 15×10×10 m"]
+    WMB["<b>WMB</b> Waste Management<br/>25×15×12 m + off-gas stack"]
+
+    RXB ---|primary penetrations| AB
+    AB ---|process I&C| CB
+    RXB ---|fuel transfer canal| SFB
+    DGB ---|1E power| CB
+    AB ---|effluent| WMB
+  end
+
+  subgraph CI["CONVENTIONAL ISLAND · Cat II · ~80 × 80 m"]
+    direction TB
+    TB_B["<b>TB</b> Turbine Building<br/>30×20×15 m · 40 MWe generator<br/>+ condenser + FW pumps"]
+    EHB["<b>EHB</b> Electrical / Switchyard<br/>50×50 yard + 33 kV interface<br/>Main + unit-aux transformers"]
+    CTW["<b>CTW</b> Cooling Tower<br/>30×30×20 m · MDCT<br/>[ASSUMED] closed-cycle"]
+    WSB["<b>WSB</b> Workshop / Service<br/>20×15×8 m"]
+
+    TB_B ---|generator output| EHB
+    TB_B ---|condenser cooling| CTW
+  end
+
+  subgraph II["INDUSTRIAL ISLAND · NFPA 2 · ~60 × 60 m"]
+    direction TB
+    TES["<b>TES</b> Thermal Energy Storage<br/>30×30×12 m [ALISHER]<br/>Zeolite or molten salt"]
+    SOE["<b>SOE</b> Solid-Oxide Electrolyser<br/>25×25×10 m [ALISHER]<br/>H₂ production"]
+    H2S["<b>H2S</b> H₂ Storage Yard<br/>20×30 m · NFPA 2 Class 1<br/>Compressed gas tanks"]
+
+    TES ---|process steam tap| SOE
+    SOE ---|H₂ pipe| H2S
+  end
+
+  subgraph INFRA["SITE INFRASTRUCTURE (outside Protected Area)"]
+    direction LR
+    ADM["ADM<br/>Administration"]
+    METEO["METEO<br/>Met tower ≥100 m"]
+    SEC["SEC<br/>Security perimeter<br/>double fence"]
+  end
+
+  GRID(["33 kV GRID"])
+  ROAD(["Public road · H₂ truck loading"])
+
+  RXB ==>|"main steam (1 line)<br/>~20 m piping rack"| TB_B
+  TB_B ==>|"feedwater (1 line)"| RXB
+  TB_B ==>|"process heat tap<br/>LP turbine extraction"| TES
+  EHB ==> GRID
+  H2S ==> ROAD
+
+  NI -.->|"100 m H₂ stand-off (NFPA 2)"| II
+
+  classDef ni fill:#ffd6d6,stroke:#c00,stroke-width:2px;
+  classDef ci fill:#d6e8ff,stroke:#06c,stroke-width:1.5px;
+  classDef ind fill:#fff2cc,stroke:#d6b656,stroke-width:1.5px;
+  classDef infra fill:#ededed,stroke:#888,stroke-dasharray:3 3;
+  classDef ext fill:#fff,stroke:#000,stroke-dasharray:4 3;
+
+  class RXB,AB,CB,SFB,DGB,WMB ni;
+  class TB_B,EHB,CTW,WSB ci;
+  class TES,SOE,H2S ind;
+  class ADM,METEO,SEC infra;
+  class GRID,ROAD ext;

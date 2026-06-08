@@ -1,0 +1,492 @@
+# Aegis-40 Safety Criteria
+# ============================================================================
+# Spine document. Every safety claim in the FER §8.5–§8.7 traces to a row here.
+# Schema:
+#   id              : kebab-case unique key
+#   parameter       : human-readable name
+#   limit_value     : numeric limit (or list for bounded ranges)
+#   unit            : SI unit
+#   direction       : "<=" | ">=" | "==" | "range"
+#   type            : hard_constraint | operating_limit | target
+#                       - hard_constraint  -> breach => wFOM = -inf, design REJECTED
+#                       - operating_limit  -> breach => trip/scram, not a design failure
+#                       - target           -> aspirational, contributes to wFOM score
+#   source          : regulatory citation
+#   normalizer      : log_ratio | min_max | target_gaussian (per MEETING_BRIEF §2.3)
+#   normalizer_params: dict of params for the normalizer (target, alpha, min, max)
+#   fom_param       : matching field name in fom_inputs.yaml
+#   sensor_chain    : how this is measured / observed
+#   setpoint_link   : id of the trip in trip_signals.md that protects this limit (if any)
+#   defense_in_depth_level: 1..5 (IAEA SSR-2/1 Rev 1 §2.13)
+#   notes           : caveats, assumptions, references
+# ============================================================================
+
+design_id: aegis40-rev_0
+schema_version: 0.1
+last_updated: 2026-05-26
+owner: Azamhon (3S / I&C / FOM)
+reactor_type: 40 MWe / 125 MWth integral PWR (iPWR) cogen
+
+# ---------------------------------------------------------------------------
+# 1. REACTIVITY & NEUTRONIC SAFETY
+# ---------------------------------------------------------------------------
+criteria:
+
+  - id: k_eff_operating
+    parameter: "Operating k-effective"
+    limit_value: 1.000
+    tolerance: 0.0005          # ±50 pcm operational band
+    unit: "-"
+    direction: "=="
+    type: operating_limit
+    source: "IAEA SSR-2/1 Rev 1 Req 46; NRC GDC-26"
+    normalizer: target_gaussian
+    normalizer_params: {target: 1.000, alpha: 1.0e5}
+    fom_param: from_openmc.k_eff_bol
+    sensor_chain: ["power-range neutron flux 4ch", "core exit T inference"]
+    setpoint_link: high_flux_trip
+    defense_in_depth_level: 1
+    notes: "Steady-state criticality. Samira BOL = 1.00722 ± 165 pcm (slightly supercritical; absorbed by control rods + HIGA Gd burnout)."
+
+  - id: shutdown_margin
+    parameter: "Shutdown margin (most reactive rod stuck out)"
+    limit_value: 0.01           # 1 % Δk/k
+    unit: "Δk/k"
+    direction: ">="
+    type: hard_constraint
+    source: "NRC SRP 4.3, IAEA SSG-52"
+    normalizer: log_ratio
+    fom_param: from_openmc.shutdown_margin_dk_pct
+    sensor_chain: ["control rod position indication", "post-trip neutron flux"]
+    setpoint_link: null         # protected by design, not by trip
+    defense_in_depth_level: 3
+    notes: "Required at all times including refueling. To be confirmed by ARO (all-rods-in minus one) OpenMC case — Samira W1 task 6."
+
+  - id: mtc_full_power
+    parameter: "Moderator Temperature Coefficient at full power"
+    limit_value: 0
+    unit: "pcm/K"
+    direction: "<"
+    type: hard_constraint
+    source: "NRC GDC-11; IAEA SSR-2/1 Req 46"
+    normalizer: target_gaussian
+    normalizer_params: {target: -40, alpha: 1.0e-3}    # nominal -40 pcm/K
+    fom_param: from_openmc.mtc_full_power_pcm_per_K
+    sensor_chain: ["inferred from RTD T_avg + flux trend"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+    notes: "Strictly negative at all power levels. HIGA + 3-zone UO₂ should give MTC < 0. Awaiting Samira W1 task 3 sweep."
+
+  - id: dtc_doppler
+    parameter: "Doppler (fuel temperature) coefficient"
+    limit_value: 0
+    unit: "pcm/K"
+    direction: "<"
+    type: hard_constraint
+    source: "NRC GDC-11"
+    normalizer: target_gaussian
+    normalizer_params: {target: -3.0, alpha: 0.1}
+    fom_param: from_openmc.dtc_pcm_per_K
+    sensor_chain: ["fuel performance model + flux"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+    notes: "Negative DTC ensures inherent transient suppression. UO₂ guarantees DTC < 0; quantify via Samira's sweep."
+
+  - id: void_coefficient
+    parameter: "Void coefficient of reactivity"
+    limit_value: 0
+    unit: "pcm/% void"
+    direction: "<"
+    type: hard_constraint
+    source: "NRC GDC-11"
+    normalizer: target_gaussian
+    normalizer_params: {target: -50, alpha: 1.0e-3}
+    fom_param: from_openmc.void_coeff_pcm_per_pct
+    sensor_chain: ["void fraction model + flux"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+    notes: "Under-moderated PWR lattice ensures negative void. Confirm via Samira W1 task 4."
+
+  - id: control_rod_worth_aro
+    parameter: "All-Rods-Out integral worth"
+    limit_value: 0.05           # ~5000 pcm minimum total worth
+    unit: "Δk/k"
+    direction: ">="
+    type: operating_limit
+    source: "NRC SRP 4.3; iPWR practice"
+    normalizer: log_ratio
+    fom_param: from_openmc.control_rod_worth_aro_pcm
+    sensor_chain: ["differential rod worth measurement at startup"]
+    setpoint_link: null
+    defense_in_depth_level: 3
+    notes: "Enables hot shutdown without boration. Samira W1 task 6 = all-rods-in case."
+
+  - id: max_reactivity_insertion_rate
+    parameter: "Maximum reactivity insertion rate"
+    limit_value: 0.00075        # 75 pcm/s typical iPWR
+    unit: "Δk/k per s"
+    direction: "<="
+    type: hard_constraint
+    source: "ANSI/ANS-58.21; rod-ejection PCT envelope"
+    normalizer: target_gaussian
+    normalizer_params: {target: 0.0, alpha: 1.0e6}
+    fom_param: from_openmc.max_reactivity_rate
+    sensor_chain: ["rod speed limit interlock"]
+    setpoint_link: high_flux_rate_trip
+    defense_in_depth_level: 2
+    notes: "Bounds rod ejection / withdrawal worst-case transient."
+
+# ---------------------------------------------------------------------------
+# 2. THERMAL-HYDRAULIC SAFETY (clad integrity, DNB, fuel)
+# ---------------------------------------------------------------------------
+
+  - id: mdnbr_steady
+    parameter: "Minimum DNBR — steady state"
+    limit_value: 1.3
+    unit: "-"
+    direction: ">="
+    type: hard_constraint
+    source: "NUREG-0800 SRP 4.4; W-3 correlation"
+    normalizer: target_gaussian
+    normalizer_params: {target: 2.0, alpha: 1.0}
+    fom_param: from_openfoam.mdnbr_steady
+    sensor_chain: ["primary flow + core ΔT + flux distribution"]
+    setpoint_link: low_flow_trip
+    defense_in_depth_level: 1
+    notes: "First wall of CSFs (Critical Safety Functions). OpenFOAM W1 task 4 = first hot-channel run."
+
+  - id: mdnbr_transient
+    parameter: "MDNBR — anticipated operational occurrences (AOO)"
+    limit_value: 1.3
+    unit: "-"
+    direction: ">="
+    type: hard_constraint
+    source: "NUREG-0800 SRP 15.0; 10 CFR 50 App A GDC-10"
+    normalizer: target_gaussian
+    normalizer_params: {target: 1.8, alpha: 2.0}
+    fom_param: from_openfoam.mdnbr_aoo
+    sensor_chain: ["transient sim hot-channel"]
+    setpoint_link: over_temp_dt_trip
+    defense_in_depth_level: 2
+
+  - id: pct_loca
+    parameter: "Peak Clad Temperature — LOCA"
+    limit_value: 1204            # 2200 °F
+    unit: "°C"
+    direction: "<="
+    type: hard_constraint
+    source: "10 CFR 50.46(b)(1); IAEA SSR-2/1 Req 17"
+    normalizer: target_gaussian
+    normalizer_params: {target: 600, alpha: 5.0e-6}
+    fom_param: from_openfoam.hot_channel_pct_loca_C
+    sensor_chain: ["core exit thermocouples (post-accident)", "fuel performance"]
+    setpoint_link: high_outlet_t_trip
+    defense_in_depth_level: 2
+    notes: "Hard ceiling. Operating PCT << 1204 °C. Per MEETING_BRIEF §4 row 5: Gaussian center 600 °C / α 5e-6."
+
+  - id: cladding_oxidation
+    parameter: "Maximum cladding oxidation"
+    limit_value: 0.17            # 17 % ECR
+    unit: "fraction of clad thickness"
+    direction: "<="
+    type: hard_constraint
+    source: "10 CFR 50.46(b)(2)"
+    normalizer: target_gaussian
+    normalizer_params: {target: 0.0, alpha: 50.0}
+    fom_param: from_openfoam.clad_oxidation_max
+    sensor_chain: ["fuel performance code (e.g. FRAPCON post-process)"]
+    setpoint_link: null
+    defense_in_depth_level: 2
+
+  - id: hydrogen_generation
+    parameter: "Core-wide hydrogen generation (Zr-water rxn)"
+    limit_value: 0.01            # 1 % of theoretical max
+    unit: "fraction"
+    direction: "<="
+    type: hard_constraint
+    source: "10 CFR 50.46(b)(3)"
+    normalizer: target_gaussian
+    normalizer_params: {target: 0.0, alpha: 1000.0}
+    fom_param: from_openfoam.h2_generation_fraction
+    sensor_chain: ["post-LOCA inference"]
+    setpoint_link: null
+    defense_in_depth_level: 2
+
+  - id: fuel_centerline_temperature
+    parameter: "Fuel centerline temperature (steady state)"
+    limit_value: 2590            # UO₂ melting margin
+    unit: "°C"
+    direction: "<"
+    type: hard_constraint
+    source: "ANS / fuel performance limit; NRC SRP 4.2"
+    normalizer: target_gaussian
+    normalizer_params: {target: 1400, alpha: 1.0e-6}
+    fom_param: from_openfoam.fuel_centerline_max_C
+    sensor_chain: ["fuel performance model"]
+    setpoint_link: over_power_dt_trip
+    defense_in_depth_level: 1
+
+# ---------------------------------------------------------------------------
+# 3. PRIMARY / SECONDARY PRESSURE BOUNDARY
+# ---------------------------------------------------------------------------
+
+  - id: primary_pressure_design
+    parameter: "Primary system pressure — design limit"
+    limit_value: 17.2
+    unit: "MPa"
+    direction: "<="
+    type: hard_constraint
+    source: "ASME Section III NB; 110 % of operating P"
+    normalizer: target_gaussian
+    normalizer_params: {target: 15.5, alpha: 0.1}
+    fom_param: from_openfoam.primary_pressure_MPa
+    sensor_chain: ["pressurizer pressure xmtr 4× (Class 1E)"]
+    setpoint_link: high_pressurizer_p_trip
+    defense_in_depth_level: 2
+    notes: "Nominal operating ~15.5 MPa. Design ~17.2 MPa = 110 % of operating per ASME margin."
+
+  - id: containment_pressure
+    parameter: "Containment design pressure"
+    limit_value: 0.414           # 4.14 bar per FER Table 1
+    unit: "MPa"
+    direction: "<="
+    type: hard_constraint
+    source: "FER Template Table 1; IAEA SSR-2/1 Req 56"
+    normalizer: target_gaussian
+    normalizer_params: {target: 0.1, alpha: 5.0}
+    fom_param: from_openfoam.containment_pressure_peak_MPa
+    sensor_chain: ["containment pressure xmtr 4×"]
+    setpoint_link: high_containment_p_trip
+    defense_in_depth_level: 3
+    notes: "Dry containment per template. Peak LOCA P must stay below design."
+
+  - id: sg_pressure_operating
+    parameter: "Steam generator operating pressure"
+    limit_value: 7.17
+    tolerance: 0.2
+    unit: "MPa"
+    direction: "=="
+    type: operating_limit
+    source: "FER Template Table 1"
+    normalizer: target_gaussian
+    normalizer_params: {target: 7.17, alpha: 0.5}
+    fom_param: from_openfoam.sg_pressure_MPa
+    sensor_chain: ["SG pressure xmtr"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+
+# ---------------------------------------------------------------------------
+# 4. DECAY HEAT REMOVAL & PASSIVE SAFETY (USP of iPWR)
+# ---------------------------------------------------------------------------
+
+  - id: operator_grace_period
+    parameter: "Operator action grace period (no AC, no AC/DC, no makeup)"
+    limit_value: 72              # hours minimum; target = unlimited
+    unit: "h"
+    direction: ">="
+    type: target
+    source: "IAEA SSG-39; NRC SECY-10-0034 (SMR policy)"
+    normalizer: log_ratio
+    fom_param: derived_safety.passive_decay_heat_removal_grace_h
+    sensor_chain: ["passive PCCS + IRWST inventory tracking"]
+    setpoint_link: null
+    defense_in_depth_level: 4
+    notes: "Aegis-40 targets 'unlimited' (cap at 720 h per MEETING_BRIEF §4 row 9). Selling point in FER §8.6."
+
+  - id: prhr_capacity
+    parameter: "Passive Residual Heat Removal capacity vs decay heat"
+    limit_value: 1.05            # 105 % decay heat at 1 s after scram
+    unit: "ratio"
+    direction: ">="
+    type: hard_constraint
+    source: "ANS-5.1 decay heat curve; IAEA SSR-2/1 Req 53"
+    normalizer: log_ratio
+    fom_param: from_openfoam.prhr_capacity_ratio
+    sensor_chain: ["PRHR HX outlet T + flow"]
+    setpoint_link: null
+    defense_in_depth_level: 3
+
+  - id: sbf_diversity_count
+    parameter: "Diverse safety-by-function principles"
+    limit_value: 5
+    unit: "count"
+    direction: ">="
+    type: target
+    source: "MEETING_BRIEF §4 row 10"
+    normalizer: min_max
+    normalizer_params: {min: 0, max: 7}
+    fom_param: derived_safety.sbf_diversity_count
+    sensor_chain: ["design-document audit"]
+    setpoint_link: null
+    defense_in_depth_level: 4
+    notes: "Approved list (MEETING_BRIEF §4): gravity, natural circulation, condensation, conduction, evaporation, capillary, pressure suppression. Count those used by Aegis-40 passive systems."
+
+# ---------------------------------------------------------------------------
+# 5. RADIOLOGICAL & SITE
+# ---------------------------------------------------------------------------
+
+  - id: epz_radius
+    parameter: "Emergency Planning Zone radius"
+    limit_value: 0.5
+    unit: "km"
+    direction: "<="
+    type: target
+    source: "FER Template Table 1; NRC RG 1.242"
+    normalizer: log_ratio
+    fom_param: from_layout_economics.epz_km
+    sensor_chain: ["source-term + atmospheric dispersion analysis"]
+    setpoint_link: null
+    defense_in_depth_level: 5
+    notes: "SMR small EPZ is a competitive lever. Target ≤ 300 m if source term allows."
+
+  - id: dose_site_boundary
+    parameter: "Whole-body dose at site boundary (worst-case LOCA, 0–2 h)"
+    limit_value: 0.25            # 25 rem TEDE
+    unit: "Sv"
+    direction: "<="
+    type: hard_constraint
+    source: "10 CFR 100.11; 10 CFR 50.34(a)(1)"
+    normalizer: target_gaussian
+    normalizer_params: {target: 0.01, alpha: 10.0}
+    fom_param: derived_safety.dose_boundary_Sv
+    sensor_chain: ["radiation monitors site boundary + plume model"]
+    setpoint_link: null
+    defense_in_depth_level: 5
+
+  - id: cdf
+    parameter: "Core Damage Frequency (PRA, internal events)"
+    limit_value: 1.0e-7
+    unit: "1/reactor-year"
+    direction: "<="
+    type: target
+    source: "FER Template Table 1; NRC RG 1.174"
+    normalizer: log_ratio
+    fom_param: derived_safety.cdf
+    sensor_chain: ["Level 1 PRA model"]
+    setpoint_link: null
+    defense_in_depth_level: 5
+
+  - id: lrf
+    parameter: "Large Release Frequency"
+    limit_value: 1.0e-8
+    unit: "1/reactor-year"
+    direction: "<="
+    type: target
+    source: "FER Template Table 1; NRC RG 1.174"
+    normalizer: log_ratio
+    fom_param: derived_safety.lrf
+    sensor_chain: ["Level 2 PRA model"]
+    setpoint_link: null
+    defense_in_depth_level: 5
+
+# ---------------------------------------------------------------------------
+# 6. SEISMIC / EXTERNAL
+# ---------------------------------------------------------------------------
+
+  - id: sse_design
+    parameter: "Safe Shutdown Earthquake design"
+    limit_value: 0.3
+    unit: "g"
+    direction: ">="
+    type: hard_constraint
+    source: "FER Template Table 1; NRC RG 1.60; IAEA SSG-9"
+    normalizer: log_ratio
+    fom_param: from_layout_economics.sse_g
+    sensor_chain: ["site response spectrum"]
+    setpoint_link: null
+    defense_in_depth_level: 4
+
+# ---------------------------------------------------------------------------
+# 7. FUEL CYCLE & LIFETIME
+# ---------------------------------------------------------------------------
+
+  - id: fuel_burnup_max
+    parameter: "Discharge burnup (peak rod)"
+    limit_value: 62              # GWd/MTU (NRC licensed limit for UO₂/Zr-4)
+    unit: "GWd/MTU"
+    direction: "<="
+    type: operating_limit
+    source: "NRC SRP 4.2 (62 GWd/MTU rod-avg); ANS"
+    normalizer: log_ratio
+    fom_param: from_openmc.burnup_discharge_GWd_per_MTU
+    sensor_chain: ["depletion sim (Serpent/OpenMC)"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+    notes: "Target ~50 GWd/MTU per FER Table 1. Hard NRC ceiling 62. Awaiting Samira long-depletion sweep."
+
+  - id: fuel_enrichment_max
+    parameter: "Maximum U-235 enrichment"
+    limit_value: 5.0             # LWR limit (without LEU+ license)
+    unit: "% wt U-235"
+    direction: "<="
+    type: hard_constraint
+    source: "10 CFR 50 enrichment limit (commercial LWR)"
+    normalizer: target_gaussian
+    normalizer_params: {target: 4.0, alpha: 1.0}
+    fom_param: from_openmc.enrichment_max_pct
+    sensor_chain: ["fuel spec sheet"]
+    setpoint_link: null
+    defense_in_depth_level: 1
+    notes: "Samira's max = 3.4 % (outer zone). FER Table 1 says 4.95 % max. Below NRC 5 % limit either way."
+
+  - id: cycle_length
+    parameter: "Cycle length"
+    limit_value: 365             # EFPD; iPWR target ≥ 12 months
+    unit: "EFPD"
+    direction: ">="
+    type: target
+    source: "FER Template Table 1 (12–24 month reload interval)"
+    normalizer: log_ratio
+    fom_param: from_openmc.cycle_length_efpd
+    sensor_chain: ["depletion sim to k_eff = 1 + leakage"]
+    setpoint_link: null
+    defense_in_depth_level: 0
+
+# ---------------------------------------------------------------------------
+# DEFENSE IN DEPTH SUMMARY (cross-cut, IAEA SSR-2/1 Rev 1 §2.13)
+# ---------------------------------------------------------------------------
+
+defense_in_depth_levels:
+  1:
+    name: "Prevention of abnormal operation and failures"
+    aegis40_features: ["Negative MTC/DTC/void", "Conservative MDNBR margin", "HIGA self-regulating burnable absorber"]
+  2:
+    name: "Control of abnormal operation and detection of failures"
+    aegis40_features: ["RPS 2/4 voting", "Anticipated transient trip envelope", "Pressurizer relief"]
+  3:
+    name: "Control of accidents within design basis"
+    aegis40_features: ["Passive ECCS x3 (per FER Table 1)", "PRHR / IRWST", "Containment isolation x3"]
+  4:
+    name: "Control of severe plant conditions, prevention of accident progression"
+    aegis40_features: ["72 h+ grace period", "Passive containment cooling x3", "Diverse SBF principles (≥5)"]
+  5:
+    name: "Mitigation of radiological consequences"
+    aegis40_features: ["EPZ ≤ 0.5 km", "Site boundary dose < 0.25 Sv", "CDF < 1e-7, LRF < 1e-8"]
+
+# ---------------------------------------------------------------------------
+# OPEN ITEMS (resolve before W1 freeze)
+# ---------------------------------------------------------------------------
+
+decisions_locked:
+  - id: clad_material
+    decision: "Zircaloy-4"
+    locked_on: 2026-05-26
+    rationale: "Zr-4 is PWR-standard. FER Table 1's Zr-2 was an illustrative template default, not a prescribed value."
+  - id: enrichment_target
+    decision: "Three-zone UO₂: 2.6 / 3.0 / 3.4 wt% U-235 (avg ~3.0 %)"
+    locked_on: 2026-05-26
+    rationale: "Matches Samira's stable OpenMC baseline. FER Table 1 enrichment was illustrative."
+
+open_items:
+  - id: aoo_pct_envelope
+    question: "Define operating PCT envelope (target Gaussian center for FOM normalizer) once OpenFOAM hot-channel done."
+    impact: "Sets normalizer for PCT scoring."
+    owner: OpenFOAM lead
+    needed_by: 2026-05-29
+    status: "Waiting for OpenFOAM W1 task 4 result"
+  - id: containment_type_split
+    question: "Dry containment per FER; confirm pressure suppression NOT used (affects SBF diversity count)."
+    impact: "SBF diversity count row."
+    owner: layout (Elbek) / supervisor
+    needed_by: "when needed (deferred per user decision 2026-05-26)"
+    status: "Deferred"

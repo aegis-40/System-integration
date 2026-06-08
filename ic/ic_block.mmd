@@ -1,0 +1,108 @@
+%%{init: {"flowchart": {"curve": "basis", "nodeSpacing": 45, "rankSpacing": 60, "htmlLabels": true, "useMaxWidth": true}, "themeVariables": {"fontSize": "15px"}}}%%
+%% Aegis-40 I&C Block Diagram
+%% Source for FER 8.7. Companion: ic_architecture.md, sensor_inventory.md, trip_signals.md
+%% Owner: Azamhon. Updated 2026-05-27.
+%% Render: strip plain %% comments (keep %%{init}) then mmdc. See README in repo.
+%% Reading rule: signals flow DOWNWARD here for print layout (top = sensors).
+%% No software path from non-safety (DCS, twin) into Class 1E (RPS, ESFAS, DAS).
+
+flowchart TB
+
+  %% ===================== LAYER 1: FIELD SENSORS =====================
+  subgraph L1["LAYER 1 — Field Instrumentation"]
+    direction LR
+    NF["NF · neutron flux<br/>SR/IR/PR 4ch"]
+    TT["T · temperature<br/>HL/CL 4ch + CE array"]
+    PP["P · pressure<br/>PZR 4ch / CONT 4ch"]
+    FF["F · primary flow<br/>2/loop (+UFM diverse)"]
+    LL["L · SG level<br/>NR/WR 4/SG"]
+    RR["RAD · radiation<br/>CONT / MSL"]
+    SGP["P-SG · SG pressure<br/>4/SG"]
+  end
+
+  %% single distribution bus -> cuts the 7x4 edge fan
+  BUS["Safety signal distribution<br/>hardwired · 4 independent divisions A–D"]
+  L1 --> BUS
+
+  %% ===================== SAFETY ACTUATION (Class 1E) =====================
+  subgraph SAFETY["CLASS 1E — Protection & Actuation"]
+    direction TB
+
+    subgraph L2["LAYER 2 — Reactor Protection System"]
+      direction TB
+      RPSDIV["Divisions A/B/C/D<br/>signal cond. + bistable"]
+      VOTE{{"2-of-4 coincidence voter"}}
+      TB["Trip breakers<br/>de-energize-to-trip"]
+      RPSDIV --> VOTE --> TB
+    end
+
+    subgraph L3["LAYER 3 — ESFAS"]
+      direction TB
+      EVOTE{{"2-of-4 voter"}}
+      ESF1["SI · CI · EFW · PRHR · MSI<br/>passive ESF actuation"]
+      EVOTE --> ESF1
+    end
+
+    DAS["DIVERSE ACTUATION SYSTEM<br/>diverse platform · flux + PZR P<br/>backup trip + SI/PRHR"]
+  end
+
+  BUS --> RPSDIV
+  BUS --> EVOTE
+  BUS --> DAS
+
+  %% ===================== NON-SAFETY CONTROL =====================
+  subgraph L4["LAYER 4 — DCS (non-safety)"]
+    direction LR
+    RXCTL["Reactor power<br/>(rod position)"]
+    PZRCTL["Pressurizer<br/>P + level"]
+    FWCTL["3-element<br/>feedwater"]
+    TURB["Turbine +<br/>cogen extraction"]
+    HIST["Data historian"]
+  end
+
+  subgraph L5["LAYER 5 — Digital twin (advisory)"]
+    direction LR
+    SOFT["Soft sensors<br/>MDNBR, fuel CL T"]
+    ANOM["Anomaly<br/>detection"]
+    PRED["Predictive<br/>maintenance"]
+  end
+
+  %% qualified one-way taps from field to non-safety
+  ISO["Qualified isolation<br/>one-way analog/optical"]
+  DIODE["DATA DIODE<br/>one-way, no return path"]
+  L1 --> ISO --> L4
+  L1 --> DIODE --> L5
+
+  %% ===================== OPERATOR + PLANT =====================
+  HMI["Operator HMI<br/>SPDS / CSF display"]
+  MANUAL["HARDWIRED manual<br/>scram · SI · CI · EFW · MSIV"]
+  CRD["Control Rod Drives<br/>scram on de-energize"]
+  ESFP["Engineered Safety<br/>Features (passive)"]
+  RX["REACTOR CORE"]
+
+  L4 --> HMI
+  L5 -.advisory only.-> HMI
+  RXCTL -->|rod demand| CRD
+
+  TB -->|interrupt CRDM power| CRD
+  ESF1 --> ESFP
+  DAS -.diverse backup.-> CRD
+  DAS -.diverse backup.-> ESFP
+  MANUAL ==> TB
+  MANUAL ==> EVOTE
+
+  CRD --> RX
+  ESFP --> RX
+
+  %% ===================== STYLES =====================
+  classDef class1e fill:#ffd6d6,stroke:#c00,stroke-width:2px;
+  classDef nonsafety fill:#d6e8ff,stroke:#06c,stroke-width:1px;
+  classDef advisory fill:#ededed,stroke:#888,stroke-dasharray:4 3;
+  classDef plant fill:#fff2cc,stroke:#d6b656,stroke-width:2px;
+  classDef bus fill:#fff,stroke:#000,stroke-width:1px;
+
+  class NF,TT,PP,FF,LL,RR,SGP,BUS,RPSDIV,VOTE,TB,EVOTE,ESF1,DAS,MANUAL class1e;
+  class RXCTL,PZRCTL,FWCTL,TURB,HIST,HMI nonsafety;
+  class SOFT,ANOM,PRED advisory;
+  class CRD,RX,ESFP plant;
+  class ISO,DIODE bus;

@@ -1,0 +1,144 @@
+%%{init: {"flowchart": {"curve": "basis", "rankSpacing": 50, "nodeSpacing": 35, "useMaxWidth": true}, "themeVariables": {"fontSize": "13px"}}}%%
+%% Aegis-40 — Major Flow Arrows (process / mass / energy view)
+%% Source for FER 8.10 task 2 + part of 8.9 cogeneration narrative.
+%% Companion: block_layout.png (spatial view), building_list.md.
+%% Owner: Azamhon. 2026-06-02.
+%% Reading rule: blue = water/steam (secondary loop) — heavy =====
+%%                yellow = electrical                 — heavy ====≡
+%%                orange = thermal (district heat)    — thick   ===
+%%                green = hydrogen                    — thick   ===
+%%                grey = solid/fuel                   — thin    --->
+%%                red = radioactive effluent          — thin    --->
+%% Quantitative split (40 MWe + 125 MWth cogen) is per Alisher energy team.
+
+flowchart LR
+
+  RPV(["<b>RPV</b><br/>Integral PWR<br/>125 MWth · ~Ø2.44 m"])
+
+  %% ============================================================
+  %% SECONDARY STEAM / FEEDWATER LOOP (closed)
+  %% ============================================================
+  subgraph LOOP["Secondary loop · closed"]
+    direction LR
+    MS["Main steam header<br/>7.17 MPa saturated"]
+    TURB["Turbine<br/>HP / IP / LP stages"]
+    COND["Condenser"]
+    FWH["FW heaters"]
+    FWP["FW pumps"]
+  end
+
+  RPV ==main steam==> MS
+  MS ==> TURB
+  TURB ==exhaust==> COND
+  COND ==condensate==> FWH
+  FWH ==> FWP
+  FWP ==feedwater==> RPV
+
+  %% ============================================================
+  %% ELECTRICAL EXPORT
+  %% ============================================================
+  subgraph ELEC["Electrical export"]
+    direction TB
+    GEN["Generator<br/>40 MWe gross"]
+    MT["Main transformer"]
+    SW33["33 kV switchyard"]
+    UAT["Unit-aux transformer"]
+    SS["Station service"]
+    BUS1E["Class 1E bus"]
+    DG["2× EDG<br/>emergency"]
+    UPS["UPS / batteries<br/>8 h"]
+  end
+
+  TURB --shaft--> GEN
+  GEN --> MT --> SW33
+  SW33 ==>|"40 MWe net to grid"| GRID(["GRID"])
+  MT --> UAT --> SS --> BUS1E
+  DG -.scram-on-LOOP.-> BUS1E
+  UPS -.batteries.-> BUS1E
+  BUS1E -.->|"RPS · ESFAS · MCR"| LOADS([Safety loads])
+
+  %% ============================================================
+  %% DISTRICT HEAT (cogen 1)
+  %% ============================================================
+  subgraph DH["District heat path"]
+    direction LR
+    LPEXT["LP extraction tap"]
+    DHHX["DH heat exchanger<br/>(NI/CI interface)"]
+    TES["TES storage<br/>charge / discharge"]
+    DHNET(["District heating<br/>network"])
+  end
+
+  TURB --LP extraction--> LPEXT --> DHHX --> TES --> DHNET
+
+  %% ============================================================
+  %% HYDROGEN (cogen 2)
+  %% ============================================================
+  subgraph H2["Hydrogen path"]
+    direction LR
+    HPS["High-temp steam<br/>from main steam tap"]
+    SOE["SOE stacks<br/>electrolysis"]
+    SEP["H₂ / O₂ separation<br/>+ purification"]
+    H2T["H₂ storage tanks<br/>compressed gas"]
+    TRUCK(["H₂ truck loading<br/>public road"])
+  end
+
+  MS --HP/MP tap--> HPS
+  BUS1E -.power to electrolyser.-> SOE
+  HPS --> SOE --> SEP --> H2T --> TRUCK
+
+  %% ============================================================
+  %% FUEL HANDLING
+  %% ============================================================
+  subgraph FUEL["Fuel handling"]
+    direction LR
+    FRESH(["Fresh fuel in<br/>truck delivery"])
+    SFBrec["SFB receiving"]
+    TRANS["Transfer canal"]
+    DRY["Dry cask staging"]
+    OFF(["Off-site repository<br/>future"])
+  end
+
+  FRESH --> SFBrec --> TRANS --> RPV
+  RPV -->|"spent fuel"| TRANS -->|">5 yr cooldown"| SFBrec -->|"after cooling"| DRY --> OFF
+
+  %% ============================================================
+  %% RADWASTE (3 streams)
+  %% ============================================================
+  subgraph WASTE["Radwaste streams"]
+    direction TB
+    LWST["Liquid<br/>RXB + AB drains"]
+    SWST["Solid<br/>resins, filters, PPE"]
+    GWST["Gaseous<br/>RXB off-gas + AB vent"]
+    WMB["WMB processing<br/>(demin · compactor · HEPA + charcoal)"]
+    DISC(["Monitored liquid<br/>discharge"])
+    STORE(["On-site solid<br/>storage drums"])
+    STACK(["Off-gas stack<br/>monitored release"])
+  end
+
+  RPV --> LWST
+  RPV --> GWST
+  RPV --> SWST
+  LWST --> WMB --> DISC
+  SWST --> WMB --> STORE
+  GWST --> WMB --> STACK
+
+  %% ============================================================
+  %% STYLES
+  %% ============================================================
+  classDef rpv fill:#fff2cc,stroke:#d6b656,stroke-width:3px;
+  classDef secondary fill:#d6e8ff,stroke:#06c,stroke-width:1.5px;
+  classDef elec fill:#fffbcc,stroke:#cc9900,stroke-width:1.5px;
+  classDef dh fill:#ffd9b3,stroke:#cc6600,stroke-width:1.5px;
+  classDef h2 fill:#d4f0d4,stroke:#2a7,stroke-width:1.5px;
+  classDef fuel fill:#e8e0f0,stroke:#663399,stroke-width:1.5px;
+  classDef waste fill:#ffd6d6,stroke:#c00,stroke-width:1.5px;
+  classDef external fill:#fff,stroke:#000,stroke-dasharray:4 3;
+
+  class RPV rpv;
+  class MS,TURB,COND,FWH,FWP secondary;
+  class GEN,MT,SW33,UAT,SS,BUS1E,DG,UPS elec;
+  class LPEXT,DHHX,TES dh;
+  class HPS,SOE,SEP,H2T h2;
+  class SFBrec,TRANS,DRY fuel;
+  class LWST,SWST,GWST,WMB waste;
+  class GRID,DHNET,TRUCK,FRESH,OFF,DISC,STORE,STACK,LOADS external;
