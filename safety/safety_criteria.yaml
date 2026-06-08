@@ -46,7 +46,7 @@ criteria:
     sensor_chain: ["power-range neutron flux 4ch", "core exit T inference"]
     setpoint_link: high_flux_trip
     defense_in_depth_level: 1
-    notes: "Steady-state criticality. Samira BOL = 1.00722 ± 165 pcm (slightly supercritical; absorbed by control rods + HIGA Gd burnout)."
+    notes: "Steady-state criticality. rev_3 (2026-06-03) BOL k_eff = 1.0264 (~+2640 pcm excess) held down by hybrid Gd+Er burnable absorber + control rods (ARO worth 15226 pcm; cold SDM 12.4%). See safety/openmc_rev3_alignment.md."
 
   - id: shutdown_margin
     parameter: "Shutdown margin (most reactive rod stuck out)"
@@ -427,7 +427,7 @@ criteria:
     sensor_chain: ["fuel spec sheet"]
     setpoint_link: null
     defense_in_depth_level: 1
-    notes: "Samira's max = 3.4 % (outer zone). FER Table 1 says 4.95 % max. Below NRC 5 % limit either way."
+    notes: "rev_3 (2026-06-03): 3-zone 4.95 / 4.70 / 4.40 wt% (max 4.95). Supersedes the 2.6/3.0/3.4 baseline — relaxed for high burnup. Max 4.95 leaves only 0.05 wt% to the 5.0 LEU ceiling (tight — flag in FER). See safety/openmc_rev3_alignment.md."
 
   - id: cycle_length
     parameter: "Cycle length"
@@ -473,9 +473,13 @@ decisions_locked:
     locked_on: 2026-05-26
     rationale: "Zr-4 is PWR-standard. FER Table 1's Zr-2 was an illustrative template default, not a prescribed value."
   - id: enrichment_target
-    decision: "Three-zone UO₂: 2.6 / 3.0 / 3.4 wt% U-235 (avg ~3.0 %)"
-    locked_on: 2026-05-26
-    rationale: "Matches Samira's stable OpenMC baseline. FER Table 1 enrichment was illustrative."
+    decision: "Three-zone UO₂: 4.95 / 4.70 / 4.40 wt% U-235 (max 4.95)"
+    locked_on: 2026-06-03   # rev_3 — supersedes the 2.6/3.0/3.4 baseline (2026-05-26)
+    rationale: "rev_3 full-core OpenMC. Relaxed from 2.6/3.0/3.4 to chase high discharge burnup (42.8 GWd/MTU) + waste-intensity score. Max 4.95 <= 5.0 LEU ceiling. See safety/openmc_rev3_alignment.md."
+  - id: burnable_absorber
+    decision: "Hybrid: Gd₂O₃ 8 wt% (×32 rods, radially zoned) + Er₂O₃ 0.5 wt% (×16 rods)"
+    locked_on: 2026-06-03   # rev_3
+    rationale: "SBF hold-down. Gd-dominant zoned to flatten radial power (F_radial 1.23); Er slow flat hold-down + cold SDM for the 479 EFPD cycle. Supersedes earlier 'Er replacing Gd'."
 
 open_items:
   - id: aoo_pct_envelope
