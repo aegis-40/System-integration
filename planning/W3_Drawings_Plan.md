@@ -87,4 +87,22 @@ From `layout/fer_8_10_coverage.md`, the deferred-to-W3 items:
 
 ---
 
+## Next steps — updated 2026-06-09
+
+**Done since W3:**
+- ✅ Interactive web layout viewer `site/index.html` — classic-white, 5 native-SVG views incl. a bird's-eye **3D axonometric massing** (covers R4 at "stylised 3D" level, beyond the elevation). Hosted-ready (GitHub Pages one step away).
+- ✅ **3S Safeguards / non-proliferation** deliverable `safety/safeguards_nonproliferation.md` — reactor-grade, self-protecting, once-through discharge from rev_3 depletion. Closes the third "S".
+
+**Next, in priority order:**
+1. **CRDM type** from Samira (still the #1 open) → unlocks rod-ejection accident basis + RXB internal validation.
+2. **Adilbek pipe NPS** → `critical_piping_table.md` (R6) + swap `[ASSUMED]` routes on `site_plot_plan` and the viewer.
+3. **Alisher TES/SOE footprint + H₂ inventory** → finalise Industrial-Island sizing + maybe shrink the 100 m stand-off.
+4. **FOM scoring tool** (`planning/PLAN.md`, 9 phases) — still unstarted; unblocked once hard-constraint normalizers (MDNBR/PCT from OpenFOAM) land.
+5. Optional FER polish: pull safeguards plots (pu_vector / self_protection / snm) into the §3S figure set; push the viewer's iso view further (shadows/trees/roads) if a showcase image is wanted; deploy the viewer to GitHub Pages.
+6. **Supervisor:** site type (inland/coastal) + heat sink; 10 sign-offs from `MEETING_BRIEF` §4.
+
+*Photoreal 3D render (NuScale-style) intentionally NOT pursued — 3D-viz pipeline, not an FER-scoring task. The SVG iso massing is the in-repo answer.*
+
+---
+
 *End of W3 drawings plan.*

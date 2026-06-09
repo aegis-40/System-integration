@@ -59,7 +59,10 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 - ✅ Trip signals + ESF actuations → `safety/trip_signals.md`
 - ✅ First event tree (LOHS, 7 sequences) → `safety/event_tree_LOHS.{md,png}`
 - ✅ FER §8.7 line-by-line coverage check → `ic/fer_8_7_coverage.md` (20/25 ✓, 5/25 △, 0 gaps, 0 defects)
+- ✅ **3S Safeguards / non-proliferation** — reactor-grade, self-protecting, once-through discharge → `safety/safeguards_nonproliferation.md`
 - ⏳ FOM integration template (`fom_inputs.yaml`) — pending
+
+**Interactive layout viewer (web):** `site/index.html` — classic-white single-page app, 5 native SVG views incl. a bird's-eye 3D massing. Hover detail, pan/zoom. See `site/README.md`.
 
 **Consolidated progress walkthrough:** `planning/briefings/MB_Progress_2026-06-05.md` (safety criteria → layout, full meeting script).
 

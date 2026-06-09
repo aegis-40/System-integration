@@ -88,6 +88,7 @@ But it's not explicit. The safety consequence is real:
 | Discharge source term | 1.2e17 Bq (27.8 EBq @ shutdown), HLW, ingestion radiotox 2.18e9 Sv | `dose_site_boundary`, `epz_radius` (needs dispersion analysis to close) |
 | Reload scheme | 4-batch, 0.90 CF | waste arisings, SFP/cask sizing |
 | Lattice | 21 FA × 17×17, 200 cm active, 20 cm H₂O radial reflector | `layout/building_list.md` RXB internal dims |
+| **Proliferation resistance** | discharge Pu is **reactor-grade** (Pu-240 24.6 %, fissile 66 %), self-protecting (19.5 W/kg-Pu, high SF-n), spent U 1.10 % — once-through, no separated stream | **NEW 3S feature** → `safety/safeguards_nonproliferation.md` |
 
 ---
 
