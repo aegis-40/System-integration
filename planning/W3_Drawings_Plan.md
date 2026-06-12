@@ -92,6 +92,9 @@ From `layout/fer_8_10_coverage.md`, the deferred-to-W3 items:
 **Done since W3:**
 - ✅ Interactive web layout viewer `site/index.html` — classic-white, 5 native-SVG views incl. a bird's-eye **3D axonometric massing** (covers R4 at "stylised 3D" level, beyond the elevation). Hosted-ready (GitHub Pages one step away).
 - ✅ **3S Safeguards / non-proliferation** deliverable `safety/safeguards_nonproliferation.md` — reactor-grade, self-protecting, once-through discharge from rev_3 depletion. Closes the third "S".
+- ✅ **Layout r2 (2026-06-12):** TB adjacent to NI, CTW peripheral (zones.md Z7, NuScale precedent) — viewer + `site_plot_plan` + CAD updated together.
+- ✅ **R4 true 3D un-deferred:** `cad/aegis40_site.step` + `cad/aegis40_rxb.step` (build123d → STEP, opens in Fusion 360). Site incl. roads/double fence/trees/pipe runs; RXB diorama incl. below-grade containment, RPV, pools, polar crane.
+- ✅ **draw.io sources** for the LOHS event tree + I&C block diagram (`.drawio` beside `.mmd`/`.png`).
 
 **Next, in priority order:**
 1. **CRDM type** from Samira (still the #1 open) → unlocks rod-ejection accident basis + RXB internal validation.

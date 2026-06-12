@@ -141,6 +141,7 @@ A more accurate block-layout drawing (with internal building positioning) lands 
 | Z4 | II is non-safety with NFPA 2 H₂ classification, ~60 × 60 m | H₂ hazard isolation |
 | Z5 | H₂ stand-off = 100 m to nearest NI building | Conservative bound NFPA 2; refine after Alisher sizes inventory |
 | Z6 | Closed cooling tower in CI | `[ASSUMED]` — supervisor confirmation pending |
+| Z7 | **TB adjacent to the NI boundary; CTW at the CI periphery** (r2, 2026-06-12) | NuScale plant-arrangement practice (IV.5-KenLangdon slide 15) + PFD logic: main-steam/feedwater run must be short (~47 m); condenser circ-water run to CTW can be long |
 
 ---
 

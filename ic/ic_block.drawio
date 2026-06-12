@@ -1,0 +1,95 @@
+<mxfile host="app.diagrams.net" agent="claude-code" version="24.7.5">
+  <diagram id="aegis40-ic-block" name="I&amp;C Block Diagram">
+    <mxGraphModel dx="1422" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Aegis-40 — I&amp;amp;C Block Diagram · FER §8.7 · signals flow downward (top = sensors) · no software path from non-safety into Class 1E" style="text;html=1;fontSize=16;fontStyle=1;fontColor=#1b2a36;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- LAYER 1 -->
+        <mxCell id="l1c" value="LAYER 1 — FIELD INSTRUMENTATION (Class 1E)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#cc0000;dashed=1;verticalAlign=top;align=left;spacing=8;fontSize=11;fontStyle=1;fontColor=#cc0000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="1320" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="NF" value="&lt;b&gt;NF · neutron flux&lt;/b&gt;&lt;br&gt;SR/IR/PR 4ch" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="60" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="TT" value="&lt;b&gt;T · temperature&lt;/b&gt;&lt;br&gt;HL/CL 4ch + CE array" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="240" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="PP" value="&lt;b&gt;P · pressure&lt;/b&gt;&lt;br&gt;PZR 4ch / CONT 4ch" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="420" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="FF" value="&lt;b&gt;F · primary flow&lt;/b&gt;&lt;br&gt;2/loop (+UFM diverse)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="600" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="LL" value="&lt;b&gt;L · SG level&lt;/b&gt;&lt;br&gt;NR/WR 4/SG" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="780" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="RR" value="&lt;b&gt;RAD · radiation&lt;/b&gt;&lt;br&gt;CONT / MSL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="960" y="110" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="SGP" value="&lt;b&gt;P-SG · SG pressure&lt;/b&gt;&lt;br&gt;4/SG" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1140" y="110" width="170" height="70" as="geometry" /></mxCell>
+
+        <!-- distribution row -->
+        <mxCell id="ISO" value="&lt;b&gt;Qualified isolation&lt;/b&gt;&lt;br&gt;one-way analog/optical" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="80" y="270" width="210" height="60" as="geometry" /></mxCell>
+        <mxCell id="BUS" value="&lt;b&gt;Safety signal distribution&lt;/b&gt;&lt;br&gt;hardwired · 4 independent divisions A–D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="430" y="270" width="420" height="60" as="geometry" /></mxCell>
+        <mxCell id="DIODE" value="&lt;b&gt;DATA DIODE&lt;/b&gt;&lt;br&gt;one-way, no return path" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1090" y="270" width="230" height="60" as="geometry" /></mxCell>
+
+        <!-- CLASS 1E envelope -->
+        <mxCell id="safc" value="CLASS 1E — PROTECTION &amp;amp; ACTUATION" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#cc0000;dashed=1;verticalAlign=top;align=left;spacing=8;fontSize=11;fontStyle=1;fontColor=#cc0000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="390" width="1320" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="l2lab" value="LAYER 2 — Reactor Protection System" style="text;html=1;fontSize=10.5;fontStyle=2;fontColor=#8a4040;align=left;" vertex="1" parent="1"><mxGeometry x="100" y="420" width="260" height="20" as="geometry" /></mxCell>
+        <mxCell id="RPSDIV" value="&lt;b&gt;Divisions A/B/C/D&lt;/b&gt;&lt;br&gt;signal cond. + bistable" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="100" y="445" width="240" height="65" as="geometry" /></mxCell>
+        <mxCell id="VOTE" value="2-of-4 coincidence voter" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="100" y="535" width="240" height="70" as="geometry" /></mxCell>
+        <mxCell id="TBR" value="&lt;b&gt;Trip breakers&lt;/b&gt;&lt;br&gt;de-energize-to-trip" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="100" y="640" width="240" height="65" as="geometry" /></mxCell>
+
+        <mxCell id="l3lab" value="LAYER 3 — ESFAS" style="text;html=1;fontSize=10.5;fontStyle=2;fontColor=#8a4040;align=left;" vertex="1" parent="1"><mxGeometry x="490" y="420" width="200" height="20" as="geometry" /></mxCell>
+        <mxCell id="EVOTE" value="2-of-4 voter" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="490" y="455" width="200" height="70" as="geometry" /></mxCell>
+        <mxCell id="ESF1" value="&lt;b&gt;SI · CI · EFW · PRHR · MSI&lt;/b&gt;&lt;br&gt;passive ESF actuation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="1"><mxGeometry x="470" y="595" width="260" height="70" as="geometry" /></mxCell>
+
+        <mxCell id="DAS" value="&lt;b&gt;DIVERSE ACTUATION SYSTEM&lt;/b&gt;&lt;br&gt;diverse platform · flux + PZR P&lt;br&gt;backup trip + SI/PRHR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="900" y="490" width="360" height="100" as="geometry" /></mxCell>
+
+        <!-- LAYER 4 / 5 -->
+        <mxCell id="l4c" value="LAYER 4 — DCS (non-safety)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0066cc;dashed=1;verticalAlign=top;align=left;spacing=8;fontSize=11;fontStyle=1;fontColor=#0066cc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="850" width="760" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="RXCTL" value="Reactor power&lt;br&gt;(rod position)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="60" y="900" width="130" height="70" as="geometry" /></mxCell>
+        <mxCell id="PZRCTL" value="Pressurizer&lt;br&gt;P + level" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="205" y="900" width="130" height="70" as="geometry" /></mxCell>
+        <mxCell id="FWCTL" value="3-element&lt;br&gt;feedwater" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="350" y="900" width="130" height="70" as="geometry" /></mxCell>
+        <mxCell id="TURB" value="Turbine +&lt;br&gt;cogen extraction" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="495" y="900" width="130" height="70" as="geometry" /></mxCell>
+        <mxCell id="HIST" value="Data historian" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="640" y="900" width="130" height="70" as="geometry" /></mxCell>
+
+        <mxCell id="l5c" value="LAYER 5 — Digital twin (advisory)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#888888;dashed=1;verticalAlign=top;align=left;spacing=8;fontSize=11;fontStyle=1;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="860" y="850" width="500" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="SOFT" value="Soft sensors&lt;br&gt;MDNBR, fuel CL T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ededed;strokeColor=#888888;dashed=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="880" y="900" width="145" height="70" as="geometry" /></mxCell>
+        <mxCell id="ANOM" value="Anomaly&lt;br&gt;detection" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ededed;strokeColor=#888888;dashed=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1040" y="900" width="145" height="70" as="geometry" /></mxCell>
+        <mxCell id="PRED" value="Predictive&lt;br&gt;maintenance" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ededed;strokeColor=#888888;dashed=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1200" y="900" width="145" height="70" as="geometry" /></mxCell>
+
+        <!-- OPERATOR + PLANT -->
+        <mxCell id="HMI" value="&lt;b&gt;Operator HMI&lt;/b&gt;&lt;br&gt;SPDS / CSF display" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d6e8ff;strokeColor=#0066cc;fontSize=11;" vertex="1" parent="1"><mxGeometry x="350" y="1060" width="240" height="70" as="geometry" /></mxCell>
+        <mxCell id="MANUAL" value="&lt;b&gt;HARDWIRED manual&lt;/b&gt;&lt;br&gt;scram · SI · CI · EFW · MSIV" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffd6d6;strokeColor=#cc0000;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="720" y="1060" width="300" height="70" as="geometry" /></mxCell>
+
+        <mxCell id="CRD" value="&lt;b&gt;Control Rod Drives&lt;/b&gt;&lt;br&gt;scram on de-energize" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="260" y="1200" width="240" height="70" as="geometry" /></mxCell>
+        <mxCell id="ESFP" value="&lt;b&gt;Engineered Safety Features&lt;/b&gt;&lt;br&gt;(passive)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;" vertex="1" parent="1"><mxGeometry x="620" y="1200" width="260" height="70" as="geometry" /></mxCell>
+        <mxCell id="RX" value="&lt;b&gt;REACTOR CORE&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;fontSize=13;" vertex="1" parent="1"><mxGeometry x="450" y="1340" width="260" height="60" as="geometry" /></mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="g1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="l1c" target="BUS"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;" edge="1" parent="1" source="l1c" target="ISO"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;" edge="1" parent="1" source="l1c" target="DIODE"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="BUS" target="RPSDIV"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="BUS" target="EVOTE"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="BUS" target="DAS"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="RPSDIV" target="VOTE"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="VOTE" target="TBR"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;" edge="1" parent="1" source="EVOTE" target="ESF1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0066cc;" edge="1" parent="1" source="ISO" target="l4c"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#666666;" edge="1" parent="1" source="DIODE" target="l5c"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0066cc;" edge="1" parent="1" source="l4c" target="HMI"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g13" value="advisory only" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#888888;dashed=1;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="l5c" target="HMI"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g14" value="rod demand" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0066cc;fontSize=10;fontColor=#0066cc;" edge="1" parent="1" source="RXCTL" target="CRD"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g15" value="interrupt CRDM power" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;strokeWidth=2;fontSize=10;fontColor=#cc0000;" edge="1" parent="1" source="TBR" target="CRD"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;strokeWidth=2;" edge="1" parent="1" source="ESF1" target="ESFP"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g17" value="diverse backup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;dashed=1;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="DAS" target="CRD"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g18" value="diverse backup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;dashed=1;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="DAS" target="ESFP"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;strokeWidth=3;" edge="1" parent="1" source="MANUAL" target="TBR"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;strokeWidth=3;" edge="1" parent="1" source="MANUAL" target="EVOTE"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=2;" edge="1" parent="1" source="CRD" target="RX"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;strokeWidth=2;" edge="1" parent="1" source="ESFP" target="RX"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

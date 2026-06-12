@@ -161,8 +161,11 @@ main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
           <text class="anno" x="150" y="207" font-size="3" text-anchor="middle">EPZ ≤ 0.5 km · whole site within radius</text>
         </g>
         <g id="pipe-site">
-          <path d="M45,42 L45,100 L62,135" fill="none" stroke="var(--hz)" stroke-width=".7" opacity=".75"/>
-          <path d="M70,135 L70,100 L70,42" fill="none" stroke="var(--ni)" stroke-width=".7" opacity=".75"/>
+          <path d="M62,135 L62,88" fill="none" stroke="var(--hz)" stroke-width=".7" opacity=".75"/>
+          <path d="M70,135 L70,88" fill="none" stroke="var(--ni)" stroke-width=".7" opacity=".75"/>
+          <path d="M50,73 L37,73 L37,42" fill="none" stroke="#3f97a8" stroke-width=".7" opacity=".75"/>
+          <text class="anno" x="34" y="56" font-size="2.6" fill="#2c7886" text-anchor="end">circ water → CTW</text>
+          <text class="anno" x="74" y="112" font-size="2.6" fill="var(--ink3)">steam / FW · ~47 m run</text>
           <path d="M105,148 L224,140" fill="none" stroke="#8a5fae" stroke-width=".7" stroke-dasharray="3 2" opacity=".75"/>
           <text class="anno" x="165" y="138" font-size="2.6" text-anchor="middle" fill="#7a4fa0">process steam → TES</text>
         </g>
@@ -306,9 +309,9 @@ const sites=[
  {id:'SFB',x:34,y:150,w:20,h:15,H:15,z:'ni',name:'Spent Fuel Building',foot:'300 m² · Cat I',fn:'Water-shielded pool, transfer canal, handling machine, dry-cask staging.',fer:'§8.8'},
  {id:'DGB',x:100,y:165,w:15,h:10,H:10,z:'ni',name:'Diesel Generator Building',foot:'150 m² · Cat I',fn:'2× emergency diesel generators, day tanks, control panels.',fer:'§8.8 A5'},
  {id:'WMB',x:24,y:168,w:25,h:15,H:12,z:'ni',name:'Waste Management Building',foot:'375 m² · Cat I',fn:'Liquid/solid/gaseous radwaste; off-gas stack ≥30 m.',fer:'§8.8'},
- {id:'TB',x:22,y:16,w:30,h:20,H:15,z:'ci',name:'Turbine Building',foot:'600 m² · Cat II',fn:'Steam turbine + 40 MWe generator, condenser, feedwater pumps.',fer:'§8.10 R2'},
+ {id:'TB',x:50,y:68,w:30,h:20,H:15,z:'ci',name:'Turbine Building',foot:'600 m² · Cat II',fn:'Steam turbine + 40 MWe generator, condenser, feedwater pumps. Adjacent to NI — shortest main-steam / feedwater run.',fer:'§8.10 R2'},
  {id:'EHB',x:56,y:14,w:40,h:28,H:8,z:'ci',name:'Electrical / Switchyard',foot:'~2,500 m² · Cat II',fn:'Main + unit-aux transformers, station service, 33 kV grid interface.',fer:'§8.8 A5'},
- {id:'CTW',x:55,y:50,w:30,h:30,H:20,z:'ci',name:'Cooling Tower',foot:'900 m² · Cat III',fn:'Mechanical-draft heat rejection [ASSUMED] pending heat-sink decision.',fer:'§8.10 R2'},
+ {id:'CTW',x:22,y:12,w:30,h:30,H:20,z:'ci',name:'Cooling Tower',foot:'900 m² · Cat III',fn:'Mechanical-draft heat rejection at the site periphery — only the circ-water run is long [ASSUMED] pending heat-sink decision.',fer:'§8.10 R2'},
  {id:'WSB',x:24,y:58,w:20,h:15,H:8,z:'ci',name:'Workshop / Service',foot:'300 m² · Cat III',fn:'Maintenance shops, warehouse, hot-tool storage.',fer:'§8.10 R2'},
  {id:'TES',x:224,y:124,w:30,h:30,H:12,z:'ii',name:'Thermal Energy Storage',foot:'900 m² [ALISHER]',fn:'Storage modules + charge/discharge HX for district heat.',fer:'§5 originality'},
  {id:'SOE',x:224,y:156,w:25,h:25,H:10,z:'ii',name:'Solid-Oxide Electrolyser',foot:'625 m² [ALISHER]',fn:'High-temperature electrolyser stacks, water purification, H₂ separation.',fer:'§5 originality'},
@@ -331,7 +334,7 @@ sites.forEach(b=>{
   rxb.appendChild(mk('circle',{cx:67.5,cy:147.5,r:1.4,fill:'var(--ni-s)','pointer-events':'none'}));})();
 
 /* ---------- ELEVATION ---------- */
-const elevs=[[30,30,20,'ci','CTW','Cooling Tower'],[68,30,15,'ci','TB','Turbine Building'],
+const elevs=[[20,30,20,'ci','CTW','Cooling Tower'],[104,30,15,'ci','TB','Turbine Building'],
  [150,30,30,'ni','RXB','Reactor Building'],[188,26,15,'ni','AB','Auxiliary Building'],
  [220,20,10,'ni','DGB','Diesel Gen'],[246,26,12,'ni','WMB','Waste Mgmt'],[259,4,30,'ni','STK','Off-gas stack'],
  [308,28,12,'ii','TES','Thermal Storage'],[340,16,10,'ii','SOE','Electrolyser']];
