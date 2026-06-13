@@ -71,6 +71,8 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 
 **draw.io diagram sources:** `safety/event_tree_LOHS.drawio` + `ic/ic_block.drawio` — editable equivalents of the mermaid-rendered PNGs, same tool family as `docs/aegis40_pfd.drawio.png`.
 
+**2026-06-13:** ✅ **CRDM = internal (in-vessel)** confirmed → rod ejection **eliminated by design** (§8.6 credit, `openmc_rev3_alignment.md` §4). ✅ **SBO event tree** `safety/event_tree_SBO.{md,drawio}` — CDF ~1e-11/ry, de-energize-to-actuate showcase. ✅ **FER-draft audit** `layout/fer_8810_docx_audit.md` (7 conflicts to reconcile) + **R6 piping table** `layout/critical_piping_table.md`.
+
 **Consolidated progress walkthrough:** `planning/briefings/MB_Progress_2026-06-05.md` (safety criteria → layout, full meeting script).
 
 **Outside this scope (other teammates):**
@@ -102,9 +104,9 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 | 1 | Long depletion with Er₂O₃ → MTC, void, ARO worth, cycle length at BOL/MOC/EOC | Samira | 5 rows in `safety/safety_criteria.yaml`; FOM inputs |
 | 2 | ~~Fuel-assembly count (21 vs 240)~~ → **RESOLVED: 21 FA, 17×17 lattice** (rev_3) | ✅ Samira | RXB sized for 21 FA confirmed correct |
 | 3 | First hot-channel MDNBR + steady-state PCT | OpenFOAM team | 2 hard-constraint normalizers; FOM scoring |
-| 4 | Critical-piping NPS (steam, FW, surge, RHR) | Adilbek | FER §8.10 R6 piping table |
+| 4 | ~~Critical-piping NPS~~ → **sizes in FER draft Table 8.10-2** (MSL 2×DN250, FWL 2×DN200, DHRS 2×DN100, ECCS 2×DN80; surge eliminated) → `layout/critical_piping_table.md` | Adilbek confirms | R6 ◐ closed `[FER-DRAFT]` |
 | 5 | TES/SOE footprint + H₂ inventory | Alisher | industrial-island sizing + stand-off |
-| 6 | Site type (inland/coastal) + heat sink | Supervisor | cooling tower vs seawater |
+| 6 | ~~Site type~~ → **Sinop, Black Sea coast** (FER draft §8.10.1) — but heat sink still split: draft says once-through seawater, PFD shows cooling tower → `layout/fer_8810_docx_audit.md` C2 | team + supervisor | heat-sink reconciliation |
 | 7 | 10 supervisor sign-offs from `planning/MEETING_BRIEF.md` §4 | Supervisor | Final FOM weights |
 | 8 | Structural weights + steel tonnage | foundation eng. | FER §8.10 R5 tables |
 | 9 | NDK (Turkish nuclear regulator) citations | Azamhon | Domesticity credit in FER §5.2 |

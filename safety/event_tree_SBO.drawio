@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net" agent="claude-code" version="24.7.5">
+  <diagram id="sbo-event-tree" name="Event Tree SBO">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Aegis-40 — Event Tree: Station Blackout (SBO) · FER §8.6" style="text;html=1;fontSize=18;fontStyle=1;fontColor=#1b2a36;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="700" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="5 sequences · 3 safe / 2 core-damage · CDF ≈ 1e-11 /ry [PRA-PENDING] — de-energization ACTUATES every credited function · source: safety/event_tree_SBO.md" style="text;html=1;fontSize=11;fontColor=#55606a;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="900" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="IE" value="&lt;b&gt;SBO initiator&lt;/b&gt;&lt;br&gt;LOOP + both standby&lt;br&gt;AC sources fail · ~1e-5 /ry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="RT" value="&lt;b&gt;RT&lt;/b&gt;&lt;br&gt;Rods drop on&lt;br&gt;de-energization?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#eeeeff;strokeColor=#666699;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="280" y="275" width="160" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="EFW" value="&lt;b&gt;EFW&lt;/b&gt;&lt;br&gt;Gravity feedwater?&lt;br&gt;(fail-open valves)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#eeeeff;strokeColor=#666699;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="510" y="170" width="170" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="OK1" value="&lt;b&gt;OK-1&lt;/b&gt;&lt;br&gt;Hot standby on SG sink&lt;br&gt;(dominant sequence)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d7f0d7;strokeColor=#33aa33;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="760" y="100" width="190" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="PRHR" value="&lt;b&gt;PRHR&lt;/b&gt;&lt;br&gt;Passive RHR?&lt;br&gt;(natural circulation)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#eeeeff;strokeColor=#666699;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="770" y="230" width="170" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="OK2" value="&lt;b&gt;OK-2&lt;/b&gt;&lt;br&gt;Passive cooldown&lt;br&gt;via PRHR to IRWST" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d7f0d7;strokeColor=#33aa33;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="170" width="190" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="IRWST" value="&lt;b&gt;IRWST&lt;/b&gt;&lt;br&gt;Long-term sink&lt;br&gt;≥ 72 h?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#eeeeff;strokeColor=#666699;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="300" width="170" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="OK3" value="&lt;b&gt;OK-3&lt;/b&gt;&lt;br&gt;≥72 h passive cooling&lt;br&gt;(AC recovery / ext. makeup after)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d7f0d7;strokeColor=#33aa33;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="440" width="210" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="CD1" value="&lt;b&gt;CD-1&lt;/b&gt;&lt;br&gt;Core damage — total loss&lt;br&gt;of heat removal · ~1e-12" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7d3d3;strokeColor=#cc0000;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="900" y="440" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="CD2" value="&lt;b&gt;CD-2&lt;/b&gt;&lt;br&gt;ATWS + SBO&lt;br&gt;(mech. rod CCF) · ~1e-11" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7d3d3;strokeColor=#cc0000;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="510" y="440" width="190" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#55606a;" edge="1" parent="1" source="IE" target="RT"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="success (gravity)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#33aa33;fontSize=10;fontColor=#2a7a2a;" edge="1" parent="1" source="RT" target="EFW"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="fail — mech. CCF ~1e-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="RT" target="CD2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#33aa33;fontSize=10;fontColor=#2a7a2a;" edge="1" parent="1" source="EFW" target="OK1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="fail ~1e-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="EFW" target="PRHR"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#33aa33;fontSize=10;fontColor=#2a7a2a;" edge="1" parent="1" source="PRHR" target="OK2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="fail ~1e-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="PRHR" target="IRWST"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#33aa33;fontSize=10;fontColor=#2a7a2a;" edge="1" parent="1" source="IRWST" target="OK3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="fail ~1e-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#cc0000;fontSize=10;fontColor=#a02020;" edge="1" parent="1" source="IRWST" target="CD1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="note" value="No AC, no DC, no operator action, no external water needed for 72 h. Class 1E batteries (72 h) power MONITORING only. Standby diesels = defence-in-depth, not credited. SBO CDF ≈ 1e-11 /ry — 4 orders below the 1e-7 plant target; substantiates FER §8.8.3 'negligible SBO' claim." style="text;html=1;fontSize=10.5;fontColor=#55606a;align=left;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="620" width="980" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

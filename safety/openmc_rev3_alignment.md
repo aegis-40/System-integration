@@ -65,17 +65,15 @@ Two locked decisions in `README.md` + `safety_criteria.yaml` are superseded by S
 
 ---
 
-## 4. Still unresolved — CRDM type (the grilling question stands)
+## 4. ~~Still unresolved~~ — **RESOLVED: CRDMs are INTERNAL (in-vessel)** (confirmed 2026-06-12)
 
-rev_3 does **not** state whether CRDMs are internal (in-vessel) or external (head-mounted). Evidence points to internal/cluster control:
-- Max reactivity insertion rate **1.5e-5 Δk/k/s** is tiny — consistent with a modeled **rod-withdrawal** transient, not a rod **ejection**.
-- "9 CR clusters" = cluster control assemblies.
+Internal/in-vessel CRDMs — the modern iPWR norm, consistent with the evidence already in rev_3 (1.5e-5 Δk/k/s = a rod-*withdrawal* transient; "9 CR clusters" = CCAs).
 
-But it's not explicit. The safety consequence is real:
-- **If internal CRDMs** (the modern iPWR norm, and the right fit for the passive-safety story): **rod ejection is eliminated by design.** Re-base the `max_reactivity_insertion_rate` note on uncontrolled rod withdrawal (an AOO that exists) and claim ejection-elimination as a **safety credit** in FER §8.6.
-- **If external CRDMs:** you owe a rod-ejection analysis (fuel enthalpy < 230 cal/g, RG 1.77) that is currently unscoped — a real gap.
-
-**Action:** ask Samira/mechanical to pin CRDM location. Until then, `max_reactivity_insertion_rate` keeps its limit but the *accident basis* in its note is unverified.
+**Safety consequences, now claimable:**
+- **Rod ejection is eliminated by design** — no head-mounted drive housing whose rupture can eject a rod. Claim as a design-basis-event **elimination credit** in FER §8.6 (alongside LB-LOCA elimination from the integral RPV).
+- `max_reactivity_insertion_rate` accident basis re-based on **uncontrolled rod withdrawal** (an AOO that exists); rev_3's 1.5e-5 Δk/k/s passes with 50× margin to the 7.5e-4 limit.
+- No RG 1.77 / 230 cal/g rod-ejection enthalpy analysis owed.
+- RXB internal arrangement: no CRDM gallery above the head → below-grade RPV pit depth stands as drawn.
 
 ---
 

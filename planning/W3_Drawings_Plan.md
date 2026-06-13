@@ -95,9 +95,10 @@ From `layout/fer_8_10_coverage.md`, the deferred-to-W3 items:
 - ✅ **Layout r2 (2026-06-12):** TB adjacent to NI, CTW peripheral (zones.md Z7, NuScale precedent) — viewer + `site_plot_plan` + CAD updated together.
 - ✅ **R4 true 3D un-deferred:** `cad/aegis40_site.step` + `cad/aegis40_rxb.step` (build123d → STEP, opens in Fusion 360). Site incl. roads/double fence/trees/pipe runs; RXB diorama incl. below-grade containment, RPV, pools, polar crane.
 - ✅ **draw.io sources** for the LOHS event tree + I&C block diagram (`.drawio` beside `.mmd`/`.png`).
+- ✅ **2026-06-13:** CRDM=internal recorded (rod ejection eliminated); **SBO event tree** (`safety/event_tree_SBO.{md,drawio}`, CDF ~1e-11/ry); **FER-draft audit** (`layout/fer_8810_docx_audit.md` — Sinop site + pipe DNs harvested, 7 conflicts flagged); **R6 critical-piping table** (`layout/critical_piping_table.md` `[FER-DRAFT]`).
 
 **Next, in priority order:**
-1. **CRDM type** from Samira (still the #1 open) → unlocks rod-ejection accident basis + RXB internal validation.
+1. ~~CRDM type~~ ✅ **RESOLVED 2026-06-12: INTERNAL (in-vessel)** → rod ejection eliminated by design (§8.6 credit); RXB pit depth stands.
 2. **Adilbek pipe NPS** → `critical_piping_table.md` (R6) + swap `[ASSUMED]` routes on `site_plot_plan` and the viewer.
 3. **Alisher TES/SOE footprint + H₂ inventory** → finalise Industrial-Island sizing + maybe shrink the 100 m stand-off.
 4. **FOM scoring tool** (`planning/PLAN.md`, 9 phases) — still unstarted; unblocked once hard-constraint normalizers (MDNBR/PCT from OpenFOAM) land.

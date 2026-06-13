@@ -127,14 +127,14 @@ criteria:
     unit: "Δk/k per s"
     direction: "<="
     type: hard_constraint
-    source: "ANSI/ANS-58.21; rod-ejection PCT envelope"
+    source: "ANSI/ANS-58.21; uncontrolled-rod-withdrawal envelope"
     normalizer: target_gaussian
     normalizer_params: {target: 0.0, alpha: 1.0e6}
     fom_param: from_openmc.max_reactivity_rate
     sensor_chain: ["rod speed limit interlock"]
     setpoint_link: high_flux_rate_trip
     defense_in_depth_level: 2
-    notes: "Bounds rod ejection / withdrawal worst-case transient."
+    notes: "Accident basis = uncontrolled rod WITHDRAWAL (AOO). Rod EJECTION eliminated by design — internal (in-vessel) CRDMs confirmed 2026-06-12 (openmc_rev3_alignment.md s4). rev_3 as-run 1.5e-5 = 50x margin."
 
 # ---------------------------------------------------------------------------
 # 2. THERMAL-HYDRAULIC SAFETY (clad integrity, DNB, fuel)

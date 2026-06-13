@@ -12,7 +12,9 @@
 | `flow_arrows.mmd` + `.png` | ✅ Day 3 | Process-flow view: 6 flow types (steam/FW, electrical, district heat, H₂, fuel handling, radwaste) · 6 color-coded streams from RPV |
 | `aux_systems.md` | ✅ Day 5 | FER §8.8 auxiliary systems: 8 systems, six-field metadata each (purpose/principle/layout/safety/performance/maintenance) · A1–A3 ✅, A4–A5 △ W3 · consolidated electrical single-line |
 | `fer_8_10_coverage.md` | ✅ Audit | Coverage check vs all 11 FER §8.10 R1–R6 + §8.8 A1–A5 requirements (parallels `ic/fer_8_7_coverage.md`) |
-| `openmc_rev3_alignment.md`† | ✅ | (in `safety/`) cross-check of Samira's rev_3 vs safety criteria |
+| `critical_piping_table.md` | ✅ 2026-06-13 | **R6 table** — DN sizes harvested from FER draft Table 8.10-2 `[FER-DRAFT]`, pending Adilbek confirmation; surge line eliminated by design |
+| `fer_8810_docx_audit.md` | ⚠️ 2026-06-13 | Audit of `docs/FER_Aegis40_8.8-8.10.docx` vs repo basis: 2 resolutions (Sinop site, pipe DNs) · **7 conflicts** (islands, heat sink, TES tech, boration, containment concept, grace period, datum) · 2 internal contradictions |
+| `openmc_rev3_alignment.md`† | ✅ | (in `safety/`) cross-check of Samira's rev_3 vs safety criteria — §4 CRDM now **RESOLVED: internal** |
 
 **Scaled engineering drawings — `drawings/` (W3, 2026-06-08):**
 
