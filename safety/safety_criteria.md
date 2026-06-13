@@ -99,7 +99,7 @@ Per `MEETING_BRIEF.md` §2.4, hard constraints are pass/fail, never scored.
 | # | Item | Decision | Rationale |
 |---|---|---|---|
 | 1 | Cladding | **Zircaloy-4** | PWR-standard. FER Table 1 Zr-2 was illustrative. |
-| 2 | Enrichment | **3-zone UO₂: 2.6/3.0/3.4 wt% U-235** (avg ~3.0 %) | Matches Samira's stable OpenMC. FER Table 1 enrichment was illustrative. |
+| 2 | Enrichment | **3-zone UO₂: 4.95/4.70/4.40 wt% U-235** (rev_3, 2026-06-03 — supersedes 2.6/3.0/3.4) | Samira's locked rev_3; chases burnup/waste score. See `openmc_rev3_alignment.md`. |
 
 ## Open items still pending
 

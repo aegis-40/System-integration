@@ -106,7 +106,7 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 | 3 | First hot-channel MDNBR + steady-state PCT | OpenFOAM team | 2 hard-constraint normalizers; FOM scoring |
 | 4 | ~~Critical-piping NPS~~ → **sizes in FER draft Table 8.10-2** (MSL 2×DN250, FWL 2×DN200, DHRS 2×DN100, ECCS 2×DN80; surge eliminated) → `layout/critical_piping_table.md` | Adilbek confirms | R6 ◐ closed `[FER-DRAFT]` |
 | 5 | TES/SOE footprint + H₂ inventory | Alisher | industrial-island sizing + stand-off |
-| 6 | ~~Site type~~ → **Sinop, Black Sea coast** (FER draft §8.10.1) — but heat sink still split: draft says once-through seawater, PFD shows cooling tower → `layout/fer_8810_docx_audit.md` C2 | team + supervisor | heat-sink reconciliation |
+| 6 | ~~Site type + heat sink~~ → **RESOLVED: Sinop, Black Sea coast; once-through seawater cooling, no CTW** (team, 2026-06-13) | ✅ team | update PFD (drop CT-1) + layout recut after C3 |
 | 7 | 10 supervisor sign-offs from `planning/MEETING_BRIEF.md` §4 | Supervisor | Final FOM weights |
 | 8 | Structural weights + steel tonnage | foundation eng. | FER §8.10 R5 tables |
 | 9 | NDK (Turkish nuclear regulator) citations | Azamhon | Domesticity credit in FER §5.2 |

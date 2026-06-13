@@ -14,7 +14,7 @@ confirmation; routing per layout r2 (TB adjacent to NI, zones.md Z7).*
 | 5 | Decay heat removal (DHRS/PRHR) | **2 × DN100** | 343 °C / 15.5 MPa | intra-RXB: RPV ↔ DHRS HX in pool/IRWST | ASME III Cl. 1 | fully passive, no active valves, **no containment penetration** | `[FER-DRAFT]` |
 | 6 | Passive ECCS injection | **2 × DN80** | 15.5 MPa design | intra-RXB: IRWST → RPV | ASME III Cl. 1 | gravity-driven; no pump penetrations | `[FER-DRAFT]` |
 | 7 | Pressurizer surge line | — | — | — | — | **ELIMINATED** — integral pressurizer internal to RPV upper head | by design |
-| 8 | Condenser circ water | TBD (large-bore) | ~30–40 °C / low P | TB condenser → heat sink | B31.1 | **blocked on C2 of `fer_8810_docx_audit.md`** — Black Sea once-through vs CTW changes size + route entirely | ⛔ open |
+| 8 | Condenser circ water | TBD (large-bore, ~82 MWth @ ΔT≈8–10 K → ~2–2.5 m³/s seawater) | ~20–30 °C / low P | seawater intake → TB condenser → discharge (once-through, **C2 resolved 2026-06-13**) | B31.1 | route + sizing with intake/discharge structures; biofouling + thermal-discharge limits at Sinop | ◐ size TBD |
 
 **Penetration note (draft §8.10.6):** MSL + FWL exit the RXB through dedicated,
 missile-protected, double-walled penetrations with annular leak-off monitoring;
