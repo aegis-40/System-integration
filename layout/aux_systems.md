@@ -2,7 +2,7 @@
 
 *Source document. Drop into FER §8.8 Auxiliary Systems Design.*
 *Companion: `layout/zones.md`, `layout/building_list.md`, `layout/block_layout.png`, `layout/flow_arrows.png`.*
-*Owner: Azamhon. Last updated: 2026-06-05.*
+*Owner: Azamhon. Last updated: 2026-06-15.*
 
 ---
 
@@ -37,8 +37,9 @@ A4 (per-system P&IDs) and A5 detailed single-line diagram are **flagged W3** —
 | 6 | Fuel Handling + Storage | Fuel handling and storage | **Yes** (SFP integrity) | RXB, SFB |
 | 7 | Fission-Product Release Control | Fission-product release control | **Yes** | RXB, WMB |
 | 8 | Service Systems (compressed air, demin water, SFP cooling) | (compressed air + support) | mixed | AB, SFB |
+| 9 | Cogeneration Interface Isolation (TES / SOE) | (cogen interface — Req 35) | **Yes** | TB, EUB |
 
-8 systems map 1:1 onto the five FER §8.8 named sub-headings (fission-product release control, ventilation, compressed air, fuel handling/storage, fire protection) **plus** the cross-cutting electrical + radiation-protection systems the section also demands (A1).
+9 systems: the first eight map 1:1 onto the five FER §8.8 named sub-headings (fission-product release control, ventilation, compressed air, fuel handling/storage, fire protection) **plus** the cross-cutting electrical + radiation-protection systems the section also demands (A1). System 9 (cogeneration interface isolation) is added to satisfy **IAEA SSR-2/1 Req 35** for this cogeneration plant (district heat via TES + hydrogen via SOE).
 
 ---
 
@@ -73,7 +74,7 @@ A4 (per-system P&IDs) and A5 detailed single-line diagram are **flagged W3** —
 | Field | Detail |
 |---|---|
 | **Purpose** | Keep worker + public dose ALARA; detect + alarm abnormal radioactivity; provide the radiological data feeding emergency response within the EPZ (`safety/safety_criteria.yaml` `epz_radius` 0.5 km). |
-| **Operating principle** | Three monitoring layers: **area** (fixed gamma monitors in occupied + access-controlled spaces), **process** (in-line monitors on liquid effluent, gaseous effluent stack, primary coolant, SFP, component cooling water — detect leakage), **personnel** (portal monitors, electronic dosimetry, contamination frisking). Stack + liquid-effluent monitors gate all releases against permit limits. |
+| **Operating principle** | Four monitoring layers per IAEA SSR-2/1 Req 81–82: **area** (fixed gamma monitors in occupied + access-controlled spaces), **process** (in-line monitors on liquid effluent, gaseous effluent stack, primary coolant, SFP, component cooling water — detect leakage), **personnel** (portal monitors, electronic dosimetry, contamination frisking), and **post-accident high-range** (RG 1.97 wide-range containment + effluent monitors, e.g. RAD-CONT to 1e3 Sv/h, `ic/sensor_inventory.md`) so the release path stays instrumented through severe conditions. Stack + liquid-effluent monitors gate all releases against permit limits. Dose-rate zoning map (ALARA, Req 5) overlays `layout/zones.md`. |
 | **Layout location** | Sensors per `ic/sensor_inventory.md`; effluent monitors on WMB stack + liquid-discharge line; personnel control point at NI Protected-Area boundary. Health-physics lab + counting room in AB. |
 | **Safety function** | **Yes.** High-radiation signals contribute to containment isolation + ventilation isolation actuations (`safety/trip_signals.md`). Effluent monitors enforce release limits. |
 | **Performance** | Effluent within 10 CFR 20 / Turkish NDK limits `[verify NDK citation — open item #5 in README]`; area-monitor alarm setpoints zone-specific; sensitivity to detect 1 % failed-fuel iodine in primary coolant `[ASSUMED]`. |
@@ -152,6 +153,28 @@ A4 (per-system P&IDs) and A5 detailed single-line diagram are **flagged W3** —
 
 ---
 
+## 9a. Cogeneration Interface Isolation (SSR-2/1 Req 35)
+
+Aegis-40 is a **cogeneration plant**: it exports heat to a Thermochemical/sensible Energy
+Storage (TES) district-heating network and steam to a Solid-Oxide Electrolysis (SOE)
+hydrogen plant. IAEA SSR-2/1 **Req 35** requires that such heat-utilization couplings be
+designed so that **no process can transport radionuclides from the nuclear plant to the
+district-heating or hydrogen unit in operational states OR accident conditions**. This
+system provides that barrier set.
+
+| Field | Detail |
+|---|---|
+| **Purpose** | Deliver heat/steam to TES (district heating) and SOE (H₂) while guaranteeing no radionuclide pathway to the public product, in normal and accident conditions (Req 35). |
+| **Operating principle** | **Non-radioactive intermediate loop** interposed between the reactor secondary steam and *both* customer circuits — reactor steam never contacts district-heat water or SOE feed. Heat crosses two interface heat exchangers (reactor-side HX → intermediate loop → customer-side HX). The clean intermediate loop is held at **higher pressure** than the reactor-side stream at the interface HX, so any HX tube leak flows **inward** (clean → reactor), never outward. Result: ≥3 independent barriers between primary coolant and the public product — (1) SG tube wall, (2) intermediate-loop boundary, (3) customer-side HX wall. |
+| **Layout location** | Reactor-side interface HX in the Turbine Building (TB); intermediate-loop pumps + customer-side HX in the Energy-Utilization Building (EUB, TES/SOE island per `zones.md` Z-energy). Cogen island is the hydrogen-stand-off zone, already separated for explosion physics. |
+| **Safety function** | **Yes.** Auto-isolation of the cogen interface is credited for Req 35: fail-closed isolation valves on both interface HX close on (a) high activity in the intermediate loop or a product stream, (b) steam-generator-tube-rupture signal, or (c) containment isolation — tied into ESFAS / `safety/trip_signals.md`. Isolation removes the export path without affecting reactor safety systems (cogen is not a reactor safety function — only its isolation is). |
+| **Performance** | ≥3 independent barriers (criterion `cogen_radionuclide_isolation` ≥2 ✅). Intermediate-loop + product-stream activity ≤ background; interface ΔP maintained clean-side-high with continuous monitoring. **Tritium** is the governing nuclide — at SOE temperatures (~800 °C) it permeates metal readily: mitigate with oxide/alumina **permeation-barrier coatings** on the high-temperature SOE interface HX, tritium monitoring on the H₂ product, and a getter/cleanup on the intermediate loop `[ANALYSIS-PENDING — tritium permeation + carryover budget for the SOE high-T interface]`. District-heat side is lower-temperature and bounded by the intermediate loop + ΔP. |
+| **Maintenance** | Periodic interface-HX leak test (eddy-current / pressure-decay); isolation-valve stroke test; intermediate-loop + product activity-monitor source-check; permeation-barrier integrity inspection on the SOE HX. |
+
+**Barrier-count check (Req 35):** SG tube + intermediate-loop boundary + customer HX = **3 ≥ 2** → `cogen_radionuclide_isolation` satisfied by design. Accident-condition isolation (the second half of Req 35) is the ESFAS-actuated fail-closed valving above.
+
+---
+
 ## 10. Electrical supply summary (FER §8.8 A5 consolidated)
 
 Drawn together so the reviewer sees one electrical story:
@@ -201,6 +224,7 @@ Defence-in-depth power layers: **grid → onsite generator → EDG → battery �
 | 5 | Source term for containment leak / gaseous hold-up sizing | §8 performance | OpenMC/safety `[SIM-PENDING]` |
 | 6 | Per-system P&IDs (A4) + formal single-line (A5) | §11 | Azamhon, W3 |
 | 7 | House-load MW for transformer sizing | §6 | T-H / BOP |
+| 8 | Tritium permeation/carryover budget for the SOE high-T interface (Req 35) | §9a performance | Alisher (TES/SOE) + safety |
 
 ---
 
@@ -217,4 +241,4 @@ Defence-in-depth power layers: **grid → onsite generator → EDG → battery �
 
 ---
 
-*End of auxiliary systems list. 8 systems, full six-field metadata each, §8.8 A1–A3 ✅, A4–A5 △ (W3). 7 open items flagged.*
+*End of auxiliary systems list. 9 systems (incl. cogeneration interface isolation, SSR-2/1 Req 35), full six-field metadata each, §8.8 A1–A3 ✅, A4–A5 △ (W3). 8 open items flagged.*

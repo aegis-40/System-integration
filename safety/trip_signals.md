@@ -2,7 +2,7 @@
 
 *Source document. Drop into FER §8.6 (protective actions) + §8.7 (logic combination of monitored variables).*
 *Companion: `safety_criteria.yaml` (limits each trip protects), `ic/sensor_inventory.md` (sensor channels), `ic/ic_block.mmd` (logic paths).*
-*Owner: Azamhon. Last updated: 2026-05-28.*
+*Owner: Azamhon. Last updated: 2026-06-15.*
 
 > **Setpoint status:** all setpoints below are **preliminary engineering values**. Final values depend on OpenMC (flux, reactivity, peaking) and OpenFOAM (DNB, hot-channel T, flow). Each row tagged `[SIM-PENDING]` where a simulation result will replace the placeholder. The *logic, voting, and actuated devices* are design-frozen; only the *numbers* move.
 
@@ -52,6 +52,7 @@
 | E3 | Emergency Feedwater (EFW) | Low SG level < 15 % **OR** loss of normal feedwater | 2/4 | L-SG-NR (#10) | Gravity feed from elevated tank (no pumps) | Yes |
 | E4 | PRHR / PCCS | Low SG level + EFW unavailable **OR** high core-exit T post-scram | 2/4 | L-SG-NR (#10), T-CE (#6) | Passive Residual Heat Removal HX → IRWST | Yes |
 | E5 | Main Steam Isolation (MSI) | Low SG pressure (steam-line-break signature) **OR** high steam-line radiation **OR** high containment P | 2/4 (P-SG), 2/3 (RAD/P-CONT) | P-SG (#21), RAD-MSL (#14), P-CONT (#12) | Close MSIVs | Yes |
+| E6 | **Emergency Boron Injection (EBIS)** — diverse shutdown system #2 (`ebis_actuation`) | **ATWS signature**: high flux/high core-exit T **AND** no rod insertion confirmed (rod-bottom not reached after trip demand) — issued by the **DAS** | 2/4 (flux/T) + rod-position confirm | NF-PR (#3), T-CE (#6), CRD rod-bottom switches | Passive borated-water injection (gravity/N₂ accumulator; fail-open isolation valves) | Yes |
 
 **Latching:** every ESF actuation is latching — once initiated it stays actuated until the operator consciously resets. It does **not** auto-clear when the initiating signal recovers. This prevents a flickering signal from cycling a safety system.
 
@@ -87,6 +88,7 @@ Every reactor trip maps back to a `safety_criteria.yaml` row. Reverse check — 
 | `primary_pressure_design` | hard | Trips 9, 10 (pressurizer P) |
 | `containment_pressure` | hard | Trip 12 + E2 (CI) |
 | `shutdown_margin` | hard | **design** (rod worth) — see §6 |
+| `independent_shutdown_systems` | hard | **design**: #1 rods + #2 EBIS (E6) — see §6 |
 | `mtc/dtc/void` | hard | **inherent** (physics, no trip) — DBE *prevention* |
 | `prhr_capacity` | hard | E4 (PRHR) |
 
@@ -94,14 +96,16 @@ Limits with **no trip** are protected by design or inherent physics, not by an a
 
 ---
 
-## 6. Dependency on soluble-boron decision `[OPEN]`
+## 6. Soluble-boron status `[RESOLVED 2026-06-15]` + the two shutdown systems
 
-The reactor-trip set above is **independent** of whether Aegis-40 uses soluble boron — these trips drop rods regardless. But two downstream items depend on it:
+Aegis-40 is **soluble-boron-free for reactivity control** — the normal-operation coolant carries no boron (Samira's `materials.xml` = pure-water moderator), so boron-dilution accidents stay eliminated and the MTC stays strongly negative. SDM in normal operation comes from rods + fixed Gd/Er burnable absorber.
 
-1. **Shutdown margin source.** If soluble-boron-free (Samira's `materials.xml` shows pure-water moderator), all SDM comes from rods + burnable absorber → the `control_rod_worth_aro` requirement rises (~8–12 % vs ~5 %), and the DAS diverse-trip path becomes more safety-significant.
-2. **ATWS mitigation.** With boron: emergency boration is a backup shutdown. Without boron: the only diverse shutdown is the DAS diverse rod insertion → reflected in the LOHS event tree ATWS branch.
+To satisfy **SSR-2/1 Req 46 §6.9 (two diverse and independent shutdown systems)**, Aegis-40 provides:
 
-→ **Action:** confirm boron status with Samira. Until then the event tree carries both branches and `control_rod_worth_aro` stays flagged.
+1. **Shutdown system #1 — control rods.** Gravity-drop on de-energization (RPS or DAS path). Cold stuck-rod SDM = 12.4 %. Protects `shutdown_margin`, `independent_shutdown_systems`.
+2. **Shutdown system #2 — Emergency Boron Injection System (EBIS)** (`ebis_actuation`, ESF E6). A **passive, diverse, shutdown-only** borated-water system, **isolated and dormant in normal operation**, armed only on an ATWS signature by the **DAS**. Diverse from #1 in physical principle (chemical poison vs mechanical insertion) → does **not** share the rod-insertion common-cause failure mode (§6.8). Sized so it ALONE holds the core cold-subcritical at the most-reactive condition (§6.10) — `[SIM-PENDING — OpenMC borated-core case, Samira]`.
+
+This is the diverse second shutdown system; the DAS provides diverse *actuation* of **both** #1 (rods) and #2 (EBIS). The LOHS event-tree ATWS branch now credits EBIS as the diverse-shutdown success path. See `safety/safety_criteria.yaml` `independent_shutdown_systems` + `open_item: shutdown_second_system`.
 
 ---
 
@@ -117,4 +121,4 @@ The reactor-trip set above is **independent** of whether Aegis-40 uses soluble b
 
 ---
 
-*End of trip signals. 13 reactor trips + 5 ESF actuations + 4 permissives, all traced to Day-1 limits. Length ≈ 3 printed pages.*
+*End of trip signals. 13 reactor trips + 6 ESF actuations (incl. EBIS diverse shutdown) + 4 permissives, all traced to Day-1 limits. Length ≈ 3 printed pages.*

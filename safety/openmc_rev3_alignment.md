@@ -82,7 +82,7 @@ Internal/in-vessel CRDMs — the modern iPWR norm, consistent with the evidence 
 | Datum | Value | Goes to |
 |---|---|---|
 | Decay heat @ shutdown | 7.75 MW (6.2 % of 125 MWth) | OpenFOAM/TH → `prhr_capacity`, 72 h grace |
-| 3D peaking F_q | 3.48 (F_ΔH 2.27, F_z 1.03) | OpenFOAM → `mdnbr_steady/transient` hot-channel |
+| 3D peaking F_q | 3.48 (F_ΔH 2.27, F_z 1.03) — ⚠️ **exceed PWR LCO** (F_q≤2.50, F_ΔH≤1.65); see `safety_criteria` `f_q_total`/`f_delta_h_radial` + `open_item: peaking_recompute` (re-tally pin-aligned; if real, de-peak via IFBA + finer Gd zoning + pin enrichment grading) | OpenFOAM → `mdnbr_steady/transient` hot-channel |
 | Discharge source term | 1.2e17 Bq (27.8 EBq @ shutdown), HLW, ingestion radiotox 2.18e9 Sv | `dose_site_boundary`, `epz_radius` (needs dispersion analysis to close) |
 | Reload scheme | 4-batch, 0.90 CF | waste arisings, SFP/cask sizing |
 | Lattice | 21 FA × 17×17, 200 cm active, 20 cm H₂O radial reflector | `layout/building_list.md` RXB internal dims |

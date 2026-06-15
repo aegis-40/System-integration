@@ -28,6 +28,39 @@ never traded), an **operating limit** (breach demands protective action), or a
 criterion carries its regulatory source and, where protective action is required,
 the crediting trip function [SSR-2/1; NUREG-0800].
 
+### 8.5.1a Plant states and design extension conditions
+
+Following IAEA SSR-2/1 Req 13 and Req 20, the Aegis-40 safety analysis classifies plant
+conditions into the standard categories, and each category carries its own acceptance
+criteria:
+
+| Plant state | Definition | Representative Aegis-40 events | Acceptance criterion |
+|---|---|---|---|
+| Normal operation | within operational limits & conditions | power operation, load-follow, cogen dispatch | OLCs respected |
+| Anticipated operational occurrences (AOO) | expected ≥1× in plant life | turbine trip, loss of normal feedwater, uncontrolled rod withdrawal | no fuel failure; MDNBR ≥ 1.3 |
+| Design basis accidents (DBA) | postulated single faults | small-break LOCA, main-steam-line break | limited fuel damage; dose ≤ 10 CFR 100 |
+| **Design extension conditions — DEC-A** (no significant fuel degradation) | multiple-failure / low-frequency sequences | ATWS, station blackout beyond design, total loss of feedwater | core remains coolable; containment intact |
+| **Design extension conditions — DEC-B** (severe accident) | core-degradation sequences | postulated core melt | containment integrity preserved; large release **practically eliminated** |
+
+The two analyzed event trees map onto this scheme: **LOHS** spans AOO→DEC-A (its
+core-damage sequences require ≥2 independent failures), and **SBO** is a DEC-A sequence
+that the de-energize-to-actuate design renders benign (§8.6.3). ATWS is the DEC-A
+sequence closed by the diverse second shutdown system (§8.6.2a).
+
+**Events removed by "practical elimination" (SSR-2/1 §5.31).** Four event classes are
+eliminated by physical construction rather than by probabilistic argument, so they fall
+outside the DEC analysis envelope:
+
+| Practically eliminated event | Deterministic basis |
+|---|---|
+| Large-break LOCA | integral RPV — no large-bore primary piping exists (§8.6.1) |
+| Control-rod ejection | internal (in-vessel) CRDMs — no ejection path exists (§8.6.1) |
+| Boron-dilution accident | soluble-boron-free reactivity control — no dilution pathway (§8.6.1) |
+| Pressurizer surge-line break | integral pressurizer in the RPV head — no external surge line (§8.6.1) |
+
+Because each basis is deterministic (the initiating geometry does not exist), these
+events are excluded by construction; the argument does not rely on a frequency estimate.
+
 ### 8.5.2 Principal criteria and demonstrated margins
 
 Table 8.5-1 presents the principal criteria with the values demonstrated by the
@@ -122,6 +155,30 @@ All credited ESF are passive and de-energize-to-actuate (§8.7.2):
   baseline and the containment text, PCC description and Figures 8.6-x must be revised
   if the pool concept is adopted.]**
 
+### 8.6.2a Reactor shutdown — two diverse and independent means
+
+IAEA SSR-2/1 Req 46 (§6.9) requires at least two diverse and independent shutdown
+systems, one of which can alone hold the core subcritical at its most reactive state
+(§6.10). Aegis-40 provides:
+
+1. **Control rods (primary).** Gravity-drop on de-energization via the RPS or DAS;
+   demonstrated cold stuck-rod shutdown margin 12.4 %.
+2. **Emergency Boron Injection System (EBIS) — diverse second system.** A passive,
+   shutdown-only borated-water system (gravity head / N₂ accumulator, fail-open
+   isolation valves), **isolated and dormant in normal operation** and armed only on
+   an anticipated-transient-without-scram signature by the Diverse Actuation System
+   (§8.7.4). EBIS is diverse from the rods in physical principle — liquid neutron
+   poison versus mechanical insertion — and therefore does not share the
+   rod-insertion common-cause failure mode (§6.8).
+
+This is achieved **without compromising the soluble-boron-free design**: the
+normal-operation coolant remains boron-free, so the boron-dilution accident stays
+eliminated (§8.6.1) and the moderator temperature coefficient stays strongly
+negative; boron exists solely as the emergency shutdown reserve, dormant until
+demanded — the same principle as a BWR standby liquid control system. EBIS boron mass
+and concentration are being sized so that the system alone reaches cold subcriticality
+at the most reactive condition *[SIM-PENDING — OpenMC borated-core case]*.
+
 ### 8.6.3 Analyzed events — event-tree results
 
 Two initiators are analyzed to event-tree depth, chosen to exercise the passive chain
@@ -143,12 +200,19 @@ challenge**. No AC, no DC, no operator action and no external water are required
 72 h; Class 1E batteries (72 h) serve post-accident monitoring only [RG 1.97]. The
 standby diesels are defence-in-depth, not credited. SBO CDF ≈ **1e-11/ry** — four
 orders below target, quantitatively substantiating the "negligible SBO" claim of
-§8.8.3 (Figure 8.6-2, `event_tree_SBO`). ATWS under SBO is bounded by mechanical
-common-cause failure of rod insertion (~1e-6 conditional **[VERIFY — CCF data
-source]**), consistent with the intent of 10 CFR 50.62 given rod/DAS diversity.
+§8.8.3 (Figure 8.6-2, `event_tree_SBO`). ATWS under SBO is mitigated by the
+diverse second shutdown system (EBIS, §8.6.2a): mechanical common-cause failure of rod
+insertion (~1e-6 conditional **[VERIFY — CCF data source]**) is backstopped by
+DAS-actuated boron injection, which shares no failure mode with the rods — consistent
+with the intent of 10 CFR 50.62.
 
-**Remaining design-basis spectrum — screening status.** The following initiators are
-identified and screened but not yet analyzed to event-tree depth; this is a declared
+**Remaining design-basis spectrum — screening status.** The postulated-initiating-event
+list is built from the NUREG-0800 SRP Chapter 15 event categories (increase/decrease in
+heat removal, decrease in flow, reactivity anomalies, inventory increase/decrease, ATWS,
+radioactive-release events) as the master checklist [SSR-2/1 Req 16, 19]. The following
+initiators are identified and screened but not yet analyzed to event-tree depth — analysis
+is prioritized **MSLB first** (the limiting overcooling transient for this strongly-
+negative-MTC core) then **SBLOCA** (the only surviving LOCA class). This is a declared
 gap, not an oversight:
 
 | Initiator | Why it matters here | Status |
@@ -216,12 +280,14 @@ A Class 1E but **platform-diverse** system (different technology and design team
 the RPS) covers postulated common-cause failure of all four RPS divisions
 [SECY-93-087; BTP 7-19; SSG-39 §6]. It monitors power-range flux and pressurizer
 pressure through fixed, hardware-biased logic, with setpoints staggered beyond the
-RPS envelope, and provides diverse paths to the trip breakers and to SI/PRHR
-actuation. *Sufficiency rationale: the two monitored variables bound the
-high-consequence CCF scenarios (overpower and loss-of-coolant/overpressure families);
-[VERIFY — defend two-variable sufficiency against the screened initiator list of
-§8.6.3 once those analyses close].* In the soluble-boron-free core, DAS rod-insertion
-diversity carries the ATWS burden (§8.6.3).
+RPS envelope, and provides diverse paths to the trip breakers, to SI/PRHR actuation,
+and to **Emergency Boron Injection (EBIS, §8.6.2a)** on an ATWS signature (high
+flux/temperature with no rod insertion confirmed). *Sufficiency rationale: the
+monitored variables bound the high-consequence CCF scenarios (overpower and
+loss-of-coolant/overpressure families); [VERIFY — defend variable sufficiency against
+the screened initiator list of §8.6.3 once those analyses close].* The DAS is the sole
+actuation path for EBIS, the diverse second shutdown system that carries the ATWS
+burden in this soluble-boron-free core (§8.6.2a, §8.6.3).
 
 ### 8.7.5 Control room and human factors
 
@@ -230,7 +296,12 @@ station, 4×80″ overview wall (plant mimic, SPDS, critical safety functions). 
 management per ISA 18.2 (three tiers; ≤10 alarms in any 10-minute window under
 design-basis transients). Computer-based procedures with paper backup. **Hardwired,
 software-independent manual actions** — reactor trip, SI, CI, EFW, MSIV closure — per
-IEEE 603 §5.8. MCR habitability HVAC per §8.8.1.
+IEEE 603 §5.8. MCR habitability HVAC per §8.8.1. A **Remote Shutdown Station**, physically
+and electrically separated from the MCR (separate fire area, independent 1E division),
+provides post-accident monitoring (RG 1.97) plus diverse manual trip and ESF actuation
+(incl. EBIS) to reach and hold safe shutdown if the MCR is uninhabitable [SSR-2/1
+Req 65–66]; its scope is minimal because the plant is passively safe for ≥72 h without
+operator action.
 
 ### 8.7.6 Digital twin (advisory) — originality feature
 
@@ -253,7 +324,9 @@ firmware, write-once audit logs).
 
 ### References (§8.5–8.7)
 
-IAEA SSR-2/1 Rev 1; IAEA SSG-2 Rev 1 (deterministic safety analysis); SSG-9; SSG-30;
+IAEA SSR-2/1 Rev 1 (Req 5, 13, 16, 17, 19, 20, 35, 45, 46, 65–66, 81–82); IAEA SSG-52
+(reactor core); IAEA TECDOC-1936 (SMR applicability); NUREG-1431 Rev 5 (STS LCO
+3.2.1/3.2.2); IAEA SSG-2 Rev 1 (deterministic safety analysis); SSG-9; SSG-30;
 SSG-39; 10 CFR 50 App. A (GDC 11, 13, 17, 19–24, 26); 10 CFR 50.46; 10 CFR 50.62;
 10 CFR 50.63 + RG 1.155; 10 CFR 73.54 + RG 5.71; 10 CFR 100.11; NUREG-0800 SRP
 Ch. 4, 7, 15; NUREG-0700/0711; NUREG/CR-6890; NUREG/CR-6928; WASH-1400; RG 1.60,
@@ -263,6 +336,11 @@ ASME III; SECY-93-087, SECY-10-0034; BTP 7-19.
 
 ---
 
-*End of draft r1. Open markers: 6× [SIM/ANALYSIS-PENDING], 5× [VERIFY], 1×
+*Draft r2, 2026-06-15 — regulatory-alignment audit folded in: §8.5.1a plant-states/DEC,
+§8.6.2a two-shutdown-systems (EBIS), Remote Shutdown Station (§8.7.5), SRP-Ch.15 PIE
+basis (§8.6.3). New pending markers added (EBIS sizing, tritium budget, DEC-A analyses,
+occupational dose). Full audit: `safety/regulatory_alignment_audit.md`.*
+
+*End of draft. Open markers: ~9× [SIM/ANALYSIS-PENDING], 5× [VERIFY], 1×
 [DECISION-PENDING C5], 2× [TBD]. Review companion:
 `planning/FER_readiness_review_2026-06-13.md` (gaps G1–G11, consistency X1–X6).*

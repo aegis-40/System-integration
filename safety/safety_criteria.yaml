@@ -23,7 +23,7 @@
 
 design_id: aegis40-rev_0
 schema_version: 0.1
-last_updated: 2026-05-26
+last_updated: 2026-06-15
 owner: Azamhon (3S / I&C / FOM)
 reactor_type: 40 MWe / 125 MWth integral PWR (iPWR) cogen
 
@@ -136,6 +136,21 @@ criteria:
     defense_in_depth_level: 2
     notes: "Accident basis = uncontrolled rod WITHDRAWAL (AOO). Rod EJECTION eliminated by design — internal (in-vessel) CRDMs confirmed 2026-06-12 (openmc_rev3_alignment.md s4). rev_3 as-run 1.5e-5 = 50x margin."
 
+  - id: independent_shutdown_systems
+    parameter: "Diverse & independent reactor shutdown systems"
+    limit_value: 2
+    unit: "count"
+    direction: ">="
+    type: hard_constraint
+    source: "IAEA SSR-2/1 Rev 1 Req 46 §6.9 (≥2 diverse+independent systems); §6.10 (≥1 alone subcritical at most reactive state); §6.8 (CCF of insertion)"
+    normalizer: min_max
+    normalizer_params: {min: 0, max: 2}
+    fom_param: derived_safety.independent_shutdown_systems
+    sensor_chain: ["design-document audit", "ARO/stuck-rod OpenMC cases", "EBIS tank level + boron concentration"]
+    setpoint_link: ebis_actuation
+    defense_in_depth_level: 3
+    notes: "**RESOLVED 2026-06-15 (was GAP vs SSR-2/1 Req 46 §6.9).** Count = 2: (1) gravity-drop control rods (primary; cold SDM 12.4%, stuck-rod compliant), (2) **Emergency Boron Injection System (EBIS)** — a passive, diverse, shutdown-only borated-water system (see trip_signals.md E6 + FER §8.6.2a). Diversity satisfied (chemical poison vs mechanical rod → no shared insertion CCF, §6.8). §6.10: EBIS sized so it ALONE reaches cold subcritical at the most reactive condition [SIM-PENDING — Samira to size boron mass/concentration via OpenMC borated-core case]. Design philosophy preserved: NO soluble boron for reactivity control in normal operation (boron-dilution accident stays eliminated); EBIS is isolated/dormant, armed only on ATWS via the DAS. Note: SBF burnable absorber (Gd/Er) is fixed hold-down, NOT counted as a shutdown system. See open_item shutdown_second_system (now sizing-only)."
+
 # ---------------------------------------------------------------------------
 # 2. THERMAL-HYDRAULIC SAFETY (clad integrity, DNB, fuel)
 # ---------------------------------------------------------------------------
@@ -225,6 +240,36 @@ criteria:
     sensor_chain: ["fuel performance model"]
     setpoint_link: over_power_dt_trip
     defense_in_depth_level: 1
+
+  - id: f_delta_h_radial
+    parameter: "Nuclear enthalpy-rise hot-channel factor F_ΔH^N"
+    limit_value: 1.65           # CFΔH at full power (P=1); LCO = 1.65·[1+0.3·(1−P)]
+    unit: "-"
+    direction: "<="
+    type: hard_constraint
+    source: "NUREG-1431 Rev 5 LCO 3.2.2; IAEA SSG-52 §6 (core power distribution); NUREG-0800 SRP 4.4"
+    normalizer: target_gaussian
+    normalizer_params: {target: 1.55, alpha: 1.0}
+    fom_param: from_openmc.f_delta_h
+    sensor_chain: ["in-core flux map (movable detectors / SPNDs)", "loading-pattern verification"]
+    setpoint_link: over_temp_dt_trip
+    defense_in_depth_level: 1
+    notes: "Radial peaking of the integrated pin power; drives MDNBR directly. **FLAG: rev_3 as-run OpenMC F_ΔH = 2.268 EXCEEDS the 1.65 LCO by ~37%** (safety/openmc_rev3_alignment.md / OpenMC summary_report.txt 2026-06-03). The 3D notebook COMPUTES this (diagnostic `radial_peaking_FdeltaH`) but does NOT gate it — absent from notebook SAFETY_LIMITS, so it never showed FAIL. Caveat: value is a raw RegularMesh pin tally (cell 1.27 cm vs pin pitch 1.2623 cm → aliasing + inter-FA water gaps can inflate). Re-run with a pin-aligned lattice tally and engineering uncertainty factors before treating as final. See open_item peaking_recompute."
+
+  - id: f_q_total
+    parameter: "Total heat-flux hot-channel (peaking) factor F_Q(Z)"
+    limit_value: 2.50           # CFQ at full power; LCO = [CFQ/P]·K(Z)
+    unit: "-"
+    direction: "<="
+    type: hard_constraint
+    source: "NUREG-1431 Rev 5 LCO 3.2.1; 10 CFR 50.46(b) (LOCA PCT/LHGR basis); IAEA SSG-52 §6; NUREG-0800 SRP 4.3"
+    normalizer: target_gaussian
+    normalizer_params: {target: 2.30, alpha: 1.0}
+    fom_param: from_openmc.f_q
+    sensor_chain: ["in-core flux map (axial + radial)", "loading-pattern verification"]
+    setpoint_link: over_power_dt_trip
+    defense_in_depth_level: 1
+    notes: "3D total peaking (F_xy·F_z); sets peak linear heat rate → LOCA PCT and centerline-melt margins. **FLAG: rev_3 as-run OpenMC F_q = 3.478 EXCEEDS the 2.50 LCO by ~39%** (diagnostic `pin_peaking_factor_Fq`). Same gating gap and same mesh-aliasing caveat as f_delta_h_radial. If confirmed after pin-aligned re-tally, the SBF Gd-zoned loading needs de-peaking (split Gd zoning / pin-level enrichment grading / IFBA) before DNBR and LOCA limits can be met. See open_item peaking_recompute."
 
 # ---------------------------------------------------------------------------
 # 3. PRIMARY / SECONDARY PRESSURE BOUNDARY
@@ -339,6 +384,20 @@ criteria:
     defense_in_depth_level: 5
     notes: "SMR small EPZ is a competitive lever. Target ≤ 300 m if source term allows."
 
+  - id: occupational_collective_dose
+    parameter: "Annual occupational collective dose"
+    limit_value: 0.5
+    unit: "person-Sv/yr"
+    direction: "<="
+    type: target
+    source: "IAEA SSR-2/1 Rev 1 Req 5 (radiation protection in design, ALARA); IAEA GSR Part 3"
+    normalizer: log_ratio
+    fom_param: derived_safety.occupational_collective_dose_personSv
+    sensor_chain: ["area + personnel dosimetry program", "dose-rate zoning map"]
+    setpoint_link: null
+    defense_in_depth_level: 5
+    notes: "Req 5 ALARA design feature (2026-06-15 audit). Target <0.5 person-Sv/yr (advanced-PWR class). ALARA design measures: cobalt-free materials in the primary circuit, shielded/remote maintenance of high-dose components (SG, CVCS, radwaste), dose-rate zoning built on layout/zones.md. [ANALYSIS-PENDING — collective-dose estimate + zoning map]."
+
   - id: dose_site_boundary
     parameter: "Whole-body dose at site boundary (worst-case LOCA, 0–2 h)"
     limit_value: 0.25            # 25 rem TEDE
@@ -443,6 +502,27 @@ criteria:
     defense_in_depth_level: 0
 
 # ---------------------------------------------------------------------------
+# 8. COGENERATION INTERFACE (SSR-2/1 Req 35) — Aegis-40 is a cogen plant
+#    (TES district heating + SOE hydrogen). Req 35 applies and was previously
+#    unaddressed (2026-06-15 audit).
+# ---------------------------------------------------------------------------
+
+  - id: cogen_radionuclide_isolation
+    parameter: "Independent barriers preventing radionuclide transport to heat/H₂ utilization units"
+    limit_value: 2
+    unit: "count"
+    direction: ">="
+    type: hard_constraint
+    source: "IAEA SSR-2/1 Rev 1 Req 35 (no radionuclide transport to district-heating / desalination units in operational states AND accident conditions)"
+    normalizer: min_max
+    normalizer_params: {min: 0, max: 3}
+    fom_param: derived_safety.cogen_isolation_barriers
+    sensor_chain: ["intermediate-loop activity monitor", "interface ΔP monitor", "product-stream radiation monitor (district heat return, H₂)"]
+    setpoint_link: null
+    defense_in_depth_level: 3
+    notes: "**RESOLVED 2026-06-15 (was GAP vs SSR-2/1 Req 35).** Count = 3 barriers: (1) SG tube wall, (2) non-radioactive intermediate-loop boundary, (3) customer-side HX wall — see layout/aux_systems.md §9a. Intermediate loop held at HIGHER pressure than the reactor-side stream at each interface HX → any leak flows inward (clean→reactor), never outward. Accident-condition isolation (the 2nd half of Req 35): fail-closed ESFAS valves on high intermediate-loop/product activity, SGTR signal, or containment isolation. Tritium is the governing nuclide for the SOE high-T (~800°C) interface → permeation-barrier coatings + H₂-product tritium monitor + intermediate-loop getter [ANALYSIS-PENDING budget]. See open_item cogen_isolation_design (now tritium-budget only)."
+
+# ---------------------------------------------------------------------------
 # DEFENSE IN DEPTH SUMMARY (cross-cut, IAEA SSR-2/1 Rev 1 §2.13)
 # ---------------------------------------------------------------------------
 
@@ -494,3 +574,39 @@ open_items:
     owner: layout (Elbek) / supervisor
     needed_by: "when needed (deferred per user decision 2026-05-26)"
     status: "Deferred"
+  - id: shutdown_second_system
+    question: "EBIS adopted as shutdown system #2 (Req 46 §6.9 met by design). Remaining: size the boron mass/concentration so EBIS ALONE holds cold subcritical at most-reactive state (§6.10)."
+    impact: "Closes the design gap; sizing confirms §6.10 standalone-capability claim. Feeds EBIS tank volume into layout (RXB) + the ATWS branch of the LOHS event tree."
+    owner: core design (Samira) sizing + 3S (Azamhon) integration
+    needed_by: 2026-06-19
+    status: "DESIGN ADOPTED 2026-06-15 (EBIS: passive, shutdown-only, DAS-armed; trip_signals E6, FER §8.6.2a). SIM-PENDING — OpenMC borated-core case to set boron mass for standalone cold-subcritical at most-reactive condition + verify no operational boron (dilution stays eliminated)."
+  - id: cogen_isolation_design
+    question: "EBIS-style barrier scheme adopted for Req 35 (intermediate loop + inward ΔP + ESFAS auto-isolation, aux_systems.md §9a). Remaining: tritium permeation/carryover budget for the SOE high-T (~800°C) interface."
+    impact: "Closes Req 35 by design (3 barriers). Tritium budget confirms H₂-product + district-heat dose pathway is bounded; sizes permeation-barrier coatings + getter."
+    owner: energy/TES lead (Alisher) + 3S (Azamhon)
+    needed_by: 2026-06-22
+    status: "DESIGN ADOPTED 2026-06-15 (aux_systems.md §9a). ANALYSIS-PENDING — tritium permeation through the SOE interface HX + carryover to H₂ product and district-heat water; confirm < release limits, specify permeation-barrier coating + intermediate-loop getter."
+  - id: dec_plant_states
+    question: "Plant-state + DEC + practical-elimination framework added (FER §8.5.1a). Remaining: analyze the DEC-A sequences (ATWS, total LOFW) to demonstrate the coolable-core / containment-intact acceptance criteria."
+    impact: "Framework complete; DEC-A quantitative demonstration ties to the event-tree completion (open_item-equivalent in FER §8.6.3 screening table)."
+    owner: 3S (Azamhon)
+    needed_by: 2026-06-22
+    status: "FRAMEWORK ADDED 2026-06-15 (FER §8.5.1a: AOO/DBA/DEC-A/DEC-B + §5.31 practical-elimination of LBLOCA/rod-ejection/boron-dilution/surge-line). ANALYSIS-PENDING — DEC-A sequence demonstrations (event-tree completion, FER §8.6.3)."
+  - id: fuel_core_structural
+    question: "SSR-2/1 Req 43–44: demonstrate fuel-element performance + core structural capability (rod internal pressure, clad strain/fretting, fuel-clad gap; combined seismic+LOCA core loads; control-rod insertability under seismic)."
+    impact: "Completes the fuel/core mechanical safety case underpinning the fuel design limits already in this file."
+    owner: mechanical/fuel lead + core design (Samira)
+    needed_by: 2026-06-26
+    status: "OPEN — assign FRAPCON-class rod-performance checks + core hold-down/seismic-LOCA structural analysis. Coordinated by 3S; analyses owned by mechanical scope."
+  - id: containment_pt_analysis
+    question: "SSR-2/1 Req 54–58: confirm containment design pressure (≤0.414 MPa) holds for the limiting DBA mass-energy release, once the dry-vs-submerged-pool decision (C5) is made."
+    impact: "Validates the containment-pressure hard_constraint + the §8.6.2 containment description; gates the layout/CAD recut."
+    owner: layout (Elbek) + safety (Azamhon) + supervisor (C5 decision)
+    needed_by: 2026-06-26
+    status: "OPEN — (1) resolve C5 (recommend compact high-pressure steel containment, fits passive PCC + small footprint); (2) run limiting-DBA (SBLOCA/MSLB) mass-energy → containment P/T; (3) confirm ≤0.414 MPa with margin. See layout/fer_8810_docx_audit.md C5."
+  - id: peaking_recompute
+    question: "rev_3 as-run F_q=3.478 and F_ΔH=2.268 exceed PWR LCOs (2.50 / 1.65). Are these real or a RegularMesh pin-tally artifact (cell≠pin pitch, inter-FA water gaps)?"
+    impact: "Both are hard_constraint. If real, wFOM → DESIGN_REJECTED until the SBF loading is de-peaked; also gates MDNBR (DNBR feasibility) and LOCA PCT. If artifact, limits pass with margin."
+    owner: OpenMC lead (Samira)
+    needed_by: 2026-06-19
+    status: "OPEN — (1) re-tally with a pin-aligned lattice/distribcell tally instead of RegularMesh (removes cell≠pitch aliasing + water-gap dilution); (2) add f_q + f_delta_h to notebook SAFETY_LIMITS and export as from_openmc.f_q / from_openmc.f_delta_h; (3) report engineering F_ΔH/F_q with uncertainty factors. **If still > LCO after re-tally, de-peak the SBF loading:** (a) IFBA (thin ZrB₂ coating) to flatten radial profile without large Gd lumps; (b) finer radial Gd zoning gradient; (c) pin-level enrichment grading — lower enrichment in the high-peak locations (guide-tube/water-hole-adjacent + peripheral pins); (d) loading-pattern optimization (trade low-leakage vs flatter). Target F_ΔH ≤ 1.55, F_q ≤ 2.30 with margin to the LCOs."

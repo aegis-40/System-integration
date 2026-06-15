@@ -114,6 +114,7 @@ Class 1E, also 4-train. Same sensor inputs as RPS but evaluates a different set 
 | Emergency Feedwater (EFW) | Low SG level OR loss of normal FW | Gravity-driven feedwater from elevated tank (passive — isolation valves open, no pumps) |
 | PRHR / PCCS | Low SG level + EFW unavailable OR high core exit T post-scram | Passive Residual Heat Removal HX aligned to IRWST |
 | Main Steam Isolation (MSI) | High steam line radiation OR high containment P | MSIVs close |
+| Emergency Boron Injection (EBIS) | ATWS signature (high flux/T + no rod insertion) — **DAS only** | Passive borated-water injection (shutdown system #2) |
 
 ESFAS uses the same 2-of-4 voting model as RPS. Actuation is **latching** — once initiated, operator must consciously reset; not auto-cleared by signal recovery.
 
@@ -143,9 +144,10 @@ This layer is a **TEKNOFEST originality lever** for FER §5 (originality / innov
 ### 3.6 Diverse Actuation System (DAS)
 Class 1E but **technologically diverse** from the RPS/ESFAS — implemented on a different platform (e.g. FPGA where RPS uses qualified PLC, or vice-versa), by a different design team, to defeat **common-cause software failure** (CCF) of the primary protection system. Required by NRC SECY-93-087 / BTP 7-19 and IAEA SSG-39 §6 for digital protection systems.
 
-The DAS independently monitors a reduced set of the most safety-significant variables — power-range neutron flux and pressurizer pressure (see `sensor_inventory.md`) — and provides a **diverse backup** path to:
+The DAS independently monitors a reduced set of the most safety-significant variables — power-range neutron flux, pressurizer pressure, and core-exit temperature with control-rod-bottom confirmation (see `sensor_inventory.md`) — and provides a **diverse backup** path to:
 - trip the reactor (independent signal to the trip breakers), and
-- actuate the key passive ESF functions (SI, PRHR).
+- actuate the key passive ESF functions (SI, PRHR), and
+- **actuate the Emergency Boron Injection System (EBIS)** — shutdown system #2 — on an ATWS signature (high flux/temperature **with no rod insertion confirmed**). EBIS is the diverse, independent second means of shutdown required by IAEA SSR-2/1 Req 46 §6.9 in this soluble-boron-free core; the DAS is its sole actuation path (see `safety/trip_signals.md` E6).
 
 The DAS is **not** part of the layered DiD control hierarchy (Layers 1–5); it is a parallel safety-grade subsystem whose sole purpose is to cover a postulated CCF that disables all four RPS divisions simultaneously. It uses simpler, fixed, hardware-biased logic to minimize shared failure modes with the RPS software. Its actuation thresholds are set slightly beyond the RPS setpoints so the RPS acts first under normal demand, with the DAS as backstop.
 
@@ -182,6 +184,24 @@ Despite digital I&C throughout, the following operator actions remain **hardwire
 - Manual MSIV closure.
 
 Per IEEE 603 §5.8, manual initiation must be independent of computer health.
+
+### 4.5 Supplementary control room / Remote Shutdown Station (RSS)
+
+Per IAEA SSR-2/1 Req 65–66, a **Remote Shutdown Station** is provided, physically and
+electrically separated from the MCR (different fire area, independent cabling and 1E power
+division), able to bring the plant to and maintain **safe shutdown** if the MCR becomes
+uninhabitable (fire, smoke, toxic gas, sabotage). Because Aegis-40 is passively safe for
+≥72 h with no operator action (§8.6), the RSS scope is deliberately minimal:
+
+- **Post-accident monitoring** of the critical safety-function variables (neutron flux,
+  core-exit T, pressurizer P, SG/IRWST level, containment P/radiation) per RG 1.97;
+- **Diverse manual reactor trip** and **manual ESF actuation** (SI, EFW/PRHR alignment,
+  containment isolation, **EBIS**) on hardwired controls independent of the MCR;
+- confirmation of shutdown-system status (rod-bottom + EBIS).
+
+The RSS does not need full control capability — it only has to confirm the passive systems
+have actuated and provide a diverse manual backstop. It shares no cabling, HVAC, or power
+division with the MCR so that a single MCR-disabling event cannot also disable it.
 
 ---
 

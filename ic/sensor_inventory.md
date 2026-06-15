@@ -1,7 +1,7 @@
 # Sensor Inventory — Aegis-40
 
 *Source: companion to `ic_architecture.md`. Drop-in candidate for FER §8.7 subsection on sensor / detector list.*
-*Owner: Azamhon. Last updated: 2026-05-27.*
+*Owner: Azamhon. Last updated: 2026-06-15.*
 
 ---
 
@@ -100,7 +100,7 @@ Categories per RG 1.97 Rev 5:
 |---|---|---|---|
 | 1 | No containment H₂ monitor (severe accident) | Add catalytic + thermal-conductivity H₂ monitors, RG 1.97 Type C | High |
 | 2 | No pressurizer wide-range level (post-acc) | Add L-PZR-WR, dP, Class 1E | Medium |
-| 3 | No boric acid concentration sensor | Add online boron meter (low priority — no boration in passive design?) | Low — TBD with Samira |
+| 3 | No EBIS instrumentation (diverse shutdown system #2) | Add EBIS tank level + boron-concentration meter + injection-line flow/valve-position (1E), feeding the DAS `ebis_actuation` confirm. Online coolant boron meter NOT needed in normal op (boron-free) — boron exists only in the dormant EBIS reserve. | High (was Low) — with Samira |
 | 4 | No coolant activity monitor (online failed fuel detection) | Add primary coolant gamma spec | Low |
 | 5 | IRWST level | Add 2-channel level for ECCS source | Medium |
 

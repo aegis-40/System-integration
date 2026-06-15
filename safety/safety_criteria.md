@@ -2,7 +2,7 @@
 
 *Source: `safety_criteria.yaml` — single source of truth. This file is auto-renderable from it.*
 *Maps to FER §8.5. Cross-referenced from §8.6 (safety systems) and §8.7 (I&C trips).*
-*Owner: Azamhon. Last updated: 2026-05-26.*
+*Owner: Azamhon. Last updated: 2026-06-15.*
 
 ---
 
@@ -17,6 +17,9 @@
 | `void_coefficient` | Void coefficient | < 0 pcm/% void | **hard** | NRC GDC-11 | Void model + flux | — |
 | `control_rod_worth_aro` | ARO integral worth | ≥ 5 % Δk/k | operating | NRC SRP 4.3 | Diff rod worth | — |
 | `max_reactivity_insertion_rate` | Max ρ-insertion rate | ≤ 75 pcm/s | **hard** | ANSI/ANS-58.21 | Rod speed interlock | `high_flux_rate_trip` |
+| `independent_shutdown_systems` | Diverse+independent shutdown systems | ≥ 2 | **hard** | SSR-2/1 Req 46 §6.9 | Design audit | `ebis_actuation` |
+
+> ✅ **Resolved (SSR-2/1 Req 46 §6.9):** Count = **2** — (1) gravity-drop control rods, (2) **Emergency Boron Injection System (EBIS)**: passive, diverse (chemical poison ≠ mechanical rod), shutdown-only, DAS-armed on ATWS. SBF philosophy kept — *no soluble boron for reactivity control in normal operation*; EBIS dormant/isolated. §6.10 standalone cold-subcritical sizing is [SIM-PENDING]. See `trip_signals.md` E6, FER §8.6.2a, `open_item: shutdown_second_system`.
 
 ## 2. Thermal-hydraulic safety
 
@@ -28,6 +31,10 @@
 | `cladding_oxidation` | Clad ECR | ≤ 17 % | **hard** | 10 CFR 50.46(b)(2) | Fuel perf code | — |
 | `hydrogen_generation` | Core-wide H₂ (Zr-H₂O) | ≤ 1 % | **hard** | 10 CFR 50.46(b)(3) | Post-LOCA inference | — |
 | `fuel_centerline_temperature` | UO₂ centerline T | < 2590 °C | **hard** | NRC SRP 4.2; UO₂ T_melt | Fuel perf model | — |
+| `f_delta_h_radial` | Enthalpy-rise factor F_ΔH^N | ≤ 1.65 | **hard** | NUREG-1431 LCO 3.2.2; SSG-52; SRP 4.4 | In-core flux map | `over_temp_dt_trip` |
+| `f_q_total` | Heat-flux peaking factor F_Q(Z) | ≤ 2.50 | **hard** | NUREG-1431 LCO 3.2.1; 10 CFR 50.46; SSG-52 | In-core flux map | `over_power_dt_trip` |
+
+> ⚠️ **Peaking flag (rev_3 as-run):** OpenMC reports **F_q = 3.478** (> 2.50, +39%) and **F_ΔH = 2.268** (> 1.65, +37%) — both exceed PWR Tech-Spec LCOs. The 3D notebook computes them as diagnostics but does **not** gate them (absent from `SAFETY_LIMITS`). Pending pin-aligned re-tally + de-peaking — see `open_item: peaking_recompute` in `safety_criteria.yaml`. Drives MDNBR (DNBR) and LOCA PCT, so resolution is on the critical path.
 
 ## 3. Pressure boundary
 
@@ -52,6 +59,7 @@
 | ID | Parameter | Limit | Type | Source |
 |---|---|---|---|---|
 | `epz_radius` | EPZ radius | ≤ 0.5 km | target | FER Tbl 1; NRC RG 1.242 |
+| `occupational_collective_dose` | Annual occupational collective dose | ≤ 0.5 person-Sv/yr | target | SSR-2/1 Req 5; GSR Part 3 |
 | `dose_site_boundary` | Boundary dose (LOCA 0–2 h) | ≤ 0.25 Sv TEDE | **hard** | 10 CFR 100.11 |
 | `cdf` | Core damage frequency | < 1e-7 /ry | target | FER Tbl 1; NRC RG 1.174 |
 | `lrf` | Large release frequency | < 1e-8 /ry | target | FER Tbl 1; NRC RG 1.174 |
@@ -69,6 +77,14 @@
 | `fuel_burnup_max` | Discharge burnup (peak rod) | ≤ 62 GWd/MTU | operating | NRC SRP 4.2 |
 | `fuel_enrichment_max` | Max U-235 enrichment | ≤ 5.0 wt % | **hard** | 10 CFR 50 LEU limit |
 | `cycle_length` | Cycle length | ≥ 365 EFPD | target | FER Tbl 1 (12–24 mo reload) |
+
+## 8. Cogeneration interface (SSR-2/1 Req 35)
+
+| ID | Parameter | Limit | Type | Source |
+|---|---|---|---|---|
+| `cogen_radionuclide_isolation` | Independent barriers to TES/H₂ units | ≥ 2 | **hard** | SSR-2/1 Req 35 |
+
+> ✅ **Resolved (SSR-2/1 Req 35):** Count = **3 barriers** — SG tube wall + non-radioactive intermediate loop + customer-side HX (`aux_systems.md` §9a). Clean intermediate loop held at *higher* pressure → any leak flows inward, never outward; ESFAS fail-closed isolation on high activity / SGTR / containment isolation covers accident conditions. Tritium budget for the SOE high-T interface is [ANALYSIS-PENDING]. See `open_item: cogen_isolation_design`.
 
 ---
 
@@ -110,4 +126,6 @@ Per `MEETING_BRIEF.md` §2.4, hard constraints are pass/fail, never scored.
 
 ---
 
-*Total: 27 numeric safety criteria across 7 categories (17 hard constraints, 4 operating limits, 6 targets) + 5-level defense-in-depth map. Every row machine-readable in `safety_criteria.yaml`, every row links to a FOM input field, every hard constraint either has a trip or a design-by-construction note.*
+*Total: 32 numeric safety criteria across 8 categories (21 hard constraints, 4 operating limits, 7 targets) + 5-level defense-in-depth map. Every row machine-readable in `safety_criteria.yaml`, every row links to a FOM input field, every hard constraint either has a trip or a design-by-construction note.*
+
+*2026-06-15 regulatory-alignment audit (vs SSR-2/1 Rev 1, SSG-52, TECDOC-1936, NUREG-1431) added: `f_q_total`, `f_delta_h_radial` (peaking, Req 45/SSG-52), `independent_shutdown_systems` (Req 46 — resolved via EBIS), `cogen_radionuclide_isolation` (Req 35 — resolved via intermediate loop), `occupational_collective_dose` (Req 5). Full audit + resolutions: `safety/regulatory_alignment_audit.md`. Companion: `safety/hazards_register.md` (Req 17).*
