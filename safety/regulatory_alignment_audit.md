@@ -63,7 +63,7 @@ international standards added to `docs/international_regulations/`.*
 | 45 | Control of the core (power distribution) | FLAGGED | peaking criteria added + de-peak path (Finding D) |
 | 46 | Reactor shutdown | RESOLVED (design) | EBIS = diverse system #2 (Finding A); §6.10 sizing pending |
 | 47–49 | RCS design / overpressure / inventory | PASS | integral RPV, Pzr P limits + relief, SI |
-| 51–53 | Residual heat removal / ECCS / ultimate heat sink | PASS | PRHR/IRWST; UHS = seawater (C2 resolved) |
+| 51–53 | Residual heat removal / ECCS / ultimate heat sink | PASS | PRHR/IRWST. **Safety UHS = IRWST + passive containment cooling (seawater-independent, ≥72 h)**; once-through seawater (C2) is the NORMAL heat sink only, non-safety (TECDOC-1936 graded). See `safety_criteria.yaml` `ultimate_heat_sink`. *(T3 fix 2026-06-19 — was wrongly "UHS = seawater".)* |
 | 54–58 | Containment & isolation | PARTIAL | `open_item: containment_pt_analysis` — resolve C5 then run P/T |
 | 59–64 | Instrumentation / protection / control / separation | PASS | `ic_architecture` — strong; one-way isolation, DAS, computer-based per IEC 60880 |
 | 65–66 | Control room / supplementary CR | RESOLVED | Remote Shutdown Station, `ic_architecture` §4.5 + FER §8.7.5 |

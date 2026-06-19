@@ -34,7 +34,7 @@
 
 > *"Reactor building, energy conversion, ops/maintenance services, other systems & buildings."*
 
-Already audited in `building_list.md` §5 — all four categories populated (RXB / TB+EHB+CTW / CB+WSB+ADM / AB+SFB+DGB+WMB+TES+SOE+H2S+SEC+METEO+OFFGAS). ✓
+Already audited in `building_list.md` §5 — all four categories populated (RXB / TB+EHB+CWP(+seawater intake/outfall) / CB+WSB+ADM / AB+SFB+DGB+WMB+TES+SOE+H2S+SEC+METEO+OFFGAS). ✓
 
 ---
 
@@ -109,7 +109,7 @@ Beyond requirement-by-requirement — does the deliverable set hold together?
 | Check | Result |
 |---|---|
 | Every building tied to a function — no orphan boxes | ✓ all 14 buildings in `building_list.md` have a function; block diagram boxes all appear in the list |
-| Every footprint sourced or `[ASSUMED]` | ✓ tags present; TES/SOE flagged `[ALISHER]`, CTW `[ASSUMED]` |
+| Every footprint sourced or `[ASSUMED]` | ✓ tags present; TES(TCES)/SOE flagged `[ALISHER]`; CWP + seawater intake/outfall (once-through, C2) |
 | Cross-references resolve to real files | ✓ `epz_radius`, `sse_design` exist in `safety/safety_criteria.yaml`; `ic_architecture.md` §4 MCR ref valid |
 | Diagram + table + prose tell same story | ✓ 3 islands + same building IDs across `zones.md`, `building_list.md`, `block_layout`, `aux_systems.md` |
 | H₂ stand-off ≥ 100 m respected on diagram | ✓ `zones.md` §4 ASCII + Z5 + `building_list.md` H2S note all state 100 m |

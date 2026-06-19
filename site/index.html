@@ -163,11 +163,11 @@ main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
         <g id="pipe-site">
           <path d="M62,135 L62,88" fill="none" stroke="var(--hz)" stroke-width=".7" opacity=".75"/>
           <path d="M70,135 L70,88" fill="none" stroke="var(--ni)" stroke-width=".7" opacity=".75"/>
-          <path d="M50,73 L37,73 L37,42" fill="none" stroke="#3f97a8" stroke-width=".7" opacity=".75"/>
-          <text class="anno" x="34" y="56" font-size="2.6" fill="#2c7886" text-anchor="end">circ water → CTW</text>
+          <path d="M50,73 L34,73 L34,20 L16,20" fill="none" stroke="#3f97a8" stroke-width=".7" opacity=".75"/>
+          <text class="anno" x="40" y="50" font-size="2.6" fill="#2c7886" text-anchor="end">circ water → sea</text>
           <text class="anno" x="74" y="112" font-size="2.6" fill="var(--ink3)">steam / FW · ~47 m run</text>
           <path d="M105,148 L224,140" fill="none" stroke="#8a5fae" stroke-width=".7" stroke-dasharray="3 2" opacity=".75"/>
-          <text class="anno" x="165" y="138" font-size="2.6" text-anchor="middle" fill="#7a4fa0">process steam → TES</text>
+          <text class="anno" x="165" y="138" font-size="2.6" text-anchor="middle" fill="#7a4fa0">process steam → TCES bed</text>
         </g>
         <g id="site-buildings"></g>
         <g transform="translate(284,20)"><circle r="8" fill="var(--paper)" stroke="var(--line2)" stroke-width=".4"/><path d="M0,-6 L2.2,3 L0,1 L-2.2,3 Z" fill="var(--ink)"/><text x="0" y="-9" font-size="3.4" text-anchor="middle" fill="var(--ink)" font-family="var(--disp)">N</text></g>
@@ -311,9 +311,9 @@ const sites=[
  {id:'WMB',x:24,y:168,w:25,h:15,H:12,z:'ni',name:'Waste Management Building',foot:'375 m² · Cat I',fn:'Liquid/solid/gaseous radwaste; off-gas stack ≥30 m.',fer:'§8.8'},
  {id:'TB',x:50,y:68,w:30,h:20,H:15,z:'ci',name:'Turbine Building',foot:'600 m² · Cat II',fn:'Steam turbine + 40 MWe generator, condenser, feedwater pumps. Adjacent to NI — shortest main-steam / feedwater run.',fer:'§8.10 R2'},
  {id:'EHB',x:56,y:14,w:40,h:28,H:8,z:'ci',name:'Electrical / Switchyard',foot:'~2,500 m² · Cat II',fn:'Main + unit-aux transformers, station service, 33 kV grid interface.',fer:'§8.8 A5'},
- {id:'CTW',x:22,y:12,w:30,h:30,H:20,z:'ci',name:'Cooling Tower',foot:'900 m² · Cat III',fn:'Mechanical-draft heat rejection at the site periphery — only the circ-water run is long [ASSUMED] pending heat-sink decision.',fer:'§8.10 R2'},
+ {id:'CWP',x:24,y:14,w:20,h:12,H:10,z:'ci',name:'Circ-Water Pump house (seawater)',foot:'240 m² · Cat III',fn:'Once-through Black Sea seawater (C2) — no cooling tower. CWP house on-island; intake + outfall are shoreline structures. NORMAL heat sink only; safety UHS is the passive IRWST (seawater-independent).',fer:'§8.10 R2'},
  {id:'WSB',x:24,y:58,w:20,h:15,H:8,z:'ci',name:'Workshop / Service',foot:'300 m² · Cat III',fn:'Maintenance shops, warehouse, hot-tool storage.',fer:'§8.10 R2'},
- {id:'TES',x:224,y:124,w:30,h:30,H:12,z:'ii',name:'Thermal Energy Storage',foot:'900 m² [ALISHER]',fn:'Storage modules + charge/discharge HX for district heat.',fer:'§5 originality'},
+ {id:'TES',x:224,y:124,w:30,h:30,H:12,z:'ii',name:'Thermochemical Storage (TCES, zeolite-13X)',foot:'900 m² [ALISHER]',fn:'Zeolite-13X / water-vapour sorption (~390 t). Charge=dehydration off surplus ~280°C steam, discharge=hydration to district heat. Decouples steady reactor output from grid load → load-following + thermal management (C3).',fer:'§5 originality'},
  {id:'SOE',x:224,y:156,w:25,h:25,H:10,z:'ii',name:'Solid-Oxide Electrolyser',foot:'625 m² [ALISHER]',fn:'High-temperature electrolyser stacks, water purification, H₂ separation.',fer:'§5 originality'},
  {id:'H₂S',x:256,y:140,w:20,h:30,H:6,z:'ii',name:'H₂ Storage Yard',foot:'600 m² · NFPA 2',fn:'Compressed-gas tanks, ≥100 m from nearest safety building.',fer:'§8.10 R1'},
 ];
@@ -334,7 +334,7 @@ sites.forEach(b=>{
   rxb.appendChild(mk('circle',{cx:67.5,cy:147.5,r:1.4,fill:'var(--ni-s)','pointer-events':'none'}));})();
 
 /* ---------- ELEVATION ---------- */
-const elevs=[[20,30,20,'ci','CTW','Cooling Tower'],[104,30,15,'ci','TB','Turbine Building'],
+const elevs=[[20,20,10,'ci','CWP','Circ-Water Pumps (seawater)'],[104,30,15,'ci','TB','Turbine Building'],
  [150,30,30,'ni','RXB','Reactor Building'],[188,26,15,'ni','AB','Auxiliary Building'],
  [220,20,10,'ni','DGB','Diesel Gen'],[246,26,12,'ni','WMB','Waste Mgmt'],[259,4,30,'ni','STK','Off-gas stack'],
  [308,28,12,'ii','TES','Thermal Storage'],[340,16,10,'ii','SOE','Electrolyser']];
@@ -388,8 +388,8 @@ function buildIso(){
     root.appendChild(g);
   });
   // leader-line callouts for the headline buildings
-  const labs=[['RXB',-1,-34,'Reactor Building'],['CTW',-1,-30,'Cooling Tower'],['TB',-1,-26,'Turbine Building'],
-    ['CB',-1,-18,'Control Building'],['EHB',1,-26,'Switchyard'],['TES',1,-18,'Thermal Storage'],
+  const labs=[['RXB',-1,-34,'Reactor Building'],['CWP',-1,-30,'Circ-Water Pumps'],['TB',-1,-26,'Turbine Building'],
+    ['CB',-1,-18,'Control Building'],['EHB',1,-26,'Switchyard'],['TES',1,-18,'TCES Storage'],
     ['SOE',1,8,'Electrolyser'],['H₂S',1,28,'H₂ Storage'],['SFB',-1,18,'Spent Fuel'],['WMB',-1,30,'Waste Mgmt'],['DGB',1,40,'Diesel Gen'],['AB',1,-10,'Auxiliary']];
   labs.forEach(l=>{const b=sites.find(s=>s.id===l[0]);if(!b)return;
     const p=P(b.x+b.w/2,b.y+b.h/2,b.H);const lx=p[0]+l[1]*70,ly=p[1]+l[2];

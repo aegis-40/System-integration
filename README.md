@@ -106,7 +106,8 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 | 3 | First hot-channel MDNBR + steady-state PCT | OpenFOAM team | 2 hard-constraint normalizers; FOM scoring |
 | 4 | ~~Critical-piping NPS~~ → **sizes in FER draft Table 8.10-2** (MSL 2×DN250, FWL 2×DN200, DHRS 2×DN100, ECCS 2×DN80; surge eliminated) → `layout/critical_piping_table.md` | Adilbek confirms | R6 ◐ closed `[FER-DRAFT]` |
 | 5 | TES/SOE footprint + H₂ inventory | Alisher | industrial-island sizing + stand-off |
-| 6 | ~~Site type + heat sink~~ → **RESOLVED: Sinop, Black Sea coast; once-through seawater cooling, no CTW** (team, 2026-06-13) | ✅ team | update PFD (drop CT-1) + layout recut after C3 |
+| 6 | ~~Site type + heat sink~~ → **RESOLVED: Sinop, Black Sea coast; once-through seawater cooling, no CTW** (team, 2026-06-13). Realism confirmed vs Akkuyu (4×VVER-1200, licensed Turkish once-through precedent). | ✅ team | Text/data recut done 2026-06-19; PFD redraw outstanding (drop CT-1) |
+| 6b | ~~TES technology~~ → **RESOLVED: TCES (thermochemical, zeolite-13X)** for load-following + thermal management (team, 2026-06-13). Supersedes two-tank Therminol-66. | ✅ team | Text/data recut done 2026-06-19; PFD/graphics recut in progress |
 | 7 | 10 supervisor sign-offs from `planning/MEETING_BRIEF.md` §4 | Supervisor | Final FOM weights |
 | 8 | Structural weights + steel tonnage | foundation eng. | FER §8.10 R5 tables |
 | 9 | NDK (Turkish nuclear regulator) citations | Azamhon | Domesticity credit in FER §5.2 |

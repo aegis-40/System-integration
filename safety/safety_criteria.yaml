@@ -17,13 +17,14 @@
 #   fom_param       : matching field name in fom_inputs.yaml
 #   sensor_chain    : how this is measured / observed
 #   setpoint_link   : id of the trip in trip_signals.md that protects this limit (if any)
-#   defense_in_depth_level: 1..5 (IAEA SSR-2/1 Rev 1 §2.13)
+#   tolerance       : optional ± operational band on limit_value (used by ==-direction rows)
+#   defense_in_depth_level: 1..5 (IAEA SSR-2/1 Rev 1 §2.13), or null if not a DiD feature
 #   notes           : caveats, assumptions, references
 # ============================================================================
 
-design_id: aegis40-rev_0
+design_id: aegis40-rev_3-safety_r1   # was aegis40-rev_0 (S1 fix 2026-06-19): align spine with rev_3 core basis
 schema_version: 0.1
-last_updated: 2026-06-15
+last_updated: 2026-06-19
 owner: Azamhon (3S / I&C / FOM)
 reactor_type: 40 MWe / 125 MWth integral PWR (iPWR) cogen
 
@@ -351,6 +352,35 @@ criteria:
     setpoint_link: null
     defense_in_depth_level: 3
 
+  - id: ultimate_heat_sink
+    parameter: "Safety ultimate heat sink — availability & seawater-independence"
+    limit_value: 72            # h of passive heat removal with no operator action, no AC, no seawater
+    unit: "h"
+    direction: ">="
+    type: hard_constraint
+    source: "IAEA SSR-2/1 Rev 1 Req 53 (heat transfer to UHS); Req 52; TECDOC-1936 (graded SMR)"
+    normalizer: log_ratio
+    fom_param: derived_safety.uhs_passive_grace_h
+    sensor_chain: ["IRWST level + temperature", "containment pressure", "PCCS pool level"]
+    setpoint_link: null
+    defense_in_depth_level: 4
+    notes: "**ADDED 2026-06-19 (seawater + TCES audit).** The SAFETY ultimate heat sink is the IRWST + passive containment cooling (atmosphere-coupled), NOT the once-through seawater system. Seawater (C2) is the NORMAL, power-operation, non-safety-classified heat sink; the TCES bed and district-heat/SOE cogen are also normal-operation loads. This row asserts that loss of the seawater intake (storm surge / biofouling / debris / ice / jellyfish) or loss of TCES is a power-conversion event that does NOT challenge the safety UHS — decay-heat removal is passive and seawater-independent for ≥72 h (target unlimited, see operator_grace_period). Corrects the UHS conflation in safety/regulatory_alignment_audit.md and safety/hazards_register.md. Per TECDOC-1936 the seawater system is graded non-safety because the safety function is met passively without it."
+
+  - id: coastal_external_hazard
+    parameter: "Design-basis extreme sea level / storm surge / tsunami protection (coastal site)"
+    limit_value: 1             # min_max flag: 1 = protected to site DBFL, 0 = not demonstrated
+    unit: "flag"
+    direction: ">="
+    type: hard_constraint
+    source: "IAEA SSR-1; SSG-9 (site evaluation); SSR-2/1 Rev 1 Req 17/18 (external hazards, CCF)"
+    normalizer: min_max
+    normalizer_params: {min: 0, max: 1}
+    fom_param: derived_safety.coastal_hazard_protected
+    sensor_chain: ["site flood-hazard study", "intake forebay level", "trash-rack dP"]
+    setpoint_link: null
+    defense_in_depth_level: 4
+    notes: "**ADDED 2026-06-19 (coastal Sinop site).** Once-through seawater on the Black Sea coast introduces extreme-sea-level, storm-surge and tsunami as design-basis external events, plus marine intake blockage (biofouling, jellyfish/algal bloom, debris, ice) as a CCF candidate for the NORMAL heat sink. Provision: safety SSCs on dry-site grade above the design-basis flood level (DBFL); intake protected by breakwater + redundant travelling screens + chlorination (Akkuyu practice). Intake-blockage CCF is bounded by ultimate_heat_sink (safety function does not depend on seawater). [ANALYSIS-PENDING — Sinop coastal hazard study; ties to hazards_register.md H5]."
+
   - id: sbf_diversity_count
     parameter: "Diverse safety-by-function principles"
     limit_value: 5
@@ -499,7 +529,7 @@ criteria:
     fom_param: from_openmc.cycle_length_efpd
     sensor_chain: ["depletion sim to k_eff = 1 + leakage"]
     setpoint_link: null
-    defense_in_depth_level: 0
+    defense_in_depth_level: null   # S2 fix 2026-06-19: was 0 (out of 1..5 range); cycle length is an economic target, not a DiD feature
 
 # ---------------------------------------------------------------------------
 # 8. COGENERATION INTERFACE (SSR-2/1 Req 35) — Aegis-40 is a cogen plant

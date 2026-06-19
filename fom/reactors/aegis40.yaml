@@ -3,19 +3,23 @@ display_name: Aegis-40
 country: Türkiye
 developer: TEKNOFEST 2026 team
 status: detailed_design
-source: "rev_3 OpenMC + safety/safety_criteria.yaml (2026-06-15)"
+source: "rev_3 OpenMC + safety/safety_criteria.yaml (2026-06-19); cooling=once-through seawater (C2), storage=TCES zeolite-13X (C3)"
 
 descriptive:        # raw inputs for derived parameters
   thermal_power_mwth: 125
   electric_power_mwe: 40
   capacity_factor: 0.95
-  plant_footprint_m2: 20000        # estimate — plant island (NI+TB+aux), excl. EPZ buffer
+  plant_footprint_m2: 19340        # 2026-06-19: was 20000 — CTW (900 m²) freed by once-through seawater, CWP house (240 m²) added → net −660 m². Intake/outfall are off-island shoreline.
   burnup_GWd_per_MTU: 42.8         # confirmed rev_3
   design_life_years: 60            # estimate
   cogen:
     q_th_sold_mwth: 15             # PER §4.1.3 district heat
     h_th_sold_hours: 1600          # winter heating season
     m_h2_kg_per_yr: 120000         # PER §4.1.3 SOE hydrogen
+  # --- cooling/storage change implications for FOM (do NOT hand-tune weights — see fom/README §5 + the seawater audit §4) ---
+  # freshwater_consumption_m3_per_MWh: ~0   # once-through seawater ≈ no makeup vs evaporative tower ~2–3% of circ flow. PROPOSED sustainability param (parameters_schema.yaml), inactive pending independent weight elicitation + competitor data.
+  # thermal_efficiency: colder Black Sea intake (8–25°C) lowers condenser back-pressure → real η can only improve vs a cooling-tower baseline; rated 40 MWe/125 MWth (0.32) kept until the cycle number is confirmed (do not inflate the rating).
+  # capacity_factor/dispatchability: TCES decouples steady reactor output from grid load → better load-following without deep reactor maneuver; CF held at 0.95 (no unsubstantiated bump).
 
 categories:
   safety:

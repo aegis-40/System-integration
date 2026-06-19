@@ -12,7 +12,7 @@ Outputs:
                             Section Analysis (or hide Soil body) for the cutaway.
 
 Layout basis (r2, 2026-06-12): TB adjacent to NI (short steam/FW run),
-CTW at site periphery — NuScale plant-arrangement practice.
+Once-through seawater (no cooling tower): CWP house on-island + shoreline intake/outfall.
 Coordinates: site plan metres, X=east, Y=north (plan y flipped), Z=up. STEP in mm.
 """
 
@@ -143,14 +143,11 @@ parts.append(cyl("Offgas_stack_band", RED, 46, 170, 1.25, 1.5, z0=28.5))
 # ============ CONVENTIONAL ISLAND (Cat II) — r2 arrangement ============
 building("TB", 50, 68, 30, 20, 15, WALL_CI, ROOF_CI)      # adjacent to NI
 building("WSB", 24, 58, 20, 15, 8, WALL_CI, ROOF_CI)
-# Cooling tower (peripheral): basin + plenum + 6 mech-draft fan cells
-parts.append(box("CTW_basin", CONC, 22, 12, 30, 30, 2.0))
-parts.append(box("CTW_plenum", CONC, 23, 13, 28, 28, 6.0, z0=2.0))
-for i in range(3):
-    for j in range(2):
-        fx, fy = 27 + 0.5 + i * 9.5, 19 + j * 13 - 1.5
-        parts.append(cyl(f"CTW_fanring_{i}{j}", STEEL, fx + 1.5, fy + 2.5, 3.6, 2.6, z0=8.0))
-        parts.append(cyl(f"CTW_fan_{i}{j}", (0.25, 0.28, 0.30), fx + 1.5, fy + 2.5, 2.9, 0.4, z0=10.0))
+# Once-through seawater (C2): Circ-Water Pump house on-island + shoreline intake/outfall basin
+# (replaces the former mechanical-draft cooling tower — no tower)
+building("CWP", 24, 14, 20, 12, 10, WALL_CI, ROOF_CI)
+parts.append(box("SEA_intake_basin", TEAL, 6, 10, 10, 34, 1.5))      # shoreline forebay (intake + outfall)
+parts.append(box("SEA_screen_house", CONC, 8, 14, 6, 8, 5, z0=1.5))  # travelling-screen / pump fwd structure
 # Switchyard: gravel pad, control building, gantries, transformers
 parts.append(box("EHB_pad", (0.70, 0.69, 0.66), 56, 14, 40, 28, 0.25))
 building("EHB_ctrl", 58, 16, 10, 8, 6, WALL_CI, ROOF_CI)
@@ -163,9 +160,10 @@ parts.append(box("EHB_trafo1", (0.35, 0.38, 0.42), 59, 30, 4, 3.2, 4.2, z0=0.25)
 parts.append(box("EHB_trafo2", (0.35, 0.38, 0.42), 59, 35, 4, 3.2, 4.2, z0=0.25))
 
 # ============ INDUSTRIAL ISLAND ============
+# TCES (C3): thermochemical zeolite-13X sorption bed (replaces two-tank sensible Therminol-66)
 parts.append(box("TES_slab", CONC, 224, 124, 30, 30, 0.4))
-parts.append(cyl("TES_tank_hot", RED, 232, 132, 6, 14, z0=0.4))
-parts.append(cyl("TES_tank_cold", TEAL, 246, 145, 6, 14, z0=0.4))
+parts.append(box("TCES_bed", TEAL, 228, 128, 22, 16, 11, z0=0.4))      # zeolite-13X sorption vessel/bed (~390 t)
+parts.append(cyl("TCES_charge_vessel", STEEL, 244, 148, 4, 9, z0=0.4))  # dehydration/charge HX
 parts.append(box("TES_skid", STEEL, 228, 146, 8, 6, 4, z0=0.4))
 building("SOE", 224, 156, 25, 25, 10, WALL_II, ROOF_II)
 parts.append(box("H2_pad", CONC, 256, 140, 20, 30, 0.3))

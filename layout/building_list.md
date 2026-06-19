@@ -55,15 +55,17 @@ These numbers drive RXB internal dimensions (refueling machine reach, crane clea
 |---|---|---|---|---|---|---|---|
 | **TB** | Turbine Building | Steam turbine + generator (40 MWe), condenser, condensate + FW pumps, lube oil | 30 × 20 = 600 | 15 | Cat II | non-1E | 40 MWe is small — single condensing turbine; saturated steam at 7.17 MPa |
 | **EHB** | Electrical / Switchyard Building | Main transformer + unit-aux transformer pads; station service transformer; 33 kV switchyard interface | 50 × 50 = 2 500 (yard) + 15 × 10 = 150 (building) | 8 (building) | Cat II | non-1E | Main transformer 50 MVA — covers 40 MWe + house load |
-| **CTW** | Cooling Tower | Mechanical-draft cooling tower for residual heat rejection | 30 × 30 = 900 | 20 | Cat III | non-1E | `[ASSUMED]` closed-cycle MDCT pending supervisor decision on heat sink |
+| **CWP** | Circulating Water Pump house | Seawater circ-water pumps for the condenser (once-through) + travelling-screen wash | 20 × 12 = 240 | 10 | Cat III | non-1E | **Replaces CTW** (C2, once-through Black Sea seawater). Compact on-island; intake/outfall are shoreline structures below |
+| **INTK** | Seawater intake structure | Breakwater-protected intake forebay, trash racks + redundant travelling screens, chlorination/biofouling control | shoreline (off-island) | — | Cat III | non-1E | Akkuyu-pattern; protects against marine debris/biofouling/jellyfish (CCF of the NORMAL sink only — `safety/safety_criteria.yaml` `coastal_external_hazard`) |
+| **OUTF** | Discharge / outfall structure | Returns condenser circ-water to sea via forebay + culverts; thermal-discharge monitoring | shoreline (off-island) | — | Cat III | non-1E | Thermal/ΔT discharge under Turkish SKKY `[VERIFY-SKKY]`; ~70–82 MWth → negligible plume |
 | **WSB** | Workshop / Service Building | Maintenance shops, warehouse, hot-tool storage, gas cylinders | 20 × 15 = 300 | 8 | Cat III | non-1E | Combined with admin in this estimate |
-| | **CI subtotal** | | **~4 450 m² (incl. switchyard)** | | | | within ~80 × 80 m envelope |
+| | **CI subtotal** | | **~3 790 m² (incl. switchyard; CTW 900 m² freed, CWP 240 m² added)** | | | | within ~80 × 80 m envelope; intake/outfall off-island shoreline |
 
 ### 3.3 Industrial Island
 
 | ID | Building | Function | Footprint (m²) | Height (m) | Seismic | Power | Source / notes |
 |---|---|---|---|---|---|---|---|
-| **TES** | Thermal Energy Storage Building | Zeolite / molten salt storage modules, charge/discharge HX | 30 × 30 = 900 `[ALISHER]` | 12 | Cat III | non-1E | `[ALISHER]` to confirm storage medium + mass |
+| **TES** | Thermochemical Energy Storage (TCES) Building | **Zeolite-13X / water-vapour sorption** bed (~390 t `[ALISHER]`), charge (dehydration) / discharge (hydration) HX | 30 × 30 = 900 `[ALISHER]` | 12 | Cat III | non-1E | C3 RESOLVED: TCES, not sensible Therminol-66. Load-following + thermal management. `[ALISHER]` confirms bed mass/footprint |
 | **SOE** | Solid-Oxide Electrolyser Building | High-temperature electrolyser stacks, water purification, H₂ separation + purification | 25 × 25 = 625 `[ALISHER]` | 10 | Cat III | non-1E | NFPA 2 Class 1 around stack exhaust |
 | **H2S** | H₂ Storage Yard | Compressed gas tanks (350 bar typical), distribution manifold | 20 × 30 = 600 | 6 | Cat III | non-1E | NFPA 2 stand-off ≥ 100 m from NI buildings (see `zones.md` §2.3) |
 | | **II subtotal** | | **~2 125 m²** | | | | within ~60 × 60 m envelope, plus 100 m buffer to NI |
@@ -104,7 +106,7 @@ Conservative: a 10 ha (100 × 100 m × 10 ≈ 100 000 m²) inland plot accommoda
 | FER-required category | Covered by |
 |---|---|
 | Reactor building | RXB |
-| Energy conversion systems | TB + EHB + CTW |
+| Energy conversion systems | TB + EHB + CWP (seawater intake/outfall) |
 | Operation and maintenance services | CB + WSB + ADM |
 | Other systems and buildings | AB + SFB + DGB + WMB + TES + SOE + H2S + SEC + METEO + OFFGAS |
 
@@ -119,10 +121,10 @@ Conservative: a 10 ha (100 × 100 m × 10 ≈ 100 000 m²) inland plot accommoda
 | 1 | TES building footprint final number | TES row | Alisher |
 | 2 | SOE building footprint final number | SOE row | Alisher |
 | 3 | H₂ inventory + storage form (tube trailer / stationary tanks / underground) | H2S row + stand-off Z5 | Alisher |
-| 4 | Heat sink choice (MDCT vs seawater) | CTW row | Supervisor |
+| 4 | ~~Heat sink choice (MDCT vs seawater)~~ → **RESOLVED: once-through seawater** (CWP/INTK/OUTF rows) | ✅ team | — |
 | 5 | Fuel-assembly count (21 vs 240) | RXB internal + SFB pool size | Samira |
 | 6 | Critical piping NPS | Piping rack between NI and CI | Adilbek |
-| 7 | Site selection (inland / coastal) | CTW + intake structure presence | Supervisor |
+| 7 | ~~Site selection (inland / coastal)~~ → **RESOLVED: coastal Sinop** | ✅ team | — |
 | 8 | Weight distributions for R5 | Whole table | foundation engineer (W3+) |
 | 9 | RPV total height including heads | RXB above-grade envelope | Samira |
 

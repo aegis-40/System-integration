@@ -31,13 +31,15 @@ design (with basis); **PENDING** = provision identified, analysis owed.
 | Heavy-load drop | fuel/cask handling over the pool or RPV | single-failure-proof handling machine; safe-load-path interlocks; no heavy load over irradiated fuel | CARRIED |
 | Internal explosion (hydrogen) | H₂ in containment post-accident; SOE/TES H₂ on site | core-wide H₂ ≤ 1 % limit (`safety_criteria` `hydrogen_generation`); PARs/igniters [PENDING]; SOE H₂ stand-off (external, §3) | PARTIAL |
 | Loss of support systems | loss of cooling/air/power to safety loads | fail-safe valves, passive ESF, 1E power (`aux_systems.md` §5, §9) | CARRIED |
+| TCES bed (zeolite-13X) — over-temperature / vessel over-pressure / dust / loss-of-charge | sorption-bed thermal runaway or steam over-pressure; zeolite dust | zeolite-13X is **non-toxic, non-flammable, non-corrosive** → intrinsically low hazard; bed isolated downstream of the cogen 3-barrier set (Req 35); charge-steam relief + bed temperature/pressure interlocks; loss-of-charge is a power-conversion event, not a safety event (`safety_criteria.yaml` `ultimate_heat_sink`) | CARRIED (low-hazard medium; relief + interlocks PENDING sizing `[ALISHER]`) |
 
 ## 3. External hazards
 
 | Hazard | Aegis-40 provision | Status |
 |---|---|---|
 | Seismic (SSE) | design SSE ≥ 0.3 g; 1E equipment seismically qualified (IEEE 344); `safety_criteria` `sse_design` | CARRIED |
-| External flooding / tsunami | site grade + dry-site concept; coastal seawater UHS intake protected [site-dependent] | PENDING — site flood hazard (ties to FER site selection) |
+| External flooding / tsunami / storm surge (coastal Sinop) | safety SSCs on dry-site grade above design-basis flood level (DBFL); **seawater intake is the NORMAL heat sink only** — breakwater + redundant travelling screens + chlorination; **safety UHS is the seawater-independent passive IRWST/PCC** (`safety_criteria.yaml` `coastal_external_hazard` + `ultimate_heat_sink`) | PENDING — Sinop coastal flood/surge/tsunami study (H5) |
+| Marine intake blockage (biofouling, jellyfish/algal bloom, debris, ice) | CCF candidate for the NORMAL seawater heat sink only; redundant intake bays + travelling screens + chlorination; **does not challenge the safety UHS** (passive, seawater-independent) | CARRIED (bounded by `ultimate_heat_sink`) |
 | Extreme wind / tornado / tornado missile | seismic Cat-I structures bound most wind loads; missile-resistant NI exterior | PENDING — tornado-missile spectrum |
 | Aircraft hazard | compact, low-profile NI; below-grade/shielded RPV; small target | PENDING — aircraft-impact screening |
 | Extreme ambient temperature | UHS + HVAC sized for site temperature extremes | PENDING — site envelope |

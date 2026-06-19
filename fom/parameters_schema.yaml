@@ -156,6 +156,16 @@ categories:
         normalizer: log_ratio
         direction: max
         sub_weight: 0.30
+      # --- PROPOSED 2026-06-19 (seawater/TCES change), INACTIVE: not in the active sub_weight set
+      #     so the current report is unchanged. Activating requires (a) competitor freshwater
+      #     data from the IAEA SMR booklet [ESTIMATE→sourced] and (b) INDEPENDENT weight
+      #     re-elicitation (do not self-tune — fom/README §5 caveat 3). Direction=min.
+      # freshwater_consumption:
+      #   unit: m3_per_MWh
+      #   normalizer: log_ratio
+      #   direction: min
+      #   sub_weight: 0.00        # placeholder; rebalance design_life/spent_fuel when activated
+      #   notes: "Once-through seawater ≈ 0 makeup vs evaporative cooling tower ~2–3% of circ flow evaporated. Strong, defensible sustainability differentiator tied directly to the C2 cooling decision."
 
   efficiency:
     weight: 0.15

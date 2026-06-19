@@ -50,14 +50,14 @@ The partition is dictated by four constraints:
 **Buildings:**
 - Turbine Building (TB)
 - Electrical / Switchyard (EHB) — main transformers, 33 kV grid interface
-- Cooling Tower (CTW) — mechanical-draft, closed-cycle (`[ASSUMED]` until supervisor confirms)
+- Circulating Water Pump house (CWP) + **seawater intake structure** (breakwater-protected, travelling screens, chlorination) and **discharge/outfall structure** — **once-through Black Sea cooling, NO cooling tower** (C2, 2026-06-13). Intake/outfall are shoreline structures, largely outside the plant-island footprint.
 - Service / Workshop Building
 
-**Class:** Seismic Category II. Conventional industrial siting standards.
+**Class:** Seismic Category II. Conventional industrial siting standards. *(Note: the seawater system is the **normal** heat sink only — non-safety-classified. The **safety** ultimate heat sink is the passive IRWST + containment cooling, seawater-independent — see `safety/safety_criteria.yaml` `ultimate_heat_sink`.)*
 
 **Security:** **Vital Area** controlled access — no public, but lower-tier than NI.
 
-**Footprint estimate:** ~80 m × 80 m (6 400 m²). Turbine + cooling tower dominate.
+**Footprint estimate:** ~80 m × 80 m (6 400 m²) — **smaller than the prior cooling-tower scheme** (the 900 m² MDCT is freed; only the compact CWP house remains on-island). Turbine + switchyard now dominate.
 
 **Separation from NI:** ~20 m physical buffer; main steam + feedwater piping crosses the boundary in a controlled trench.
 
@@ -66,7 +66,7 @@ The partition is dictated by four constraints:
 **Function:** non-electrical applications of the cogeneration heat — thermal energy storage for district heating, solid-oxide electrolyser hydrogen production, H₂ storage. **This island is the Aegis-40 originality lever** for FER §5.
 
 **Buildings:**
-- TES Building (zeolite or molten-salt storage `[ASSUMED]` until Alisher confirms)
+- TES Building — **Thermochemical Energy Storage (TCES), zeolite-13X / water-vapour sorption** (C3 RESOLVED 2026-06-13; supersedes the two-tank sensible Therminol-66 option). ~390 t bed `[ALISHER]` to confirm mass/footprint. For load-following + thermal management.
 - SOE Building (high-temperature electrolyser stacks)
 - H₂ Storage Yard (compressed gas tanks)
 
@@ -140,8 +140,9 @@ A more accurate block-layout drawing (with internal building positioning) lands 
 | Z3 | CI is Seismic Cat II, ~80 × 80 m | Conventional industrial; turbine + cooling dominate |
 | Z4 | II is non-safety with NFPA 2 H₂ classification, ~60 × 60 m | H₂ hazard isolation |
 | Z5 | H₂ stand-off = 100 m to nearest NI building | Conservative bound NFPA 2; refine after Alisher sizes inventory |
-| Z6 | ~~Closed cooling tower in CI~~ → **RESOLVED 2026-06-13: once-through Black Sea seawater cooling, NO cooling tower** | Team decision — small 82 MWth rejection, negligible thermal-plume impact at the Sinop coastal site; CTW footprint freed. Layout/viewer/CAD still show CTW until the one-shot recut after C3 (TES tech) settles — see `fer_8810_docx_audit.md` |
-| Z7 | **TB adjacent to the NI boundary; CTW at the CI periphery** (r2, 2026-06-12) | NuScale plant-arrangement practice (IV.5-KenLangdon slide 15) + PFD logic: main-steam/feedwater run must be short (~47 m); condenser circ-water run to CTW can be long |
+| Z6 | ~~Closed cooling tower in CI~~ → **RESOLVED 2026-06-13: once-through Black Sea seawater cooling, NO cooling tower** | Team decision — small ~70–82 MWth rejection, negligible thermal-plume impact at the Sinop coastal site (≈1 % of Akkuyu's per-fleet load); CTW footprint freed. **Akkuyu (4×VVER-1200) is the licensed Turkish precedent for once-through seawater.** Text/data recut applied 2026-06-19; graphical recut in progress now that C3 is settled. |
+| Z7 | **TB adjacent to the NI boundary; seawater intake/outfall + CWP house at the CI periphery / shoreline** (r2, 2026-06-12; updated 2026-06-19) | NuScale plant-arrangement practice + PFD logic: main-steam/feedwater run must be short (~47 m); condenser circ-water run to the shoreline intake/outfall can be long |
+| Z8 | **TCES = thermochemical zeolite-13X / water-vapour sorption** (C3 RESOLVED 2026-06-13) | Non-toxic/non-flammable/non-corrosive proven medium; charge by dehydration off ~280 °C pass-out steam, discharge ~150–200 °C to district heat. Decouples steady reactor output from grid dispatch → **load-following + thermal management without deep reactor maneuvering** (safety upside — see safety review). Supersedes two-tank sensible Therminol-66 |
 
 ---
 
@@ -150,9 +151,9 @@ A more accurate block-layout drawing (with internal building positioning) lands 
 | # | Item | Owner | Resolves |
 |---|---|---|---|
 | 1 | Final H₂ inventory (kg) | Alisher | Z5 stand-off math (could shrink to 60 m if < 15 000 kg) |
-| 2 | TES storage mass + height | Alisher | TES Building footprint estimate (currently `[ASSUMED]` 30 × 30 m) |
+| 2 | TCES bed mass (~390 t?) + height | Alisher | TES Building footprint estimate (currently `[ASSUMED]` 30 × 30 m) |
 | 3 | Primary loop pipe NPS + routes | Adilbek | Piping rack sizing between NI and CI |
-| 4 | Site type (inland / coastal) + heat sink | Supervisor | Z6 cooling decision + CTW vs seawater intake structure |
+| 4 | ~~Site type + heat sink~~ → **RESOLVED: coastal Sinop, once-through seawater (Z6); TCES (Z8)** | ✅ team | — graphical recut in progress |
 | 5 | Final fuel-assembly count (21 in 2D vs 240 in FER table) | Samira | RXB internal layout (refueling machine span, SFP size) |
 
 ---

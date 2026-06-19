@@ -34,6 +34,11 @@ flowchart LR
   FWH ==> FWP
   FWP ==feedwater==> RPV
 
+  %% once-through seawater cooling of the condenser (C2) — NORMAL heat sink, not safety UHS
+  SEA(["Black Sea<br/>once-through"])
+  SEA ==seawater intake==> COND
+  COND ==warm return ΔT≈8–10 K==> SEA
+
   %% ============================================================
   %% ELECTRICAL EXPORT
   %% ============================================================
@@ -64,11 +69,12 @@ flowchart LR
     direction LR
     LPEXT["LP extraction tap"]
     DHHX["DH heat exchanger<br/>(NI/CI interface)"]
-    TES["TES storage<br/>charge / discharge"]
+    TES["TCES bed (zeolite-13X)<br/>charge=dehydration / discharge=hydration"]
     DHNET(["District heating<br/>network"])
   end
 
   TURB --LP extraction--> LPEXT --> DHHX --> TES --> DHNET
+  MS -.surplus steam: charge TCES.-> TES
 
   %% ============================================================
   %% HYDROGEN (cogen 2)
@@ -141,4 +147,4 @@ flowchart LR
   class HPS,SOE,SEP,H2T h2;
   class SFBrec,TRANS,DRY fuel;
   class LWST,SWST,GWST,WMB waste;
-  class GRID,DHNET,TRUCK,FRESH,OFF,DISC,STORE,STACK,LOADS external;
+  class GRID,DHNET,TRUCK,FRESH,OFF,DISC,STORE,STACK,LOADS,SEA external;

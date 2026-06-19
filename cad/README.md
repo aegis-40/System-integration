@@ -9,9 +9,10 @@ SolidWorks, etc. All parts are named and coloured.
 | `aegis40_site.step` | **Plant site** (317 solids): all 13 buildings at true footprints + heights from `layout/building_list.md`, island pads, access/patrol roads, double PIDAS-style security fence + industrial-island fence, mech-draft cooling tower (6 fan cells), switchyard gantries + transformers, TES hot/cold tanks, H₂ tank yard, off-gas stack, critical pipe runs `[ASSUMED]`, terrain + trees. |
 | `aegis40_rxb.step` | **Reactor-building diorama** (31 solids): soil block with excavated pit, RC pit liner + basemat, below-grade containment shell Ø15 m, RPV Ø2.44 m with 21-FA core band [rev_3], IRWST annulus, refuelling pool, bio-shield slab, RXB superstructure + polar crane, SFB annex with spent-fuel pool/racks + transfer canal. |
 
-**Layout basis (r2, 2026-06-12):** TB adjacent to NI (shortest main-steam/feedwater
-run, ~47 m), CTW at the site periphery — NuScale plant-arrangement practice
-(IV.5-KenLangdon-NuScale.pdf, slide 15).
+**Layout basis (r2, 2026-06-12; cooling updated 2026-06-19):** TB adjacent to NI
+(shortest main-steam/feedwater run, ~47 m); **once-through seawater (C2) — CWP house
+on-island + shoreline intake/outfall, no cooling tower**; **TCES zeolite-13X (C3)**
+storage — NuScale plant-arrangement practice (IV.5-KenLangdon-NuScale.pdf, slide 15).
 
 ## Fusion 360 import
 

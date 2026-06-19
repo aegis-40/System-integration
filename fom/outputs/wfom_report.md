@@ -14,19 +14,19 @@ wFOM > 0 ⇒ Aegis-40 scores higher on the weighted aggregate. Per-pair renormal
 
 | Reference | wFOM | safety | economic | safeguards | sustainability | efficiency | #params |
 |---|---|---|---|---|---|---|---|
-| carem25 | **+0.326** | +0.134 | +0.073 | +0.006 | +0.077 | +0.035 | 17 |
-| smart | **+0.278** | +0.180 | +0.005 | +0.073 | +0.024 | -0.004 | 16 |
-| nuscale_voygr | **-0.387** | -0.389 | -0.071 | +0.044 | +0.030 | +0.000 | 17 |
+| carem25 | **+0.328** | +0.134 | +0.075 | +0.006 | +0.077 | +0.035 | 17 |
+| smart | **+0.280** | +0.180 | +0.007 | +0.073 | +0.024 | -0.004 | 16 |
+| nuscale_voygr | **-0.385** | -0.389 | -0.069 | +0.044 | +0.030 | +0.000 | 17 |
 
 ## 3. Absolute-utility ranking (single scale)
 Because every normalizer is a difference of a per-reactor term, an absolute utility U(X) exists and wFOM(D,R)=U(D)−U(R). Ranked on the **16 parameters populated for all four reactors**: burnup, capacity_factor, cycle_length_efpd, design_life, diversity_count, epz_class, footprint_per_mwe, n_active_components, non_electric_revenue_share, primary_circulation, refuel_cycle, sbf_score, seismic_sse, specific_revenue, spent_fuel_per_mwh, thermal_efficiency.
 
 | Rank | Reactor | U (abs. utility) | ΔU vs Aegis-40 |
 |---|---|---|---|
-| 1 | nuscale_voygr | +0.605 | +0.145 |
-| 2 | aegis40 | +0.460 | +0.000 |
-| 3 | carem25 | +0.197 | -0.262 |
-| 4 | smart | +0.182 | -0.278 |
+| 1 | nuscale_voygr | +0.605 | +0.143 |
+| 2 | aegis40 | +0.462 | +0.000 |
+| 3 | carem25 | +0.197 | -0.265 |
+| 4 | smart | +0.182 | -0.280 |
 
 > Note: the common set has only **n_active_components** from the Safety category (PCT/MDNBR/peaking/MTC are sim-only and unpublished for competitors) — so this ranking under-represents Safety despite its 0.35 weight. The pairwise table (§2) recovers more safety coverage where reference data exists. **This data-availability gap is the single biggest threat to the comparison's validity.**
 
@@ -36,7 +36,7 @@ Because every normalizer is a difference of a per-reactor term, an absolute util
 | Parameter (cat) | dir | Aegis-40 | CAREM-25 | SMART | NuScale |
 |---|---|---|---|---|---|
 | specific_revenue (econ) | max | 544 | 473 | 473 | 499 |
-| footprint_per_mwe (econ) | min | 500 | 1.2e+03 | 841 | 152 |
+| footprint_per_mwe (econ) | min | 484 | 1.2e+03 | 841 | 152 |
 | refuel_cycle (econ) | max | 16 | 14 | 30 | 18 |
 | cycle_length_efpd (econ) | max | 479 | 390 | 870 | 520 |
 | thermal_efficiency (effi) | max | 0.32 | 0.3 | 0.293 | 0.308 |
@@ -57,7 +57,7 @@ Cell = `gw·(uᵢ − mean)`. **+** helps, **−** hurts. Column sum = U − mea
 | Parameter | gw | Aegis-40 | CAREM-25 | SMART | NuScale |
 |---|---|---|---|---|---|
 | specific_revenue | 0.080 | +0.007 | -0.004 | -0.004 | +0.000 |
-| footprint_per_mwe | 0.060 | +0.003 | -0.049 | -0.028 | +0.075 |
+| footprint_per_mwe | 0.060 | +0.005 | -0.050 | -0.029 | +0.074 |
 | refuel_cycle | 0.040 | -0.006 | -0.011 | +0.019 | -0.001 |
 | cycle_length_efpd | 0.020 | -0.002 | -0.006 | +0.010 | -0.001 |
 | thermal_efficiency | 0.067 | +0.003 | -0.001 | -0.003 | +0.001 |
@@ -74,18 +74,18 @@ Cell = `gw·(uᵢ − mean)`. **+** helps, **−** hurts. Column sum = U − mea
 | spent_fuel_per_mwh | 0.045 | +0.005 | -0.023 | +0.012 | +0.006 |
 | **category subtotals:** | | | | | |
 | _safety_ | 0.350 | +0.026 | -0.045 | -0.154 | +0.173 |
-| _economic_ | 0.200 | +0.002 | -0.071 | -0.003 | +0.073 |
+| _economic_ | 0.200 | +0.003 | -0.072 | -0.004 | +0.072 |
 | _safeguards_ | 0.150 | +0.031 | +0.024 | -0.042 | -0.013 |
 | _sustainability_ | 0.150 | +0.033 | -0.045 | +0.009 | +0.003 |
 | _efficiency_ | 0.150 | +0.008 | -0.027 | +0.012 | +0.008 |
-| **U − mean(U)** | 1.000 | **+0.099** | **-0.164** | **-0.179** | **+0.244** |
+| **U − mean(U)** | 1.000 | **+0.100** | **-0.164** | **-0.179** | **+0.243** |
 
 ## 3b. Absolute scoring vs international-standard targets
 Each reactor scored against a fixed benchmark of regulatory limits + good-design targets (`reactors/standards.yaml`) instead of against each other. **wFOM > 0 ⇒ beats the benchmark.** Reactor-independent, so it answers "is it good?" not just "better than X?"
 
 | Reactor | wFOM vs standards | #params |
 |---|---|---|
-| aegis40 | **-0.176** | 20 |
+| aegis40 | **-0.174** | 20 |
 | carem25 | **-0.481** | 17 |
 | smart | **-0.462** | 16 |
 | nuscale_voygr | **+0.231** | 17 |
@@ -109,9 +109,9 @@ Principal-eigenvector weights from `ahp/category_pairwise.yaml`. **Consistency r
 | Property | Pass | Value |
 |---|---|---|
 | identity  wFOM(R,R)=0 | ✅ | 0.00e+00 |
-| antisymmetry  wFOM(A,B)=−wFOM(B,A) | ✅ | +0.278/-0.278 |
-| transitivity  U(A)−U(C)=(A−B)+(B−C) | ✅ | -0.145=-0.145 |
-| monotonicity  ↑burnup ⇒ ↑wFOM | ✅ | +0.326→+0.330 |
+| antisymmetry  wFOM(A,B)=−wFOM(B,A) | ✅ | +0.280/-0.280 |
+| transitivity  U(A)−U(C)=(A−B)+(B−C) | ✅ | -0.143=-0.143 |
+| monotonicity  ↑burnup ⇒ ↑wFOM | ✅ | +0.328→+0.333 |
 
 ## 5. Independent cross-check — TOPSIS
 Same data + global weights, different aggregation (distance-to-ideal). If the ranking agrees with wFOM, the result is method-robust.
@@ -119,7 +119,7 @@ Same data + global weights, different aggregation (distance-to-ideal). If the ra
 | Reactor | TOPSIS closeness | wFOM rank | TOPSIS rank |
 |---|---|---|---|
 | nuscale_voygr | 0.695 | 1 | 1 |
-| aegis40 | 0.643 | 2 | 2 |
+| aegis40 | 0.644 | 2 | 2 |
 | carem25 | 0.469 | 3 | 3 |
 | smart | 0.248 | 4 | 4 |
 

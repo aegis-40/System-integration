@@ -145,7 +145,7 @@ A4 (per-system P&IDs) and A5 detailed single-line diagram are **flagged W3** —
 | Field | Detail |
 |---|---|
 | **Purpose** | Support utilities every other system needs: instrument + service air, demineralised water makeup, and active SFP heat removal. |
-| **Operating principle** | **Instrument air** — oil-free compressors + dryers feed air-operated valves/dampers (fail-safe on loss of air — valves go to safe position). **Service air** — general plant use. **Demin water** — ion-exchange plant supplies primary makeup, SFP makeup, steam-cycle makeup. **SFP cooling** — pump + heat-exchanger skids reject SFP decay heat to component-cooling water → ultimate heat sink. |
+| **Operating principle** | **Instrument air** — oil-free compressors + dryers feed air-operated valves/dampers (fail-safe on loss of air — valves go to safe position). **Service air** — general plant use. **Demin water** — ion-exchange plant supplies primary makeup, SFP makeup, steam-cycle makeup. **SFP cooling** — pump + heat-exchanger skids reject SFP decay heat to component-cooling water → **once-through seawater (the NORMAL heat sink, non-safety)**. Note: the **safety** ultimate heat sink is the passive IRWST/containment cooling (seawater-independent); the large SFP thermal inertia gives long grace if active SFP cooling is lost (`safety/safety_criteria.yaml` `ultimate_heat_sink`). |
 | **Layout location** | Compressors + air receivers + demin plant in AB; SFP cooling skids in SFB. |
 | **Safety function** | **Mixed.** Instrument air: non-1E but valves fail-safe (so loss is bounded). SFP cooling: important-to-safety (loss → SFP heat-up; but large pool thermal inertia gives long grace, monitored by `safety_criteria.yaml` SFP-temp limit). Demin water: non-safety. |
 | **Performance** | Instrument-air dew point ≤ −40 °C `[ASSUMED]`; SFP cooling sized to hold pool ≤ 50 °C normal / ≤ 80 °C max `[ASSUMED — set against safety_criteria SFP row]`. |
@@ -155,9 +155,12 @@ A4 (per-system P&IDs) and A5 detailed single-line diagram are **flagged W3** —
 
 ## 9a. Cogeneration Interface Isolation (SSR-2/1 Req 35)
 
-Aegis-40 is a **cogeneration plant**: it exports heat to a Thermochemical/sensible Energy
-Storage (TES) district-heating network and steam to a Solid-Oxide Electrolysis (SOE)
-hydrogen plant. IAEA SSR-2/1 **Req 35** requires that such heat-utilization couplings be
+Aegis-40 is a **cogeneration plant**: it exports heat to a **Thermochemical Energy
+Storage (TCES, zeolite-13X)** district-heating network and steam to a Solid-Oxide
+Electrolysis (SOE) hydrogen plant. The TCES bed (C3 resolved 2026-06-13) is charged by
+dehydration off surplus pass-out steam and discharged by hydration to the district-heat
+intermediate loop, decoupling steady reactor output from grid dispatch (load-following).
+IAEA SSR-2/1 **Req 35** requires that such heat-utilization couplings be
 designed so that **no process can transport radionuclides from the nuclear plant to the
 district-heating or hydrogen unit in operational states OR accident conditions**. This
 system provides that barrier set.
