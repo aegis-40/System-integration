@@ -1,0 +1,14 @@
+# AHP top-level pairwise comparison of the 5 categories (Saaty 1–9 scale).
+# a_ij = how much MORE important row i is than column j.
+# Eigenvector → category weights; consistency ratio CR must be < 0.10 (PLAN §6).
+# Seeded to reproduce the PLAN §1.1 defaults (Safety 0.35 …). Replace with a real
+# supervisor/expert elicitation before publishing.
+
+order: [safety, economic, safeguards, sustainability, efficiency]
+# columns in 'order': [safety, economic, safeguards, sustainability, efficiency]
+matrix:
+  safety: [1, 2, 3, 3, 3]
+  economic: [0.5, 1, 2, 2, 2]
+  safeguards: [0.333, 0.5, 1, 1, 1]
+  sustainability: [0.333, 0.5, 1, 1, 1]
+  efficiency: [0.333, 0.5, 1, 1, 1]

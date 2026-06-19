@@ -1,0 +1,42 @@
+id: carem25
+display_name: CAREM-25
+country: Argentina
+developer: CNEA
+status: under_construction
+source: "IAEA SMR booklet 2022 (docs/SMR_booklet.pdf p.11-14, CAREM25)"
+
+descriptive:
+  thermal_power_mwth: 100          # booklet
+  electric_power_mwe: 30           # booklet "100 / ~30"
+  capacity_factor: 0.90            # estimate
+  plant_footprint_m2: 36000        # booklet
+  burnup_GWd_per_MTU: 24           # booklet
+  design_life_years: 40            # booklet (NOT 60)
+  cogen:
+    q_th_sold_mwth: 0              # desalination-capable but no committed cogen baseline
+    h_th_sold_hours: 0
+    m_h2_kg_per_yr: 0
+
+categories:
+  safety:
+    grace_period:        { value: 36,   status: booklet,    source: iaea }      # booklet §5b "grace period of 36 hours"
+    seismic_sse:         { value: 0.25, status: booklet,    source: iaea }      # booklet 0.25g
+    primary_circulation: { value: 1,    status: booklet,    source: iaea }      # natural circulation
+    n_active_components: { value: 3,     status: estimate,   source: derived }   # passive grace, active diesels after 36 h
+    pct:                 { value: null,  status: tbd,        source: na }
+    mdnbr:               { value: null,  status: tbd,        source: na }
+    peaking_factor_3d:   { value: null,  status: tbd,        source: na }
+    mtc:                 { value: null,  status: tbd,        source: na }
+  economic:
+    refuel_cycle:        { value: 14,    status: booklet,    source: iaea }
+    cycle_length_efpd:   { value: 390,   status: booklet,    source: iaea }      # 390 FPD / 50% core replacement
+  safeguards:
+    sbf_score:           { value: 3,     status: booklet,    source: iaea }      # booklet §4c: boron NOT used for control/shutdown
+    epz_class:           { value: 1,     status: estimate,   source: iaea }
+    diversity_count:     { value: 4,     status: estimate,   source: derived }   # nat-circ, gravity, condensation, pressure-suppression
+  sustainability:
+    design_life:         { value: 40,    status: booklet,    source: iaea }      # booklet (NOT 60)
+  efficiency:
+    burnup:              { value: 24,    status: booklet,    source: iaea }
+    capacity_factor:     { value: 0.90,  status: estimate,   source: derived }
+    linear_heat_rate:    { value: null,  status: tbd,        source: na }

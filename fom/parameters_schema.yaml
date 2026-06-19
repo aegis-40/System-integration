@@ -1,0 +1,184 @@
+# Aegis-40 wFOM — parameter schema + default weights
+# ============================================================================
+# Defines the 5 categories, their parameters, normalizers, directions/targets,
+# hard limits, and the DEFAULT weights (PLAN.md §1.1 / §3).
+#
+# wFOM(D,R) = Σ_c W_c · Σ_i w_ci · N_i(x_i^D, x_i^R)
+#
+# Each N_i is a DIFFERENCE of a per-reactor function u_i:
+#   log_ratio:      N = d·(ln x^D − ln x^R)           u_i(x) = d·ln x
+#   min_max:        N = n(x^D) − n(x^R)               u_i(x) = n(x)   (n in [0,1])
+#   target_gaussian:N = g(x^D) − g(x^R)               u_i(x) = exp(−α(x−t)²)
+# ⇒ wFOM(D,R) = U(D) − U(R)  (absolute utility per reactor). See README.
+#
+# Weights here are SUPERVISOR-PENDING defaults (PLAN §1.2 q1). The AHP layer
+# (PLAN §6) can replace them; engine reads these unless --weights given.
+# ============================================================================
+
+schema_version: 1.0
+weight_status: default_pending_supervisor   # PLAN §1.2 q1
+
+categories:
+
+  safety:
+    weight: 0.35
+    parameters:
+      # --- booklet-sourceable for all reactors (cross-comparison backbone) ---
+      grace_period:
+        unit: h
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.18
+        notes: "Operator no-action grace. NuScale capped at 720 h (PLAN §1.1)."
+      seismic_sse:
+        unit: g
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.12
+        notes: "Safe-shutdown earthquake design level. IAEA booklet lists it for every reactor."
+      primary_circulation:
+        unit: ordinal
+        normalizer: min_max
+        direction: max
+        scale: [0, 1]
+        sub_weight: 0.09
+        notes: "0 = forced (needs pumps), 1 = natural circulation (passive). Booklet-sourced."
+      n_active_components:
+        unit: count
+        normalizer: log_ratio
+        direction: min
+        sub_weight: 0.10
+        notes: "Active safety components for DBA mitigation (1+N). ESTIMATE — no clean source; down-weighted 2026-06-15."
+      # --- sim-only (Aegis-40 has them; competitors null → drop in cross-comparison, score vs standards) ---
+      pct:
+        unit: degC
+        normalizer: target_gaussian
+        target: 600.0
+        alpha: 5.0e-6
+        hard_ceiling: 1204.0
+        sub_weight: 0.18
+        notes: "Peak clad temp. openfoam-sourced."
+      mdnbr:
+        unit: "-"
+        normalizer: target_gaussian
+        target: 2.0
+        alpha: 4.0
+        hard_floor: 1.3
+        sub_weight: 0.18
+        notes: "Min DNBR. openfoam-sourced."
+      peaking_factor_3d:
+        unit: "-"
+        normalizer: target_gaussian
+        target: 1.5
+        alpha: 4.0
+        hard_ceiling: 2.5
+        sub_weight: 0.07
+        notes: "3D F_q. hard_ceiling 2.5 = PWR LCO (safety_criteria f_q_total). openmc-sourced."
+      mtc:
+        unit: pcm/K
+        normalizer: target_gaussian
+        target: -40.0
+        alpha: 2.0e-3
+        hard_ceiling: 0.0
+        sub_weight: 0.08
+        notes: "Moderator temp coeff — MUST be < 0 (hard_ceiling 0). openmc-sourced."
+
+  economic:
+    weight: 0.20
+    parameters:
+      specific_revenue:
+        unit: usd_per_kWe_yr
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.40
+        derived: true
+        notes: "(P_el·8760·CF·p_el + Q_th·h_th·p_th + m_H2·p_H2)/P_el. Prices in economic_assumptions.yaml."
+      footprint_per_mwe:
+        unit: m2_per_MWe
+        normalizer: log_ratio
+        direction: min
+        sub_weight: 0.30
+        derived: true
+      refuel_cycle:
+        unit: months
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.20
+      cycle_length_efpd:
+        unit: days
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.10
+
+  safeguards:
+    weight: 0.15
+    parameters:
+      sbf_score:
+        unit: ordinal
+        normalizer: min_max
+        direction: max
+        scale: [0, 3]
+        sub_weight: 0.40
+        notes: "0=full soluble boron,1=boron+rods,2=rods+Gd,3=fully SBF."
+      epz_class:
+        unit: ordinal
+        normalizer: min_max
+        direction: max
+        scale: [0, 2]
+        sub_weight: 0.30
+        notes: "0=large/site-area EPZ,1=plant-boundary,2=on-vessel/negligible."
+      diversity_count:
+        unit: count
+        normalizer: min_max
+        direction: max
+        scale: [0, 7]
+        sub_weight: 0.30
+        notes: "count from {gravity, nat-circ, condensation, conduction, evaporation, capillary, pressure-suppression}."
+
+  sustainability:
+    weight: 0.15
+    parameters:
+      non_electric_revenue_share:
+        unit: fraction
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.40
+        derived: true
+      spent_fuel_per_mwh:
+        unit: gHM_per_MWh
+        normalizer: log_ratio
+        direction: min
+        sub_weight: 0.30
+        derived: true
+        notes: "(P_th/P_el)·(1/burnup_GWd_per_MTU)·24"
+      design_life:
+        unit: years
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.30
+
+  efficiency:
+    weight: 0.15
+    parameters:
+      thermal_efficiency:
+        unit: fraction
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.40
+        derived: true
+        notes: "P_el / P_th"
+      burnup:
+        unit: GWd_per_MTU
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.30
+      capacity_factor:
+        unit: fraction
+        normalizer: log_ratio
+        direction: max
+        sub_weight: 0.20
+      linear_heat_rate:
+        unit: kW_per_m
+        normalizer: log_ratio
+        direction: min
+        sub_weight: 0.10

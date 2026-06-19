@@ -1,0 +1,42 @@
+id: nuscale_voygr
+display_name: NuScale VOYGR (NPM-77)
+country: USA
+developer: NuScale Power
+status: design_certified
+source: "IAEA SMR booklet 2022 (docs/SMR_booklet.pdf p.87-90, VOYGR/NPM)"
+
+descriptive:
+  thermal_power_mwth: 250          # booklet (per module)
+  electric_power_mwe: 77           # booklet "250 / 77 (gross)" per module
+  capacity_factor: 0.95            # estimate
+  plant_footprint_m2: 11700        # booklet 140000 m² for VOYGR-12 ÷ 12 modules (per-module basis)
+  burnup_GWd_per_MTU: 45           # booklet "≥ 45" (NOT 30)
+  design_life_years: 60            # booklet
+  cogen:
+    q_th_sold_mwth: 0
+    h_th_sold_hours: 0
+    m_h2_kg_per_yr: 0
+
+categories:
+  safety:
+    grace_period:        { value: 720,   status: booklet,    source: iaea }      # booklet "unlimited" → capped 720 h (PLAN §1.1)
+    seismic_sse:         { value: 0.5,   status: booklet,    source: iaea }      # booklet 0.5g
+    primary_circulation: { value: 1,     status: booklet,    source: iaea }      # natural circulation (no RCPs)
+    n_active_components: { value: 1,      status: estimate,   source: derived }   # booklet: safe shutdown+cool, no AC/DC/operator/water (fully passive)
+    pct:                 { value: null,  status: tbd,        source: na }
+    mdnbr:               { value: null,  status: tbd,        source: na }
+    peaking_factor_3d:   { value: null,  status: tbd,        source: na }
+    mtc:                 { value: null,  status: tbd,        source: na }
+  economic:
+    refuel_cycle:        { value: 18,    status: booklet,    source: iaea }      # booklet "Nominal 18" (NOT 24)
+    cycle_length_efpd:   { value: 520,   status: estimate,   source: derived }   # ~18 mo × 0.95
+  safeguards:
+    sbf_score:           { value: 0,     status: booklet,    source: iaea }      # booklet §4c: control mainly soluble boron + 16 rods
+    epz_class:           { value: 2,     status: literature, source: iaea }      # site-boundary EPZ (smallest)
+    diversity_count:     { value: 4,     status: estimate,   source: derived }
+  sustainability:
+    design_life:         { value: 60,    status: booklet,    source: iaea }
+  efficiency:
+    burnup:              { value: 45,    status: booklet,    source: iaea }      # booklet "≥ 45" (NOT 30)
+    capacity_factor:     { value: 0.95,  status: estimate,   source: derived }
+    linear_heat_rate:    { value: null,  status: tbd,        source: na }

@@ -1,0 +1,42 @@
+id: smart
+display_name: SMART
+country: Republic of Korea
+developer: KAERI
+status: detailed_design   # booklet: "Detailed design" (standard design approval 2012)
+source: "IAEA SMR booklet 2022 (docs/SMR_booklet.pdf p.55-58, SMART)"
+
+descriptive:
+  thermal_power_mwth: 365          # booklet
+  electric_power_mwe: 107          # booklet "365 / 107"
+  capacity_factor: 0.90            # estimate
+  plant_footprint_m2: 90000        # booklet
+  burnup_GWd_per_MTU: 54           # booklet "< 54"
+  design_life_years: 60            # booklet
+  cogen:                            # SMART desalinates (~40,000 m3/day) — NOT captured by heat+H2 formula; see note
+    q_th_sold_mwth: 0
+    h_th_sold_hours: 0
+    m_h2_kg_per_yr: 0
+
+categories:
+  safety:
+    grace_period:        { value: null,  status: tbd,        source: na }        # not stated in booklet
+    seismic_sse:         { value: 0.3,   status: booklet,    source: iaea }      # booklet ">0.3g"
+    primary_circulation: { value: 0,     status: booklet,    source: iaea }      # forced (4 reactor coolant pumps)
+    n_active_components: { value: 4,      status: estimate,   source: derived }   # "Passive" approach (PRHRS/PSIS/ADS) BUT forced primary (4 RCPs) + soluble boron
+    pct:                 { value: null,  status: tbd,        source: na }
+    mdnbr:               { value: null,  status: tbd,        source: na }
+    peaking_factor_3d:   { value: null,  status: tbd,        source: na }
+    mtc:                 { value: null,  status: tbd,        source: na }
+  economic:
+    refuel_cycle:        { value: 30,    status: booklet,    source: iaea }
+    cycle_length_efpd:   { value: 870,   status: booklet,    source: iaea }      # booklet §4b "870 EFPD, two-batch"
+  safeguards:
+    sbf_score:           { value: 0,     status: booklet,    source: iaea }      # booklet §4c: control by rods + soluble boron
+    epz_class:           { value: 1,     status: estimate,   source: iaea }
+    diversity_count:     { value: 3,     status: estimate,   source: derived }
+  sustainability:
+    design_life:         { value: 60,    status: booklet,    source: iaea }
+  efficiency:
+    burnup:              { value: 54,    status: booklet,    source: iaea }
+    capacity_factor:     { value: 0.90,  status: estimate,   source: derived }
+    linear_heat_rate:    { value: null,  status: tbd,        source: na }

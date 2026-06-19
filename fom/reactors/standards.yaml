@@ -1,0 +1,39 @@
+id: standards
+display_name: "Standards/target reference"
+country: "—"
+developer: "IAEA/NRC limits + best-practice targets"
+status: benchmark
+source: "absolute reference: regulatory limits + good-design targets (NOT a real reactor)"
+
+# Synthetic reference of ABSOLUTE target values. Score wFOM(reactor, standards):
+#   > 0 ⇒ reactor beats the benchmark on the weighted aggregate.
+# No 'descriptive' block ⇒ engine uses these explicit values directly (no derivation).
+
+categories:
+  safety:
+    grace_period:        { value: 72,    source: "IAEA SSG-39 / NRC SECY-10-0034 (SMR ≥72 h)" }
+    seismic_sse:         { value: 0.3,   source: "common SSE design basis" }
+    primary_circulation: { value: 1,     source: "passive ideal" }
+    n_active_components: { value: 1,      source: "passive ideal" }
+    pct:                 { value: 600,   source: "good steady PCT; limit 1204 (10 CFR 50.46)" }
+    mdnbr:               { value: 2.0,   source: "good DNB margin; limit 1.3 (SRP 4.4)" }
+    peaking_factor_3d:   { value: 1.5,   source: "good 3D F_q; limit 2.5 (NUREG-1431 LCO)" }
+    mtc:                 { value: -40,   source: "strongly negative MTC target" }
+  economic:
+    specific_revenue:    { value: 500,   source: "benchmark $/kWe-yr (electricity-only baseline)" }
+    footprint_per_mwe:   { value: 500,   source: "compact-SMR target" }
+    refuel_cycle:        { value: 24,    source: "≥24-month target" }
+    cycle_length_efpd:   { value: 600,   source: "long-cycle target" }
+  safeguards:
+    sbf_score:           { value: 3,     source: "fully SBF ideal" }
+    epz_class:           { value: 2,     source: "site-boundary/negligible EPZ ideal" }
+    diversity_count:     { value: 5,     source: "strong passive diversity" }
+  sustainability:
+    non_electric_revenue_share: { value: 0.2, source: "meaningful cogen share target" }
+    spent_fuel_per_mwh:  { value: 1.5,   source: "low waste-intensity target" }
+    design_life:         { value: 60,    source: "60-year design life target" }
+  efficiency:
+    thermal_efficiency:  { value: 0.33,  source: "good PWR-class η" }
+    burnup:              { value: 50,    source: "high-burnup target" }
+    capacity_factor:     { value: 0.95,  source: "high CF target" }
+    linear_heat_rate:    { value: 15,    source: "moderate LHR target" }

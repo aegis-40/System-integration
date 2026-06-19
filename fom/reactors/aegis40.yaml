@@ -1,0 +1,42 @@
+id: aegis40
+display_name: Aegis-40
+country: Türkiye
+developer: TEKNOFEST 2026 team
+status: detailed_design
+source: "rev_3 OpenMC + safety/safety_criteria.yaml (2026-06-15)"
+
+descriptive:        # raw inputs for derived parameters
+  thermal_power_mwth: 125
+  electric_power_mwe: 40
+  capacity_factor: 0.95
+  plant_footprint_m2: 20000        # estimate — plant island (NI+TB+aux), excl. EPZ buffer
+  burnup_GWd_per_MTU: 42.8         # confirmed rev_3
+  design_life_years: 60            # estimate
+  cogen:
+    q_th_sold_mwth: 15             # PER §4.1.3 district heat
+    h_th_sold_hours: 1600          # winter heating season
+    m_h2_kg_per_yr: 120000         # PER §4.1.3 SOE hydrogen
+
+categories:
+  safety:
+    grace_period:        { value: 72,    status: target,    source: safety_criteria }   # target ∞, 72 h floor
+    seismic_sse:         { value: 0.3,   status: confirmed, source: safety_criteria }   # sse_design
+    primary_circulation: { value: 1,     status: confirmed, source: design }            # natural circ (FER §8.6.3)
+    n_active_components: { value: 2,      status: estimate,  source: derived }           # passive ESF
+    pct:                 { value: null,   status: tbd,       source: openfoam }
+    mdnbr:               { value: null,   status: tbd,       source: openfoam }
+    peaking_factor_3d:   { value: 3.478,  status: confirmed, source: openmc }            # ⚠ > 2.5 LCO (pre de-peak)
+    mtc:                 { value: -35.9,  status: confirmed, source: openmc }
+  economic:
+    refuel_cycle:        { value: 16,     status: estimate,  source: derived }           # ~479 EFPD / 0.95
+    cycle_length_efpd:   { value: 479,    status: confirmed, source: openmc }
+  safeguards:
+    sbf_score:           { value: 3,      status: confirmed, source: design }            # fully SBF
+    epz_class:           { value: 1,      status: estimate,  source: safety_criteria }   # 0.5 km plant boundary
+    diversity_count:     { value: 5,      status: estimate,  source: design }
+  sustainability:
+    design_life:         { value: 60,     status: estimate,  source: design }
+  efficiency:
+    burnup:              { value: 42.8,   status: confirmed, source: openmc }
+    capacity_factor:     { value: 0.95,   status: estimate,  source: design }
+    linear_heat_rate:    { value: 11.3,   status: estimate,  source: derived }           # 125 MWth / ~11088 m fuel

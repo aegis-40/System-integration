@@ -1,0 +1,8 @@
+# Market prices for specific-revenue derivation (PLAN.md §1.2 q2 — defaults pending supervisor).
+prices:
+  electricity_usd_per_mwh: 60
+  district_heat_usd_per_mwh: 50
+  hydrogen_usd_per_kg: 5
+  desalinated_water_usd_per_m3: 1.0
+reference_year: 2026
+discount_rate: 0.07
