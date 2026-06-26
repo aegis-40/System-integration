@@ -1,16 +1,14 @@
-# Site Zoning — Aegis-40 Three-Island Scheme
+# Site Zoning — Aegis-40 Compact In-Line Layout
 
 *Source document. Drop into FER §8.10 introduction.*
-*Companion: `layout/building_list.md`, `layout/block_layout.png` (Day 3), `layout/aux_systems.md` (Day 5).*
-*Owner: Azamhon. Last updated: 2026-06-02.*
+*Companion: `layout/building_list.md`, `planning/COMPACT_LAYOUT_PROPOSAL.md` (detailed description), `layout/aux_systems.md`.*
+*Owner: Azamhon. Last updated: 2026-06-26.*
 
----
+> **LAYOUT RE-BASELINE 2026-06-26 (closes C1).** The team adopted a **compact in-line layout** — a single linear process spine **Storage(SFB) → Reactor(RXB) → Turbine(TB) → TCES → SOE(H₂ gen)**, with aux/electrical buildings flanking it, replacing the spread three-island campus. This is the SMR-standard compact pattern (NuScale / Rolls-Royce SMR / BWRX-300), chosen for **construction economy** (shortest pipe/cable runs, shared spine walls, one linear construction front) with all safety separations preserved. **The full detailed description — building schedule, positions, separations, plan/elevation — is `planning/COMPACT_LAYOUT_PROPOSAL.md`.** §1–§4 below are retained as the hazard-class rationale that still governs *which* zone each spine block sits in; §5 carries the decision log (see Z9).
 
-## 1. Why three islands
+## 1. Functional zoning along the spine
 
-The Aegis-40 site is partitioned into **three functional islands** separated by physical buffers and security classifications. Each island contains buildings sharing the same hazard class, safety class, and access control. This partition is the basis for every downstream layout decision — building grouping, piping routes, electrical distribution, emergency response zones.
-
-The three-island scheme follows the standard PWR practice (Westinghouse AP1000, KAERI SMART, NuScale VOYGR), adapted for Aegis-40's **cogeneration scope** that adds a non-conventional Industrial Island for thermal energy storage (TES) and hydrogen production (SOE).
+The site is still partitioned by **hazard class, safety class and access control** — but the zones now sit as **contiguous blocks along one spine** rather than as separated islands, with security/seismic class **stepping down west→east**: Protected Area (nuclear: SFB+RXB+CB+AB+WMB+DGB) → Vital Area (turbine: TB+switchyard) → non-safety (cogen tail: TCES+SOE, with bulk H₂ storage set back to the SE corner). The same four constraints below dictate the zone boundaries; the compact spine satisfies them via adjacency + a mid-spine seismic gap + the H₂ corner offset rather than via wide inter-island buffers.
 
 The partition is dictated by four constraints:
 
@@ -135,14 +133,15 @@ A more accurate block-layout drawing (with internal building positioning) lands 
 
 | ID | Decision | Rationale |
 |---|---|---|
-| Z1 | Three-island scheme (Nuclear / Conventional / Industrial) | Standard PWR practice extended for cogeneration |
-| Z2 | NI is Seismic Cat I throughout, ~100 × 80 m | Driven by RXB + AB + CB grouping + SSE 0.3 g |
-| Z3 | CI is Seismic Cat II, ~80 × 80 m | Conventional industrial; turbine + cooling dominate |
-| Z4 | II is non-safety with NFPA 2 H₂ classification, ~60 × 60 m | H₂ hazard isolation |
-| Z5 | H₂ stand-off = 100 m to nearest NI building | Conservative bound NFPA 2; refine after Alisher sizes inventory |
+| Z1 | ~~Three-island scheme~~ → **SUPERSEDED by Z9 compact spine** (2026-06-26) | Replaced by the single in-line spine; hazard-class zoning retained as contiguous blocks |
+| Z2 | Nuclear block (SFB+RXB+CB+AB+WMB+DGB) = Seismic Cat I, Protected Area | SSE 0.3 g; grouped at the west end of the spine |
+| Z3 | Turbine block (TB+switchyard) = Seismic Cat II, Vital Area | mid-spine; seismic gap ≥75 mm to the Cat-I nuclear block |
+| Z4 | Cogen tail (TCES+SOE) = non-safety; bulk H₂ NFPA 2 set back to SE corner | east end of spine; H₂ storage offset (see Z5) |
+| Z5 | **H₂ bulk storage offset to SE corner → ~123 m from RXB** (confirmed 2026-06-26) | Exceeds the 100 m conservative bound + NFPA 2 ≥60 m. Protects safety SSCs from H₂-explosion overpressure (RG 1.91, SSR-2/1 Req 17). SOE *production* stays in-line; *bulk storage* is the setback. Refine once Alisher sizes inventory |
 | Z6 | ~~Closed cooling tower in CI~~ → **RESOLVED 2026-06-13: once-through Black Sea seawater cooling, NO cooling tower** | Team decision — small ~70–82 MWth rejection, negligible thermal-plume impact at the Sinop coastal site (≈1 % of Akkuyu's per-fleet load); CTW footprint freed. **Akkuyu (4×VVER-1200) is the licensed Turkish precedent for once-through seawater.** Text/data recut applied 2026-06-19; graphical recut in progress now that C3 is settled. |
 | Z7 | **TB adjacent to the NI boundary; seawater intake/outfall + CWP house at the CI periphery / shoreline** (r2, 2026-06-12; updated 2026-06-19) | NuScale plant-arrangement practice + PFD logic: main-steam/feedwater run must be short (~47 m); condenser circ-water run to the shoreline intake/outfall can be long |
 | Z8 | **TCES = thermochemical zeolite-13X / water-vapour sorption** (C3 RESOLVED 2026-06-13) | Non-toxic/non-flammable/non-corrosive proven medium; charge by dehydration off ~280 °C pass-out steam, discharge ~150–200 °C to district heat. Decouples steady reactor output from grid dispatch → **load-following + thermal management without deep reactor maneuvering** (safety upside — see safety review). Supersedes two-tank sensible Therminol-66 |
+| Z9 | **COMPACT IN-LINE LAYOUT (closes C1, 2026-06-26):** single spine Storage(SFB) → RXB → [seismic gap] → TB → TCES → SOE(H₂ gen); CB+AB+WMB north flank, DGB+switchyard+CWP+WSB south flank; bulk H₂ to SE corner | SMR-standard compact pattern (NuScale/RR-SMR/BWRX-300). Construction economy: shortest pipe/cable runs, shared spine walls, one linear front; site envelope ~250×300 → **~160×120 m**, built ~8 800 → ~8 200 m². All safety separations preserved (seismic gap, H₂ offset, fire walls, security tiers, turbine-missile orientation). AB+WMB kept separate (team). Detailed description: `planning/COMPACT_LAYOUT_PROPOSAL.md` |
 
 ---
 

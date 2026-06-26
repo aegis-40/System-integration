@@ -1,8 +1,10 @@
 # Building List — Aegis-40
 
 *Source document. Drop into FER §8.10 building inventory.*
-*Companion: `layout/zones.md`, `layout/block_layout.png` (Day 3).*
-*Owner: Azamhon. Last updated: 2026-06-02.*
+*Companion: `layout/zones.md`, `planning/COMPACT_LAYOUT_PROPOSAL.md`.*
+*Owner: Azamhon. Last updated: 2026-06-26.*
+
+> **Arrangement (2026-06-26, C1 resolved):** these buildings are now arranged in a **compact in-line spine** — SFB → RXB → TB → TCES → SOE, with CB/AB/WMB on the north flank and DGB/switchyard/CWP/WSB on the south, bulk H₂ offset to the SE corner. Footprints below are unchanged; only the *arrangement* changed (shared spine walls save ~6–8 % built area). Positions + the building schedule with adjacencies are in `planning/COMPACT_LAYOUT_PROPOSAL.md` (zones.md Z9).
 
 ---
 
