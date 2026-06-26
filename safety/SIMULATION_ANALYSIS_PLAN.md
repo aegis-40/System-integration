@@ -60,11 +60,25 @@ All of these live in **one notebook** — Samira's `docs/aegis40_neutronics_FER.
 
 | # | Simulation | Tool | Produces | Feeds | Status |
 |---|---|---|---|---|---|
-| O1 | Atmospheric dispersion (source term → site boundary) | RASCAL / HotSpot / MACCS-class | boundary dose 0–2 h, EPZ basis | `dose_site_boundary` (≤0.25 Sv), `epz_radius` | **MISSING** |
-| O2 | Fuel-performance / rod mechanics | FRAPCON-class | rod internal P, clad strain, fuel-clad gap, fission-gas | `fuel_core_structural` (Req 43–44) | **MISSING — mechanical scope** |
-| O3 | Decay-heat source term | ORIGEN / depletion post-process | decay-heat curve, isotopic source term (Bq) | PRHR sizing (F5), dispersion (O1) | partial (ANS-5.1 cross-check exists) |
-| O4 | Level-1 PRA (event-tree quantification) | SAPHIRE-class / by-hand | CDF, LRF | `cdf`, `lrf` | partial (LOHS/SBO done by hand) |
-| O5 | Seismic / structural (combined seismic+LOCA core loads) | FEA | core hold-down, rod insertability | `fuel_core_structural`, `sse_design` | **MISSING — mechanical/civil scope** |
+| O1 | Atmospheric dispersion (source term → site boundary) | RASCAL / HotSpot / MACCS-class | boundary dose 0–2 h, EPZ basis | `dose_site_boundary` (≤0.25 Sv), `epz_radius` | **CITE/BOUND** (see §1.C.1) |
+| O2 | Fuel-performance / rod mechanics | FRAPCON-class | rod internal P, clad strain, fuel-clad gap, fission-gas | `fuel_core_structural` (Req 43–44) | **CITE/BOUND** (see §1.C.1) |
+| O3 | Decay-heat source term | ORIGEN / depletion post-process | decay-heat curve, isotopic source term (Bq) | PRHR sizing (F5), dispersion (O1) | **CITE** — ANS/ANSI-5.1 is the standard, no run needed |
+| O4 | Level-1 PRA (event-tree quantification) | SAPHIRE-class / by-hand | CDF, LRF | `cdf`, `lrf` | **CITE/BOUND** — hand trees + NuScale-class PRA reference |
+| O5 | Seismic / structural (combined seismic+LOCA core loads) | FEA | core hold-down, rod insertability | `fuel_core_structural`, `sse_design` | **CITE/BOUND** — standards + mechanical scope |
+
+### 1.C.1 · Strategy — cite/bound against IAEA/NRC standards instead of running unfamiliar tools
+
+For a **detailed-design competition entry** (not a license application), the §1.C items do not need de-novo simulation in tools the team doesn't operate. Each can be supported by **(a) a recognized standard/correlation, and/or (b) a bounding or by-similarity argument against the NRC-reviewed reference plant** — Aegis-40's core is geometrically the **NuScale NPM** (37 FA / 9 768 pins / 2.0 m, per the TH report), so "by similarity to NuScale" is a strong, legitimate basis. This is the standard "demonstration by reference to the licensed envelope" approach. **Each such claim must be labelled as bounding/by-reference, not as a plant-specific calculation.**
+
+| Item | How to substantiate without running the tool | Citations |
+|---|---|---|
+| **O1 dispersion / EPZ** | Bound the source term by core power (125 MWth, ~⅓ of NuScale NPM) and credit the passive containment; argue boundary dose < PAG with the **plant-boundary EPZ** by reference to NuScale's NRC-approved site-boundary EPZ methodology and scaling. A full MACCS run is *not* required for the FER. | RG 1.183 (alternative source term); 10 CFR 50.33(g) + SMR EPZ final rule; NEI 12-02; NuScale FSAR Ch. 15 / SECY-15-0077; IAEA NS-G-2.x |
+| **O2 fuel performance** | Bound by the **NRC-licensed fuel envelope**: standard 17×17 UO₂/Zircaloy-4 at ≤62 GWd/MTU is already within the approved design basis, and Aegis-40 runs at **low linear power (12.8 kW/m peak ≪ ~43 kW/m PWR limit)** — so rod-internal-pressure, clad-strain and fission-gas margins are large *by inspection*. No FRAPCON run needed; state it as bounded-by-envelope. | NRC SRP 4.2 (NUREG-0800); 10 CFR 50.46; ANS fuel criteria; IAEA NF-T-2.1 |
+| **O3 decay heat** | **ANS/ANSI-5.1 is the standard decay-heat curve** — citing it *is* the deliverable; no simulation. Already cross-checked against the depletion. | ANSI/ANS-5.1-2014 |
+| **O4 PRA (CDF/LRF)** | The hand-built LOHS/SBO event trees give per-initiator CDF; **bound the plant CDF/LRF by the NuScale-class passive-PRA result** (passive iPWRs report CDF ~1e-8–1e-10) by similarity. A full SAPHIRE model is beyond FER scope; cite the reference and the de-energize-to-actuate argument. | NuScale FSAR Ch. 19 (PRA); IAEA SSG-3 / SSG-4; NRC RG 1.174 |
+| **O5 seismic/structural** | Cite the **design spectrum + qualification standards** (SSE 0.3 g to RG 1.60; 1E equipment to IEEE 344); the combined seismic+LOCA core-structural FEA is the **mechanical/civil teammate's** scope, referenced not run here. | RG 1.60, RG 1.61; IEEE 344; IAEA SSG-9, NS-G-1.6 |
+
+> **Honesty rule:** these are **bounding / by-reference** justifications appropriate to a design-stage report, not plant-specific safety demonstrations. The FER must say so explicitly (e.g. "bounded by the NRC-licensed fuel envelope" / "by similarity to the NuScale NPM"). Where a number is genuinely needed and cheap (e.g. a scaling dose estimate), do the hand-calc; where the tool is unfamiliar and the standard suffices, cite.
 
 ---
 
@@ -137,9 +151,10 @@ Each file must export a machine-readable results file (e.g. `safety_analysis_res
 
 **Important (named in the reviewer audit):**
 6. **F6 containment P/T** (also gated on the C5 dry-vs-pool decision).
-7. **O1 dispersion** → boundary dose + EPZ justification.
-8. **N12 MSLB cooldown** → the limiting overcooling transient for this strong-negative-MTC core.
-9. **N11 SFP-rack criticality** → fuel-handling safety.
+7. **N12 MSLB cooldown** → the limiting overcooling transient for this strong-negative-MTC core.
+8. **N11 SFP-rack criticality** → fuel-handling safety.
+
+*Reclassified to CITE/BOUND (no tool run — §1.C.1):* O1 dispersion/EPZ, O2 fuel performance, O3 decay heat, O4 PRA, O5 seismic — substantiated against NRC/IAEA standards + by-similarity to the NuScale NPM rather than de-novo simulation.
 
 **Analyses with no sim dependency (do anytime):**
 9. B9 tritium budget · B10 setpoint-uncertainty roll-up · B11 battery sizing · B8 coastal DBFL (needs a site study, not a reactor sim).
@@ -155,7 +170,7 @@ Each file must export a machine-readable results file (e.g. `safety_analysis_res
 |---|---|---|
 | **OpenMC** | 12 simulations, **1 file** (extend with N10–N12) | criticality, coefficients, rod worth/SDM, peaking, depletion, EBIS, SFP, MSLB-cooldown |
 | **OpenFOAM** | 6 simulations, **1 project (exists, extend)** | **F1 steady MDNBR (1.56) + F4 nat-circ DONE** (chtMultiRegionFoam + correlation stack, V&V'd vs NuScale, `Aegis40_TH_report.docx`); F2 transient, F3 SBLOCA, F5 PRHR, F6 containment remain |
-| **Other** (dispersion, ORIGEN, PRA, FRAPCON, FEA) | 5 simulations, **2 files + 2 external** | dose/EPZ, source term, CDF/LRF, fuel mechanics, seismic |
+| **Other** (dispersion, ORIGEN, PRA, FRAPCON, FEA) | 5 items — **CITE/BOUND, not run** (§1.C.1) | dose/EPZ, decay heat, CDF/LRF, fuel mechanics, seismic — substantiated by ANS-5.1, NRC SRP 4.2, RG 1.183/1.60, IEEE 344, and by-similarity to the NuScale NPM, instead of unfamiliar-tool runs |
 | **Analyses** | 10 of-sim-results + 11 standalone | 11 standalone are mostly DONE; the of-sim ones wait on their runs |
 
 *Single source of truth for limits + the rev_4 design basis: `safety/safety_criteria.yaml`. This plan is the companion that says how each limit gets its number.*

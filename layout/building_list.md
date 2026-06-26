@@ -18,23 +18,32 @@
 
 ## 2. Reactor envelope (the constraint that sets everything)
 
-> **⚠ rev_4 re-baseline (2026-06-26):** Samira's neutronics core grew from **21 FA → 37 FA** (7-wide octagon, 12 control-rod clusters; `docs/aegis40_neutronics_FER.ipynb`), and active height **1.90 m → 2.00 m**. The 37-FA core is ~1.76× the 21-FA fuel area, so the **RPV diameter, core-barrel OD, RXB internal dimensions and SFP rack size below are now UNDERSIZED and must be re-derived** for 37 FA + 12 CRA. The values below are the superseded 21-FA envelope, kept until the 37-FA geometry is re-cut. `[REWORK — 37-FA RPV/RXB/SFP sizing]`
+> **rev_4 re-baseline (2026-06-26):** the core is now **37 FA, 7-wide octagon, 12 CRA** (`docs/aegis40_neutronics_FER.ipynb`), and the thermal-hydraulic study (`docs/Aegis40_TH_report.docx`) fixes the integral-vessel arrangement: a **~10 m tall, ~Ø3.0–3.5 m NuScale-class natural-circulation vessel** (helical-coil SG in the annulus around a central riser, integral pressurizer on top). The envelope below is **re-derived for 37 FA**; values tagged `[EST]` are first-cut engineering estimates pending the mechanical vessel design (wall thickness, seismic) which is the mechanical teammate's scope.
 
-From `Aegis-40 2D test/geometry.xml` (**21-FA, superseded — see note above**):
+**Core size (from the locked lattice):** 37 FA × 21.6038 cm pitch → active-core **equivalent diameter ≈ 1.50 m** (≈ 1.51 m across the 7-wide flats); + 20 cm radial water reflector each side → **≈ 1.9 m** reflected-core diameter; **9 768 fuel pins**, **9.87 tHM**.
 
-| Component | Value (21-FA, superseded) | rev_4 (37-FA) |
+| Component | rev_4 (37-FA) | Basis |
 |---|---|---|
-| RPV outer diameter | 2.44 m | `[REWORK — larger for 37 FA]` |
-| RPV inner diameter | 2.26 m | `[REWORK]` |
-| Core barrel OD | 1.94 m | `[REWORK]` |
-| Core barrel ID | 1.85 m | `[REWORK]` |
-| Active fuel height | ~~1.90 m~~ | **2.00 m** (locked, 37-FA) |
-| Modeled total RPV height (heads excluded) | 2.35 m | `[REWORK — +0.10 m active]` |
-| Estimated total RPV height incl. heads + plenum `[ASSUMED]` | ~4.8 m | `[REWORK]` |
-| Downcomer radial gap | 0.16 m | TBD |
-| Heavy-metal loading | — | **9.87 tHM** (37 FA) |
+| Active fuel height | **2.00 m** | locked geometry |
+| Active-core equivalent diameter | **~1.50 m** | 37 FA × 0.216 m pitch |
+| Reflected-core diameter (+20 cm reflector) | **~1.9 m** | locked reflector |
+| RPV inner diameter | **~2.7–3.0 m** `[EST]` | reflected core + downcomer + riser/SG annulus |
+| RPV outer diameter | **~3.0–3.5 m** `[EST]` | TH report (NuScale-class) |
+| RPV total height | **~10 m** | TH report elevation budget (vs ~17.7 m NuScale — shorter riser) |
+| Heavy-metal loading | **9.87 tHM** | 37 FA |
 
-These numbers drive RXB internal dimensions (refueling machine reach, crane clearance, polar crane radius) — **all to be re-derived for the 37-FA core.**
+**Integral-vessel elevation budget** (delivers natural-circulation H_tc ≈ 4 m; core mid 1.9 m → SG mid 5.9 m), from the TH report:
+
+| Elevation [m] | Component |
+|---|---|
+| 0.0 – 0.9 | lower plenum / core inlet |
+| 0.9 – 2.9 | **core** (2.0 m active; mid-plane 1.9 m) |
+| 2.9 – 4.4 | outlet plenum + riser (chimney) |
+| 4.4 – 7.4 | **steam generator** (helical coil in annulus; mid 5.9 m; ~1 250 m², 467 kg/s) |
+| 7.4 – 7.9 | upper plenum |
+| 7.9 – 9.9 | integral pressurizer |
+
+These drive RXB internal dimensions (refuel-pool depth, crane lift height, polar-crane radius) and the SFP size — updated in §3.1 below. **Binding RXB dimension is now vessel HEIGHT (~10 m, was ~4.8 m), not diameter** (Ø3.25 m ≪ containment).
 
 ---
 
@@ -44,13 +53,13 @@ These numbers drive RXB internal dimensions (refueling machine reach, crane clea
 
 | ID | Building | Function | Footprint (m²) | Height (m) | Seismic | Power | Source / notes |
 |---|---|---|---|---|---|---|---|
-| **RXB** | Reactor Building | Houses RPV, primary loop, containment (steel-lined RC), polar crane, refueling pool, IRWST | **25 × 25 = 625** | 30 above grade (+ 15 below) | Cat I | mixed 1E / non-1E | Containment Ø ≈ 15 m × 25 m tall; RPV below grade; head removal via polar crane |
+| **RXB** | Reactor Building | Houses the ~10 m integral RPV, **internal IRWST pool (CAREM-style, in-containment)**, primary loop, containment, polar crane, refueling pool | **25 × 25 = 625** `[re-check]` | **~36 above grade (+ ~12 below)** `[EST]` | Cat I | mixed 1E / non-1E | rev_4: vessel **~10 m × Ø~3.25 m** (was ~4.8 × 2.44). Internal height re-derived for the taller vessel + head-lift + fuel withdrawal + crane: **vessel 10 m + ~12 m refuel/crane above**. Footprint Ø15 m containment still ≫ vessel → plan unchanged; the change is vertical. Internal IRWST = the passive safety UHS (no external ECCS penetration) |
 | **AB** | Auxiliary Building | CVCS, sampling, primary makeup, demineralisation, primary radwaste sumps | 25 × 20 = 500 | 15 | Cat I | 1E + non-1E | Penetration interface with RXB consolidated on the AB side |
 | **CB** | Control Building | Main Control Room, computer/I&C rooms, RPS/ESFAS divisions A–D in separated rooms, switchgear, battery rooms | 30 × 25 = 750 | 12 | Cat I | 1E primary | MCR per `ic/ic_architecture.md` §4.1; 2/4 voting demands 4 physically separated equipment rooms |
-| **SFB** | Spent Fuel Building | Spent fuel pool (water shielded), fuel transfer canal, fuel handling machine, SFP cooling skids | 20 × 15 = 300 | 15 | Cat I | non-1E (SFP cooling) | Pool ≈ 10 × 10 × 10 m holds ≥ full-core offload + 10 cycles |
+| **SFB** | Spent Fuel Building | Spent fuel pool (water shielded), fuel transfer canal, fuel handling machine, SFP cooling skids | **~25 × 18 = 450** `[EST]` | 15 | Cat I | non-1E (SFP cooling) | rev_4: 37-FA core is **~1.76× the 21-FA** → full-core offload + multi-cycle storage scales up; pool **~13 × 13 × 10 m** (or denser racks). SFP cooling duty also scales with the larger core decay heat |
 | **DGB** | Diesel Generator Building | 2× emergency diesel generators (≥ 100 % capacity each), day tanks, control panels | 15 × 10 = 150 | 10 | Cat I | 1E | Per FER Table 1 "Emergency power supplies = 2" |
 | **WMB** | Waste Management Building | Liquid radwaste tanks, solid waste compactor, gaseous radwaste hold-up tanks, HEPA + charcoal | 25 × 15 = 375 | 12 | Cat I | non-1E | Tied to AB drains; off-gas stack rises from this building |
-| | **NI subtotal** | | **~2 700 m²** | | | | within ~100 × 80 m island envelope (incl. corridors + 20 % circulation) |
+| | **NI subtotal** | | **~2 850 m²** `[EST]` | | | | rev_4: SFB +150 m² for the 37-FA pool; within ~100 × 80 m island envelope (incl. corridors + 20 % circulation) |
 
 ### 3.2 Conventional Island
 
