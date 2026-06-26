@@ -177,7 +177,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
 
     <!-- ============ RXB ============ -->
     <div class="stage" data-v="rxb">
-      <div class="title-ov"><div class="t">Reactor Building — Floor Plan</div><div class="s">containment Ø15 m · RPV Ø2.44 m · 21-FA core [rev_3]</div></div>
+      <div class="title-ov"><div class="t">Reactor Building — Floor Plan</div><div class="s">containment Ø15 m + internal IRWST pool · RPV Ø3.25 m · 37-FA core [rev_4]</div></div>
       <div class="scalestamp">SCALE 1 : 50</div>
       <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><g class="pz">
         <defs>
@@ -186,7 +186,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
         <rect x="14" y="14" width="72" height="72" rx="2.5" fill="#f2f6fb" stroke="var(--ni)" stroke-width="1.2"/>
         <rect x="16.5" y="16.5" width="67" height="67" rx="1.5" fill="none" stroke="var(--ni)" stroke-width=".3" opacity=".5"/>
         <circle cx="50" cy="48" r="28" fill="none" stroke="var(--ci)" stroke-width=".5" stroke-dasharray="2 1.6" opacity=".7"/>
-        <g class="bld" data-name="Containment" data-pic="Ø15 m" data-foot="dry steel-lined RC" data-fn="Leak-tight pressure boundary, 4.14 bar design. Houses the RPV, primary loop, IRWST annulus." data-fer="FER Table 1">
+        <g class="bld" data-name="Containment" data-pic="Ø15 m" data-foot="steel-lined RC + internal pool" data-fn="Leak-tight pressure boundary, 4.14 bar design. Houses the RPV, primary loop, and the internal IRWST pool (CAREM-style) — the passive safety heat sink; DHRS/ECCS condense back into it (no external penetration)." data-fer="FER §8.6.2">
           <circle class="br" cx="50" cy="48" r="22" fill="url(#cont)" stroke="var(--ni)" stroke-width="1.1"/>
           <circle cx="50" cy="48" r="21" fill="none" stroke="var(--ni)" stroke-width=".35" stroke-dasharray="1.4 1" opacity=".5"/>
         </g>
@@ -199,14 +199,14 @@ main{flex:1;display:grid;grid-template-columns:1fr 320px;min-height:0}
         <g class="bld" data-name="Penetration zone" data-pic="→ AB" data-foot="consolidated, AB side" data-fn="All containment penetrations grouped on the Auxiliary-Building face for isolation + access." data-fer="">
           <rect class="br" x="83" y="38" width="3" height="20" fill="var(--ci-f)" stroke="var(--ci)" stroke-width=".6"/>
         </g>
-        <g class="bld" data-name="Reactor Pressure Vessel" data-pic="Ø 2.44 m · rev_3" data-foot="21 FA · 17×17 lattice" data-fn="Integral PWR vessel. 200 cm active height. 21 assemblies at 4.95/4.70/4.40 wt%." data-fer="rev_3 geometry.xml">
+        <g class="bld" data-name="Reactor Pressure Vessel" data-pic="Ø 3.25 m × ~10 m · rev_4" data-foot="37 FA · 7-wide octagon" data-fn="Integral natural-circulation PWR vessel, 12.8 MPa. 200 cm active. 37 assemblies, 4.95/4.70/4.40 wt% + edge-pin 3.6 + ring zoning (de-peaking); Gd 6 wt%×20 + Er 0.5 wt%×16." data-fer="rev_4 neutronics">
           <circle class="br" cx="50" cy="48" r="3.6" fill="var(--ni)" stroke="#fff" stroke-width=".7"/>
           <circle cx="50" cy="48" r="2.5" fill="var(--ni-s)" stroke="#fff" stroke-width=".4"/>
           <text x="50" y="49.4" font-size="2.2" fill="#fff" font-weight="700">RPV</text>
         </g>
         <g class="bld" data-name="Equipment hatch" data-pic="south wall" data-foot="" data-fn="Large-component access for refuelling outages." data-fer=""><rect class="br" x="44" y="84" width="12" height="3.2" rx=".6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".5"/></g>
         <g class="bld" data-name="Personnel airlock" data-pic="north wall" data-foot="" data-fn="Crew access to containment under pressure." data-fer=""><rect class="br" x="46" y="12.8" width="8" height="3" rx=".6" fill="var(--ni-f)" stroke="var(--ni)" stroke-width=".5"/></g>
-        <text class="anno" x="50" y="29" font-size="2.4" text-anchor="middle" fill="var(--ni-s)">IRWST annulus</text>
+        <text class="anno" x="50" y="29" font-size="2.4" text-anchor="middle" fill="var(--ni-s)">internal IRWST pool</text>
         <text class="anno" x="22" y="74" font-size="2.2" fill="var(--ci-s)">polar crane swing</text>
       </g></svg>
     </div>

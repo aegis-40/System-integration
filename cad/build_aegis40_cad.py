@@ -7,7 +7,8 @@ Outputs:
                             from layout/building_list.md), island pads, roads,
                             double security fence, critical-pipe runs, trees, terrain.
   cad/aegis40_rxb.step    — reactor-building diorama: soil block w/ excavated pit,
-                            below-grade containment + RPV [rev_3], refuel pool,
+                            below-grade containment + RPV [rev_4 37-FA, Ø3.25×10 m]
+                            + internal IRWST pool (CAREM-style), refuel pool,
                             SFB + spent-fuel pool/racks, polar crane. Use Fusion
                             Section Analysis (or hide Soil body) for the cutaway.
 
@@ -241,14 +242,16 @@ cont = Pos(0, 0, -8.25 * M) * Cylinder(7.5 * M, 14.5 * M)
 cont -= Pos(0, 0, -8.25 * M) * Cylinder(7.1 * M, 14.5 * M + 4)
 cont.label, cont.color = "Containment_shell", Color(*STEEL)
 rp.append(cont)
-# IRWST annulus water (lower containment)
-irwst = Pos(0, 0, -13 * M) * Cylinder(7.0 * M, 5.0 * M)
-irwst -= Pos(0, 0, -13 * M) * Cylinder(2.6 * M, 5.2 * M)
-irwst.label, irwst.color = "IRWST_water", Color(*WATER)
+# INTERNAL IRWST pool (CAREM-25-style): in-containment water pool around/coupled
+# to the RPV — the passive safety UHS; DHRS/ECCS condense back into it (no external
+# penetration). Enlarged vs the old annulus to read as a pool.
+irwst = Pos(0, 0, -11 * M) * Cylinder(7.0 * M, 9.0 * M)
+irwst -= Pos(0, 0, -11 * M) * Cylinder(1.95 * M, 9.2 * M)   # clears the Ø3.25 RPV
+irwst.label, irwst.color = "IRWST_pool_internal", Color(*WATER)
 rp.append(irwst)
-# RPV Ø2.44, integral iPWR ~10.5 m tall, head at -5
-rp.append(rcyl("RPV", (0.62, 0.66, 0.70), 0, 0, 1.22, 10.5, -10.25))
-rp.append(rcyl("RPV_core_region", RED, 0, 0, 1.05, 2.0, -13.5))   # 21-FA core band
+# RPV Ø3.25 (rev_4 37-FA), integral natural-circ iPWR ~10 m tall, head ~5 m below grade
+rp.append(rcyl("RPV", (0.62, 0.66, 0.70), 0, 0, 1.625, 10.0, -10.0))
+rp.append(rcyl("RPV_core_region", RED, 0, 0, 0.75, 2.0, -13.5))   # 37-FA core band (~Ø1.5 m equiv)
 rp.append(rcyl("CRDM_nozzles", STEEL, 0, 0, 0.7, 0.8, -4.6))
 # refuelling pool above containment (flooded during outage)
 rp.append(rbox("Refuel_pool_water", WATER, 0, 0, 9, 9, 3.5, -2.8))

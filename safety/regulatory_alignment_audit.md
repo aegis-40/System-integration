@@ -21,7 +21,7 @@ international standards added to `docs/international_regulations/`.*
 `safety/safeguards_nonproliferation.md`, `safety/openmc_rev3_alignment.md`,
 `ic/ic_architecture.md`, `ic/sensor_inventory.md`, `ic/fer_8_7_coverage.md`,
 `layout/aux_systems.md`, `layout/building_list.md`, `layout/zones.md`,
-`docs/FER_Aegis40_8.5-8.7_draft.md`, plus the OpenMC repo `summary_report.txt` / notebook.
+`docs/FER_Aegis40_safety_ic_layout_draft.md` (the consolidated FER draft), plus the OpenMC notebook.
 
 ---
 

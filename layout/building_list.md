@@ -145,7 +145,7 @@ Conservative: a 10 ha (100 × 100 m × 10 ≈ 100 000 m²) inland plot accommoda
 ## 7. References
 
 - FER `docs/FER_Template.docx` §8.10 (facility layout) — building inventory + structural-spec requirements
-- Aegis-40 RPV envelope from `Aegis-40 2D test/geometry.xml`
+- Aegis-40 RPV envelope from `docs/aegis40_neutronics_FER.ipynb` (rev_4 37-FA) + `docs/Aegis40_TH_report.docx` (vessel elevation budget)
 - NuScale Power Plant Design — six-module / single-module compact siting
 - KAERI SMART reference plant — single-module iPWR layout
 - AP1000 DCD Tier 2 §1.2 — building/island grouping reference
