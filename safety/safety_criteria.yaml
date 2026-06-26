@@ -338,7 +338,7 @@ criteria:
     sensor_chain: ["containment pressure xmtr 4×"]
     setpoint_link: high_containment_p_trip
     defense_in_depth_level: 3
-    notes: "Dry containment per template. Peak LOCA P must stay below design."
+    notes: "**C5 resolved 2026-06-26: internal IRWST pool inside containment (CAREM-25-style)** — the P/T response is now a suppression/condensing-pool case (not dry). Peak DBA P must stay ≤ design; confirm via containment_pt_analysis (F6)."
 
   - id: sg_pressure_operating
     parameter: "Steam generator operating pressure"
@@ -675,7 +675,7 @@ open_items:
     impact: "Validates the containment-pressure hard_constraint + the §8.6.2 containment description; gates the layout/CAD recut."
     owner: layout (Elbek) + safety (Azamhon) + supervisor (C5 decision)
     needed_by: 2026-06-26
-    status: "OPEN — (1) resolve C5 (recommend compact high-pressure steel containment, fits passive PCC + small footprint); (2) run limiting-DBA (SBLOCA/MSLB) mass-energy → containment P/T; (3) confirm ≤0.414 MPa with margin. See layout/fer_8810_docx_audit.md C5."
+    status: "**C5 RESOLVED 2026-06-26: internal IRWST pool inside containment (CAREM-25-style)** — gravity DHRS/ECCS condense back into the in-containment pool, no external penetration. REMAINING: (1) run limiting-DBA (SBLOCA/MSLB) mass-energy → containment P/T for the **suppression/condensing-pool** configuration (F6); (2) confirm ≤0.414 MPa with margin; (3) recut RXB sections + CAD to show the internal pool. See layout/fer_8810_docx_audit.md C5, FER §8.6.2."
   - id: peaking_recompute
     question: "Do the rev_4 (37-FA) de-peaking measures bring F_q ≤ 2.50 and F_ΔH ≤ 1.65 (PWR LCOs)? (rev_3 21-FA as-run was 3.478 / 2.268.)"
     impact: "Both hard_constraint. Gate-feasibility of the design + MDNBR + LOCA PCT. The peaking values are the single biggest driver of the FOM gate."

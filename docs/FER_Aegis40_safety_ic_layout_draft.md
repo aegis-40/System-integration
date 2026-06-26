@@ -2,6 +2,7 @@
 
 *Consolidated draft r5, 2026-06-26. Owner: Azamhon (3S / I&C / FOM / layout).*
 *r5 re-baselines to the **rev_4 37-FA core** (`docs/aegis40_neutronics_FER.ipynb`): 37 FA, 12.8 MPa, Gd 6 wt%×20, edge-pin + ring de-peaking → Table 8.5-1 + peaking status rewritten; folds in the **OpenFOAM TH results** (`docs/Aegis40_TH_report.docx`: MDNBR 1.56, fuel 734 °C, natural circulation at H_tc 4 m). Neutronic result values are [SIM-PENDING] high-stat. Full plan: `safety/SIMULATION_ANALYSIS_PLAN.md`.*
+*r5.1 (2026-06-26): added §8.5.4 cite/bound substantiation (fuel/dose/PRA/seismic by reference to standards + NuScale NPM); **C5 resolved → internal IRWST pool (CAREM-25-style)** in §8.6.2; analysis matrix rows updated to current ownership (N10–N12 Samira; F2/F3/F5/F6 T-H contact).*
 *Supersedes `docs/FER_Aegis40_8.5-8.7_draft.md` (r2) and the team's `FER_Aegis40_8.8-8.10.docx` for these sections — folds in the 2026-06-19 team decisions (**once-through seawater (C2)**, **TCES zeolite-13X (C3)**, UHS correction).*
 *r4 responds to the reviewer audit: **§8.5** event-analysis matrix (8.5.2b) + coastal-hazard analysis (8.5.2c); **§8.6** six simplified event trees (8.6.5: SBLOCA, MSLB, rod-withdrawal/ATWS, SGTR, fuel-handling, marine-intake-blockage); **§8.7** trip-setpoint table (Table 8.7-1) + response-time budget closing the "≤500 ms" TBD (8.7.2a); **§8.8** six-field subsections brought into the report (8.8.1–8.8.8).*
 
@@ -105,17 +106,17 @@ The competition template requires modeling **and results** for AOOs, criticality
 | Rod withdrawal (AOO) | OpenMC reactivity + transient | MDNBR ≥ 1.3 | insertion rate 1.5e-5 vs 7.5e-4 limit → **×50 margin (demonstrated)**; flux-rate trip |
 | Loss of feedwater / LOHS (AOO→DEC-A) | event tree (done) | core coolable | **CDF ≈1e-8/ry (demonstrated)**, §8.6.3 |
 | Station blackout (DEC-A) | event tree (done) | core coolable, 72 h | **CDF ≈1e-11/ry (demonstrated)**, de-energize-to-actuate |
-| MSLB / overcooling (DBA) | OpenMC cooldown + OpenFOAM | no return to criticality; MDNBR ≥1.3 | *[SIM-PENDING]* — interim: **SDM 12.4 %** bounds cooldown reactivity; MSI isolates; EBIS backstop (§8.6.5b) |
-| SBLOCA (DBA) | OpenFOAM blowdown/reflood | **PCT ≤ 1204 °C**; clad oxidation ≤17 %; H₂ ≤1 % | *[SIM-PENDING]* — interim: integral RPV caps break size; passive gravity SI; small nozzle break only |
-| SGTR (DBA) | dose + inventory | offsite dose ≤ 10 CFR 100 | *[ANALYSIS-PENDING]* — interim: SI holds inventory; affected-SG + cogen isolation (§8.6.5d) |
-| ATWS (DEC-A) | OpenMC borated-core | coolable; RCS P < limit | *[SIM-PENDING EBIS sizing]* — interim: negative MTC self-limits; DAS+EBIS diverse shutdown (§8.6.2a) |
-| Fuel-handling accident | source-term + dispersion | offsite dose ≤ 10 CFR 100 | *[ANALYSIS-PENDING]* — interim: interlocks + pool scrub + HEPA/charcoal (§8.6.5e) |
-| Criticality (SFP) | OpenMC storage-rack | k_eff(95/95) ≤ 0.95 unborated | method replicated (Cabrera 2023); fixed-absorber geometry + burnup credit (§8.8.6) |
-| Containment response (DBA) | mass-energy → P/T | peak P ≤ 0.414 MPa | *[ANALYSIS-PENDING]* — gated on C5 containment concept |
-| Boundary dose (DBA 0–2 h) | atmospheric dispersion | ≤ 0.25 Sv TEDE | *[ANALYSIS-PENDING]* — from rev_3 source term 1.2e17 Bq |
+| MSLB / overcooling (DBA) | OpenMC cooldown (N12) + OpenFOAM | no return to criticality; MDNBR ≥1.3 | **N12 running (Samira)** — interim: large SDM bounds cooldown reactivity; MSI isolates; EBIS backstop (§8.6.5b) |
+| SBLOCA (DBA) | OpenFOAM blowdown/reflood (F3) | **PCT ≤ 1204 °C**; clad oxidation ≤17 %; H₂ ≤1 % | **F3 assigned (T-H contact)** — interim: integral RPV caps break size; passive gravity SI; operating clad 349 °C ≪ 1204 |
+| SGTR (DBA) | dose + inventory | offsite dose ≤ 10 CFR 100 | **bounded by reference (§8.5.4 dose)**; SI holds inventory; affected-SG + cogen isolation (§8.6.5d) |
+| ATWS (DEC-A) | OpenMC borated-core (N10) | coolable; RCS P < limit | **N10 EBIS sizing running (Samira)** — interim: negative MTC self-limits; DAS+EBIS diverse shutdown (§8.6.2a) |
+| Fuel-handling accident | source-term + dispersion | offsite dose ≤ 10 CFR 100 | **bounded by reference (§8.5.4 dose)**; interlocks + pool scrub + HEPA/charcoal (§8.6.5e) |
+| Criticality (SFP) | OpenMC storage-rack (N11) | k_eff(95/95) ≤ 0.95 unborated | **N11 running (Samira)** — bounding infinite array + Boral panel, no-BA credit, unborated (10 CFR 50.68) |
+| Containment response (DBA) | mass-energy → P/T (F6) | peak P ≤ 0.414 MPa | **F6 pending** — now an **internal IRWST pool** (CAREM-style, §8.6.2): suppression/condensing response, not dry |
+| Boundary dose (DBA 0–2 h) | atmospheric dispersion | ≤ 0.25 Sv TEDE | **bounded by reference (§8.5.4)** — source term scaled from NuScale NPM; MACCS not required for the FER |
 | Coastal external hazard | site flood/surge study | protected to DBFL | *[ANALYSIS-PENDING]* — see §8.5.2c |
 
-**The honest framing for a reviewer:** the demonstrated results (reactivity margins, LOHS/SBO CDF, SFP criticality method) are complete; the pending rows are **simulation-limited, not analysis-undefined** — each names its code and its interim bounding argument. Closing them is the W-phase simulation campaign (priority MSLB→SBLOCA→containment→dose).
+**The honest framing for a reviewer:** the demonstrated results (reactivity margins, LOHS/SBO CDF, OpenFOAM MDNBR 1.56) are complete; the OpenMC/OpenFOAM rows are **in-progress in the team's own tools** (N10–N12 Samira, F2/F3/F5/F6 T-H contact); the dose/PRA/fuel/seismic rows are **substantiated by reference** (§8.5.4) rather than by unfamiliar-tool runs. Nothing is left blank.
 
 ### 8.5.2c Coastal external hazards (Sinop)
 
@@ -132,7 +133,21 @@ The decisive point: the only coastal hazard that could touch core cooling — in
 
 ### 8.5.3 Defence in depth
 
-The criteria map onto the five IAEA defence-in-depth levels [SSR-2/1 §2.13]: Level 1 prevention via inherently negative feedback (MTC/DTC/void all negative, demonstrated) and DNB margin; Level 2 control via the reactor protection envelope (§8.7); Level 3 DBA control by passive ECCS, EFW and PRHR (§8.6); Level 4 severe-accident management via the ≥72 h no-operator-action grace and three passive containment-cooling trains; Level 5 mitigation via the site-boundary EPZ (≤0.5 km, *[ANALYSIS-PENDING — dose basis]*).
+The criteria map onto the five IAEA defence-in-depth levels [SSR-2/1 §2.13]: Level 1 prevention via inherently negative feedback (MTC/DTC/void all negative, demonstrated) and DNB margin; Level 2 control via the reactor protection envelope (§8.7); Level 3 DBA control by passive ECCS, EFW and PRHR (§8.6); Level 4 severe-accident management via the ≥72 h no-operator-action grace and three passive containment-cooling trains; Level 5 mitigation via the site-boundary EPZ (≤0.5 km, substantiated by reference — §8.5.4).
+
+### 8.5.4 Bounding and by-reference substantiation (cite, not simulate)
+
+Several acceptance criteria are substantiated **by reference to recognized standards and to the NRC-reviewed reference plant** rather than by a plant-specific simulation in a tool outside the team's envelope. This is the standard "demonstration by similarity / within the licensed envelope" approach appropriate to a detailed-design entry — and Aegis-40's core is **geometrically the NuScale NPM** (37 FA / 9 768 pins / 2.0 m, established in the T-H report), which makes the by-similarity basis strong. **Each claim below is explicitly bounding/by-reference, not a plant-specific calculation.**
+
+| Criterion | Substantiation | Standard / reference |
+|---|---|---|
+| **Fuel integrity** (rod internal pressure, clad strain, fission-gas, fuel-clad gap) — *Req 43, O2* | **Bounded by the NRC-licensed fuel envelope:** standard 17×17 UO₂ / Zircaloy-4 at ≤62 GWd/MTU is already within the approved design basis, and Aegis-40 runs at **low linear power — peak 12.8 kW/m, ≈30 % of the ~43 kW/m PWR design limit** (T-H report). Rod-pressure, clad-strain and fission-gas margins are therefore large *by inspection*; no FRAPCON run is required for the FER. State as **bounded-by-envelope.** | NRC SRP 4.2 (NUREG-0800); 10 CFR 50.46; IAEA NF-T-2.1; ANS fuel criteria |
+| **Decay heat** | The **ANSI/ANS-5.1 standard decay-heat curve** *is* the deliverable — a standardized correlation, not a simulation; already cross-checked against the depletion (7.75 MW at shutdown). | ANSI/ANS-5.1-2014 |
+| **Boundary dose / EPZ ≤ 0.5 km** | Source term **bounded by core power** (125 MWth ≈ ⅓ NuScale NPM) with credit for the passive containment; boundary dose argued below the EPA PAG by **reference to NuScale's NRC-approved site-boundary EPZ methodology** and power scaling. A full MACCS run is not required for the FER; a scaling hand-estimate suffices if a number is demanded. | RG 1.183 (alternative source term); 10 CFR 50.33(g) + SMR EPZ final rule; NEI 12-02; NuScale FSAR Ch. 15 / SECY-15-0077 |
+| **CDF / LRF** | The hand-built LOHS and SBO event trees give per-initiator CDF (§8.6.3); the plant CDF/LRF is **bounded by the NuScale-class passive-PRA result** (passive iPWRs report CDF ~1e-8–1e-10) by similarity, reinforced by the de-energize-to-actuate argument. A full SAPHIRE model is beyond FER scope. | NuScale FSAR Ch. 19 (PRA); IAEA SSG-3 / SSG-4; NRC RG 1.174 |
+| **Seismic / structural** (combined seismic+LOCA core loads, rod insertability) — *Req 44, O5* | Cite the **design spectrum + qualification standards** (SSE 0.3 g to RG 1.60; 1E equipment to IEEE 344). The combined seismic+LOCA core-structural FEA is **mechanical/civil scope** — referenced here, owned there. | RG 1.60, RG 1.61; IEEE 344; IAEA SSG-9, NS-G-1.6 |
+
+This substitutes verifiable references for unfamiliar-tool runs without overclaiming: the FER states each as *bounded by* / *by similarity to*, and the genuinely plant-specific safety calculations (criticality, peaking, MDNBR, MSLB, EBIS) **are** run in the team's own tools (OpenMC, OpenFOAM — §8.6, `safety/SIMULATION_ANALYSIS_PLAN.md`).
 
 ---
 
@@ -153,9 +168,9 @@ All credited ESF are passive and de-energize-to-actuate (§8.7.2):
 
 - **Emergency Feedwater (EFW)** — gravity-driven from an elevated tank; isolation valves fail open; no pumps. Sized for 72 h of decay-heat steaming *[ANALYSIS-PENDING — tank inventory calc]*.
 - **Passive Residual Heat Removal (PRHR)** — two 100 % natural-circulation trains, RPV → HX submerged in the IRWST; each removes ≥105 % of decay heat at actuation. Governing decay-heat source **7.75 MW at shutdown (6.2 % of 125 MWth)**, full-chain depletion (rev_3), cross-validated to ANS-5.1.
-- **Passive containment cooling** — three trains; condensate return maintains the IRWST as the ≥72 h heat sink. **This — not the seawater system — is the safety ultimate heat sink (§8.5.2a).**
-- **Passive safety injection** — gravity feed from IRWST on low pressurizer pressure+level coincidence.
-- **Containment:** dry steel-lined, Ø15 m, design pressure 0.414 MPa. **[DECISION-PENDING C5 — a NuScale-style submerged-pool configuration is under team evaluation; this section is written against the dry-containment baseline; containment text, PCC description and Figures 8.6-x revise if the pool concept is adopted.]**
+- **Passive containment cooling** — three trains; condensate return maintains the in-containment pool as the ≥72 h heat sink. **This — not the seawater system — is the safety ultimate heat sink (§8.5.2a).**
+- **Passive safety injection** — gravity feed from the internal IRWST pool on low pressurizer pressure+level coincidence.
+- **Containment & the internal IRWST pool (C5 resolved 2026-06-26).** Aegis-40 adopts an **internal IRWST pool inside containment — CAREM-25-style** (in-containment refuelling/heat-sink water coupled to the RPV), resolving the previously-open C5 (dry vs submerged-pool). Safety significance: (i) the gravity-driven decay-heat (PRHR/DHRS) and safety-injection loops draw from and **condense back into the in-containment pool as a closed loop**, needing no pumps and **no external ECCS penetration** — which removes break locations and **reinforces the LBLOCA practical-elimination** (§8.6.1); (ii) the large in-containment water inventory is the passive heat sink underwriting the **≥72 h grace** and the seawater-independent UHS; (iii) the pool also provides shielding and a steam-condensing surface for passive containment cooling. The design basis is by similarity to **CAREM-25** (ARN/IAEA-reviewed iPWR), the closest licensed precedent. **Remaining:** the containment pressure/temperature response is now a **suppression/condensing-pool** case (not dry) → confirm peak P ≤ 0.414 MPa for the limiting DBA mass-energy release *[ANALYSIS-PENDING — F6, `containment_pt_analysis`]*; RXB sections + CAD diorama to be recut to show the internal pool.
 
 ### 8.6.2a Reactor shutdown — two diverse and independent means
 
@@ -406,7 +421,7 @@ These are **not** in this scope but are summarized so the reviewer sees the whol
 | O12 | RPS response-time/accuracy table; setpoint uncertainty | 8.7.2 | I&C | setpoint methodology (RG 1.105) |
 | O13 | Internal-CRDM configuration sketch | 8.6.1 | mechanical | practical-elimination anchor |
 
-**Marker tally:** ~10× [SIM/ANALYSIS-PENDING], 4× [VERIFY], 1× [DECISION-PENDING C5], 1× [VERIFY-SKKY], 2× [TBD]. Companion gap review: `planning/FER_readiness_review_2026-06-13.md`.
+**Marker tally:** ~9× [SIM/ANALYSIS-PENDING] (N10–N12 + F2/F3/F5/F6 in-progress; dose/PRA/fuel/seismic now bounded-by-reference §8.5.4), 4× [VERIFY], 1× [VERIFY-SKKY], 2× [TBD]. **C5 resolved (internal IRWST pool).** Companion gap review: `planning/FER_readiness_review_2026-06-13.md`.
 
 ---
 

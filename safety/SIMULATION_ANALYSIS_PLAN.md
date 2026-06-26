@@ -1,5 +1,7 @@
 # Aegis-40 — Safety Simulation & Analysis Plan
 
+> **Canonical path: `safety/SIMULATION_ANALYSIS_PLAN.md`** (this file). Samira's `docs/README.md` links it as `docs/competition/SIMULATION_ANALYSIS_PLAN.md` — that path does not exist; update the link to point here.
+
 *Owner: Azamhon (3S). Created 2026-06-26. Re-baselined to the rev_4 37-FA core (`docs/aegis40_neutronics_FER.ipynb`).*
 *Purpose: enumerate every simulation and every analysis the safety case (FER §8.5–8.7) needs, sorted by the tool that produces it, with a clear count of deliverable files and an explicit "what's missing" list.*
 
@@ -35,9 +37,11 @@ All of these live in **one notebook** — Samira's `docs/aegis40_neutronics_FER.
 | N7 | Depletion BOC→EOC (3-D, design specific power) + 4-batch equilibrium (linear-reactivity model) | cycle length [EFPD], discharge burnup, k(BU) curve | `cycle_length`, `fuel_burnup_max` | medium ✓ / high running |
 | N8 | Gd/Er burnable-absorber inventory evolution | absorber burnout curve | supports `k_eff` hold-down story | medium ✓ |
 | N9 | Flux maps (thermal/fast/total, midplane) | flux distributions (FER figure) | shielding / activation inputs | medium ✓ |
-| N10 | **EBIS borated-core case** — boron mass/concentration for standalone cold-subcritical at most-reactive state | required boron mass | `independent_shutdown_systems` §6.10 | **MISSING — not yet in notebook** |
-| N11 | **SFP storage-rack criticality** — k_eff(95/95) in unborated water, max-reactivity assembly | SFP rack k_eff | fuel-handling criticality (§8.8.6) | **MISSING — separate model** |
-| N12 | **MSLB cooldown reactivity** — k vs moderator-T down to cold, most-reactive rod stuck | return-to-power margin vs SDM | MSLB acceptance (§8.6.5b) | **MISSING — needs cold/cooldown branch** |
+| N10 | **EBIS borated-core case** — boron mass/concentration for standalone cold-subcritical at most-reactive state | required boron mass | `independent_shutdown_systems` §6.10 | **IN PROGRESS — Samira** (`docs/README.md` → `aegis40_safety_neutronics.py`, cold/ARO/BOC sweep) |
+| N11 | **SFP storage-rack criticality** — k_eff(95/95) in unborated water, max-reactivity assembly | SFP rack k_eff | fuel-handling criticality (§8.8.6) | **IN PROGRESS — Samira** (bounding infinite array, Boral panel, 10 CFR 50.68) |
+| N12 | **MSLB cooldown reactivity** — k vs moderator-T down to cold, most-reactive rod stuck | return-to-power margin vs SDM | MSLB acceptance (§8.6.5b) | **IN PROGRESS — Samira** (556 K → 294 K isobar sweep, most-reactive rod stuck) |
+
+> **Ownership (2026-06-26):** N10/N11/N12 are running in Samira's standalone OpenMC deck (`docs/README.md` → `aegis40_safety_neutronics.py`, reuses the locked notebook builders), `SAFETY_STAT=medium` for first numbers. N1–N9 high-stat (STAT_FINAL) also Samira. The OpenFOAM transient/accident cases (F2/F3/F5/F6) are assigned to the T-H contact. **3S (Azamhon) owns the non-simulation work: the cite/bound write-ups (§1.C.1), the standalone analyses (§2.B), and the FER integration.**
 
 ### 1.B · OpenFOAM (thermal-hydraulics / CFD)
 
