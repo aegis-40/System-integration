@@ -33,7 +33,7 @@ Cost accounting follows the EMWG two-digit code of accounts: overnight capital c
 
 ## 8.12.3 Fuel-cycle cost *(design physics + cited market prices)*
 
-The fuel mass throughput is fixed by the reactor physics: at the rev_3 discharge burnup of 42.8 GWd/MTU, the plant burns **≈1,013 kgHM/yr** (= P_th·CF·365.25 / burnup). Enriching to the ~4.7 % mass-weighted product assay at 0.25 % tails requires **7.29 SWU/kg** and **9.65 kg natural U/kg** of fuel (separative-work value function) — i.e. **≈9.8 tU/yr feed and ≈7,400 SWU/yr**. With market unit prices (June 2026):
+The fuel mass throughput is fixed by the reactor physics: at the discharge burnup of 42.8 GWd/MTU (*[rev_3 21-FA value — 37-FA depletion re-run pending; interim]*; the 37-FA core loads 9.87 tHM), the plant burns **≈1,013 kgHM/yr** (= P_th·CF·365.25 / burnup). Enriching to the ~4.7 % mass-weighted product assay at 0.25 % tails requires **7.29 SWU/kg** and **9.65 kg natural U/kg** of fuel (separative-work value function) — i.e. **≈9.8 tU/yr feed and ≈7,400 SWU/yr**. With market unit prices (June 2026):
 
 | Component | Unit price *[CITED]* | $/kgHM | $/yr |
 |---|---|---|---|

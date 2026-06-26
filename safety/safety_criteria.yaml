@@ -22,11 +22,44 @@
 #   notes           : caveats, assumptions, references
 # ============================================================================
 
-design_id: aegis40-rev_3-safety_r1   # was aegis40-rev_0 (S1 fix 2026-06-19): align spine with rev_3 core basis
+design_id: aegis40-rev_4-safety_r1   # 2026-06-26: re-baselined to Samira's 37-FA core (docs/aegis40_neutronics_FER.ipynb)
 schema_version: 0.1
-last_updated: 2026-06-19
+last_updated: 2026-06-26
 owner: Azamhon (3S / I&C / FOM)
 reactor_type: 40 MWe / 125 MWth integral PWR (iPWR) cogen
+
+# ---------------------------------------------------------------------------
+# DESIGN BASIS — locked neutronic INPUTS (rev_4, simulation-independent)
+# Source: docs/aegis40_neutronics_FER.ipynb cell "locked neutronic design constants".
+# These are design CHOICES, not Monte-Carlo outputs → valid at any statistics.
+# Supersedes the rev_3 (21-FA) basis. The k_eff/coefficient/peaking/burnup/cycle
+# VALUES below are sim OUTPUTS still being re-run on this 37-FA core (medium-stat
+# done, high-stat STAT_FINAL running on a separate machine) → tagged SIM-PENDING.
+# ---------------------------------------------------------------------------
+design_basis:
+  core_assemblies: 37            # was 21 (rev_3) → 37 FA, 7-wide octagon (rows 3-5-7-7-7-5-3)
+  control_rod_clusters: 12       # checkerboard; central FA = instrument
+  lattice: "17x17 (264 fuel + 24 guide + 1 instrument)"
+  pin_pitch_cm: 1.2623
+  fa_pitch_cm: 21.6038
+  pellet_radius_cm: 0.40958
+  clad_outer_radius_cm: 0.476
+  clad_material: "Zircaloy-4"
+  active_height_cm: 200.0        # was 190 cm (rev_3)
+  radial_reflector_cm: 20.0      # water
+  axial_plena_cm: 30.0           # water
+  enrichment_zones_wt_pct: [4.95, 4.70, 4.40]    # intra-FA radial grade, max 4.95 <= 5.0 LEU
+  edge_pin_enrichment_wt_pct: 3.6                 # NEW: FA-perimeter de-rate (boron-free de-peaking)
+  ring_enrichment_wt_pct: {0: 4.95, 1: 4.70, 2: 4.40, 3: 4.00}   # assembly-ring zoning (de-peak)
+  burnable_absorber: "Gd2O3 6 wt% x ~20 rods/FA (ring-zoned) + Er2O3 0.5 wt% x 16 rods"
+  operating_pressure_MPa: 12.8   # was 15.5 (rev_3)
+  t_avg_C: 283
+  t_fuel_K: 900
+  t_mod_K: 556
+  hm_mass_t: 9.87                # 37 FA heavy-metal loading
+  specific_power_W_per_gHM: 12.66
+  batches: 4
+  crdm_design: "45 steps/min x 2 pcm/step = 1.5e-5 dk/k/s (design input)"
 
 # ---------------------------------------------------------------------------
 # 1. REACTIVITY & NEUTRONIC SAFETY
@@ -47,7 +80,7 @@ criteria:
     sensor_chain: ["power-range neutron flux 4ch", "core exit T inference"]
     setpoint_link: high_flux_trip
     defense_in_depth_level: 1
-    notes: "Steady-state criticality. rev_3 (2026-06-03) BOL k_eff = 1.0264 (~+2640 pcm excess) held down by hybrid Gd+Er burnable absorber + control rods (ARO worth 15226 pcm; cold SDM 12.4%). See safety/openmc_rev3_alignment.md."
+    notes: "Steady-state criticality. **rev_4 (37-FA) re-baseline 2026-06-26 — BOL k_eff, ARO worth and cold SDM are SIM-PENDING re-run on the 37-FA core (medium-stat done, high-stat STAT_FINAL running).** The rev_3 (21-FA) values (k_eff 1.0264, ARO 15226 pcm, SDM 12.4%) are SUPERSEDED and must not be cited for the 37-FA design. Hold-down mechanism unchanged: ring-zoned Gd2O3 6 wt% + Er2O3 0.5 wt% + control rods (soluble-boron-free). See docs/aegis40_neutronics_FER.ipynb."
 
   - id: shutdown_margin
     parameter: "Shutdown margin (most reactive rod stuck out)"
@@ -169,7 +202,7 @@ criteria:
     sensor_chain: ["primary flow + core ΔT + flux distribution"]
     setpoint_link: low_flow_trip
     defense_in_depth_level: 1
-    notes: "First wall of CSFs (Critical Safety Functions). OpenFOAM W1 task 4 = first hot-channel run."
+    notes: "First wall of CSFs. **rev_4 RESULT (docs/Aegis40_TH_report.docx): MDNBR = 1.56 at the natural-circulation design point (H_tc 4 m, G 542) — PASS, +20% over 1.3.** Conjugate CFD (chtMultiRegionFoam) + W-3 CHF/Tong correlation stack, V&V'd vs NuScale NPM-160 (GCI<0.15%, energy-conservative). **CAVEAT: computed with the de-peaked design-target peaking (F_Q 2.00 / F_ΔH 1.55) — contingent on OpenMC high-stat (N6) confirming it.** W-3 extrapolated below its flux range (conservative); low-flow CHF correlation recommended for final."
 
   - id: mdnbr_transient
     parameter: "MDNBR — anticipated operational occurrences (AOO)"
@@ -198,7 +231,7 @@ criteria:
     sensor_chain: ["core exit thermocouples (post-accident)", "fuel performance"]
     setpoint_link: high_outlet_t_trip
     defense_in_depth_level: 2
-    notes: "Hard ceiling. Operating PCT << 1204 °C. Per MEETING_BRIEF §4 row 5: Gaussian center 600 °C / α 5e-6."
+    notes: "Hard ceiling for the LOCA transient. **rev_4: steady-state operating peak clad = 349 °C (TH report) — confirms operating PCT ≪ 1204 °C, but the LOCA TRANSIENT itself (F3 SBLOCA blowdown/reflood) is NOT yet run** [SIM-PENDING — OpenFOAM transient; see SIMULATION_ANALYSIS_PLAN.md F3]. Gaussian center 600 °C / α 5e-6."
 
   - id: cladding_oxidation
     parameter: "Maximum cladding oxidation"
@@ -241,6 +274,7 @@ criteria:
     sensor_chain: ["fuel performance model"]
     setpoint_link: over_power_dt_trip
     defense_in_depth_level: 1
+    notes: "**rev_4 RESULT (TH report): peak fuel centreline = 734 °C** — far below melt (~2590–2840 °C), a direct consequence of the modest 12.8 kW/m peak linear power on the de-peaked 37-FA core. Peak clad (steady operating, w/ subcooled-boiling clamp) 349 °C. Same F1↔N6 peaking caveat as mdnbr_steady."
 
   - id: f_delta_h_radial
     parameter: "Nuclear enthalpy-rise hot-channel factor F_ΔH^N"
@@ -255,7 +289,7 @@ criteria:
     sensor_chain: ["in-core flux map (movable detectors / SPNDs)", "loading-pattern verification"]
     setpoint_link: over_temp_dt_trip
     defense_in_depth_level: 1
-    notes: "Radial peaking of the integrated pin power; drives MDNBR directly. **FLAG: rev_3 as-run OpenMC F_ΔH = 2.268 EXCEEDS the 1.65 LCO by ~37%** (safety/openmc_rev3_alignment.md / OpenMC summary_report.txt 2026-06-03). The 3D notebook COMPUTES this (diagnostic `radial_peaking_FdeltaH`) but does NOT gate it — absent from notebook SAFETY_LIMITS, so it never showed FAIL. Caveat: value is a raw RegularMesh pin tally (cell 1.27 cm vs pin pitch 1.2623 cm → aliasing + inter-FA water gaps can inflate). Re-run with a pin-aligned lattice tally and engineering uncertainty factors before treating as final. See open_item peaking_recompute."
+    notes: "Radial peaking of the integrated pin power; drives MDNBR directly. **rev_4 (37-FA): the de-peaking measures are now BUILT INTO the design inputs** — FA-perimeter edge-pin de-rate (3.6 wt%), radial enrichment ring-zoning {4.95/4.70/4.40/4.00}, and Gd ring-zoning; the notebook now reconstructs F_ΔH **pin-by-pin from absolute coordinates** (distribcell-style), removing the old RegularMesh cell≠pitch aliasing. The rev_3 (21-FA) as-run F_ΔH = 2.268 is SUPERSEDED. **Value SIM-PENDING — high-stat re-run on the 37-FA de-peaked core (medium-stat done, STAT_FINAL running).** Target F_ΔH ≤ 1.55. See open_item peaking_recompute."
 
   - id: f_q_total
     parameter: "Total heat-flux hot-channel (peaking) factor F_Q(Z)"
@@ -270,7 +304,7 @@ criteria:
     sensor_chain: ["in-core flux map (axial + radial)", "loading-pattern verification"]
     setpoint_link: over_power_dt_trip
     defense_in_depth_level: 1
-    notes: "3D total peaking (F_xy·F_z); sets peak linear heat rate → LOCA PCT and centerline-melt margins. **FLAG: rev_3 as-run OpenMC F_q = 3.478 EXCEEDS the 2.50 LCO by ~39%** (diagnostic `pin_peaking_factor_Fq`). Same gating gap and same mesh-aliasing caveat as f_delta_h_radial. If confirmed after pin-aligned re-tally, the SBF Gd-zoned loading needs de-peaking (split Gd zoning / pin-level enrichment grading / IFBA) before DNBR and LOCA limits can be met. See open_item peaking_recompute."
+    notes: "3D total peaking (separable F_xy·F_z); sets peak linear heat rate → LOCA PCT and centerline-melt margins. **rev_4 (37-FA): de-peaking now built into the design** (edge-pin 3.6 wt% de-rate + radial enrichment ring-zoning + Gd ring-zoning); the notebook reports the **separable** F_Q = F_ΔH·F_z (the raw single-node 3D max is kept only as a finite-statistics diagnostic that falls toward the separable value as particles increase). The rev_3 (21-FA) as-run F_q = 3.478 is SUPERSEDED. **Value SIM-PENDING — high-stat re-run on the 37-FA core (medium-stat done, STAT_FINAL running).** Target F_Q ≤ 2.30. See open_item peaking_recompute."
 
 # ---------------------------------------------------------------------------
 # 3. PRIMARY / SECONDARY PRESSURE BOUNDARY
@@ -278,18 +312,18 @@ criteria:
 
   - id: primary_pressure_design
     parameter: "Primary system pressure — design limit"
-    limit_value: 17.2
+    limit_value: 14.1            # rev_4: 110 % of 12.8 MPa operating (was 17.2 = 110 % of 15.5)
     unit: "MPa"
     direction: "<="
     type: hard_constraint
     source: "ASME Section III NB; 110 % of operating P"
     normalizer: target_gaussian
-    normalizer_params: {target: 15.5, alpha: 0.1}
+    normalizer_params: {target: 12.8, alpha: 0.1}
     fom_param: from_openfoam.primary_pressure_MPa
     sensor_chain: ["pressurizer pressure xmtr 4× (Class 1E)"]
     setpoint_link: high_pressurizer_p_trip
     defense_in_depth_level: 2
-    notes: "Nominal operating ~15.5 MPa. Design ~17.2 MPa = 110 % of operating per ASME margin."
+    notes: "**rev_4 (2026-06-26): operating pressure re-baselined to 12.8 MPa, T_avg 283 °C** (was 15.5 MPa) per the 37-FA neutronics design basis. Design limit ~14.1 MPa = 110 % of 12.8. **CASCADE: the pressurizer trip setpoints in trip_signals.md (high 16.5 / low 12.5 MPa) were scaled to 15.5 MPa and MUST be rescaled to 12.8 MPa operating** — high-P trip ≈13.7, low-P/SI ≈11.5, PORV ≈14.0 [SIM-PENDING — confirm with T-H]."
 
   - id: containment_pressure
     parameter: "Containment design pressure"
@@ -516,7 +550,7 @@ criteria:
     sensor_chain: ["fuel spec sheet"]
     setpoint_link: null
     defense_in_depth_level: 1
-    notes: "rev_3 (2026-06-03): 3-zone 4.95 / 4.70 / 4.40 wt% (max 4.95). Supersedes the 2.6/3.0/3.4 baseline — relaxed for high burnup. Max 4.95 leaves only 0.05 wt% to the 5.0 LEU ceiling (tight — flag in FER). See safety/openmc_rev3_alignment.md."
+    notes: "rev_4 (2026-06-26): intra-FA 3-zone 4.95 / 4.70 / 4.40 wt% (max 4.95), **plus a FA-perimeter edge-pin de-rate to 3.6 wt%** and **assembly-ring enrichment zoning {4.95/4.70/4.40/4.00}** — both added as boron-free de-peaking measures. Max stays 4.95 (0.05 wt% to the 5.0 LEU ceiling — flag in FER). Count-weighted core-average is lower than the zone grade once edge/ring grading is included [SIM — computed in notebook cell 27]. See docs/aegis40_neutronics_FER.ipynb."
 
   - id: cycle_length
     parameter: "Cycle length"
@@ -582,14 +616,22 @@ decisions_locked:
     decision: "Zircaloy-4"
     locked_on: 2026-05-26
     rationale: "Zr-4 is PWR-standard. FER Table 1's Zr-2 was an illustrative template default, not a prescribed value."
+  - id: core_configuration
+    decision: "37 fuel assemblies, 7-wide octagonal core (rows 3-5-7-7-7-5-3); 12 control-rod clusters (checkerboard, central FA = instrument); 17x17 lattice; 200 cm active height; 9.87 tHM"
+    locked_on: 2026-06-26   # rev_4 — supersedes the 21-FA rev_3 core
+    rationale: "Samira's 37-FA neutronics model (docs/aegis40_neutronics_FER.ipynb). Supersedes the 21-FA rev_3 count. CASCADE: RXB internal layout + SFP sizing in layout/building_list.md were sized for 21 FA and must be re-checked for 37 FA + 12 CRA."
+  - id: operating_conditions
+    decision: "Primary 12.8 MPa, T_avg 283 °C (T_fuel 900 K, T_mod 556 K)"
+    locked_on: 2026-06-26   # rev_4 — supersedes 15.5 MPa
+    rationale: "37-FA neutronics design basis. Supersedes the 15.5 MPa rev_3 assumption. Cascades to primary_pressure_design (14.1 MPa) + the pressurizer trip setpoints."
   - id: enrichment_target
-    decision: "Three-zone UO₂: 4.95 / 4.70 / 4.40 wt% U-235 (max 4.95)"
-    locked_on: 2026-06-03   # rev_3 — supersedes the 2.6/3.0/3.4 baseline (2026-05-26)
-    rationale: "rev_3 full-core OpenMC. Relaxed from 2.6/3.0/3.4 to chase high discharge burnup (42.8 GWd/MTU) + waste-intensity score. Max 4.95 <= 5.0 LEU ceiling. See safety/openmc_rev3_alignment.md."
+    decision: "Intra-FA 3-zone 4.95 / 4.70 / 4.40 wt% (max 4.95) + FA-perimeter edge-pin 3.6 wt% + assembly-ring zoning {4.95/4.70/4.40/4.00}"
+    locked_on: 2026-06-26   # rev_4 — adds edge-pin + ring de-peaking to the rev_3 zones
+    rationale: "rev_4 37-FA. The edge-pin de-rate and ring zoning are the boron-free de-peaking measures (FA-perimeter pins face the inter-assembly water gaps where thermal flux/power peaks). Max 4.95 <= 5.0 LEU ceiling. See docs/aegis40_neutronics_FER.ipynb."
   - id: burnable_absorber
-    decision: "Hybrid: Gd₂O₃ 8 wt% (×32 rods, radially zoned) + Er₂O₃ 0.5 wt% (×16 rods)"
-    locked_on: 2026-06-03   # rev_3
-    rationale: "SBF hold-down. Gd-dominant zoned to flatten radial power (F_radial 1.23); Er slow flat hold-down + cold SDM for the 479 EFPD cycle. Supersedes earlier 'Er replacing Gd'."
+    decision: "Gd₂O₃ 6 wt% (~20 rods/FA average, ring-zoned) + Er₂O₃ 0.5 wt% (×16 rods)"
+    locked_on: 2026-06-26   # rev_4 — supersedes Gd 8 wt% ×32 (over-loaded k_eff)
+    rationale: "rev_4 37-FA. Gd reduced from 8 wt%×32 to 6 wt%×20 because 32 rods over-suppressed k_eff; ring-zoned (heavier centre, GD_RING_WEIGHTS {1.65/1.45/0.95/0.68}) to flatten radial power without soluble boron. Er unchanged (slow hold-down + cold SDM). NOTE: the notebook's §4 materials prose still says '8 wt%' — the LOCKED code constant (6 wt%) governs."
 
 open_items:
   - id: aoo_pct_envelope
@@ -635,8 +677,8 @@ open_items:
     needed_by: 2026-06-26
     status: "OPEN — (1) resolve C5 (recommend compact high-pressure steel containment, fits passive PCC + small footprint); (2) run limiting-DBA (SBLOCA/MSLB) mass-energy → containment P/T; (3) confirm ≤0.414 MPa with margin. See layout/fer_8810_docx_audit.md C5."
   - id: peaking_recompute
-    question: "rev_3 as-run F_q=3.478 and F_ΔH=2.268 exceed PWR LCOs (2.50 / 1.65). Are these real or a RegularMesh pin-tally artifact (cell≠pin pitch, inter-FA water gaps)?"
-    impact: "Both are hard_constraint. If real, wFOM → DESIGN_REJECTED until the SBF loading is de-peaked; also gates MDNBR (DNBR feasibility) and LOCA PCT. If artifact, limits pass with margin."
+    question: "Do the rev_4 (37-FA) de-peaking measures bring F_q ≤ 2.50 and F_ΔH ≤ 1.65 (PWR LCOs)? (rev_3 21-FA as-run was 3.478 / 2.268.)"
+    impact: "Both hard_constraint. Gate-feasibility of the design + MDNBR + LOCA PCT. The peaking values are the single biggest driver of the FOM gate."
     owner: OpenMC lead (Samira)
-    needed_by: 2026-06-19
-    status: "OPEN — (1) re-tally with a pin-aligned lattice/distribcell tally instead of RegularMesh (removes cell≠pitch aliasing + water-gap dilution); (2) add f_q + f_delta_h to notebook SAFETY_LIMITS and export as from_openmc.f_q / from_openmc.f_delta_h; (3) report engineering F_ΔH/F_q with uncertainty factors. **If still > LCO after re-tally, de-peak the SBF loading:** (a) IFBA (thin ZrB₂ coating) to flatten radial profile without large Gd lumps; (b) finer radial Gd zoning gradient; (c) pin-level enrichment grading — lower enrichment in the high-peak locations (guide-tube/water-hole-adjacent + peripheral pins); (d) loading-pattern optimization (trade low-leakage vs flatter). Target F_ΔH ≤ 1.55, F_q ≤ 2.30 with margin to the LCOs."
+    needed_by: 2026-06-26
+    status: "**DE-PEAKING IMPLEMENTED 2026-06-26 (rev_4):** the design now incorporates (a) FA-perimeter edge-pin de-rate to 3.6 wt%, (b) assembly-ring enrichment zoning {4.95/4.70/4.40/4.00}, (c) ring-zoned Gd; AND the tally artifact is fixed — F_ΔH/F_q are reconstructed **pin-by-pin from absolute coordinates** (distribcell-style), and F_Q is reported as the **separable** F_ΔH·F_z. **REMAINING: confirm the resulting values on the 37-FA core at high statistics** — medium-stat run done, STAT_FINAL (400 batches / 50k particles) running on a separate machine; export from_openmc.f_q / from_openmc.f_delta_h with engineering uncertainty factors. Target F_ΔH ≤ 1.55, F_Q ≤ 2.30."

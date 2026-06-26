@@ -59,7 +59,7 @@ can be put on **one ranking scale**. The engine exploits this (report §3) and t
   ranking unchanged.
 - An earlier run had Aegis-40 #1; that was a **bad-estimate artifact** (SMART/NuScale
   figures), corrected against the booklet — better data flipped it. Audit data before FER use.
-- **As-run Aegis-40 fails the hard gate** (peaking 3.478 > 2.50) — comparison uses the
+- **rev_4 (37-FA) Aegis-40 now PASSES the hard gate** — de-peaked design target F_Q ≈ 2.00 ≤ 2.50 (37-FA core + edge-pin/ring zoning); high-stat confirmation pending. The old text below describes the superseded rev_3 (21-FA) gate failure (peaking 3.478 > 2.50) — comparison uses the
   post-de-peak target 2.30 (`open_item: peaking_recompute`).
 
 ## 4. Validation — how we check it "works"

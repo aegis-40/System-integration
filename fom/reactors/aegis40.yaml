@@ -3,14 +3,15 @@ display_name: Aegis-40
 country: Türkiye
 developer: TEKNOFEST 2026 team
 status: detailed_design
-source: "rev_3 OpenMC + safety/safety_criteria.yaml (2026-06-19); cooling=once-through seawater (C2), storage=TCES zeolite-13X (C3)"
+source: "rev_4 37-FA OpenMC + Aegis40_TH_report OpenFOAM + safety/safety_criteria.yaml (2026-06-26); cooling=seawater (C2), storage=TCES (C3)"
 
 descriptive:        # raw inputs for derived parameters
   thermal_power_mwth: 125
   electric_power_mwe: 40
   capacity_factor: 0.95
-  plant_footprint_m2: 19340        # 2026-06-19: was 20000 — CTW (900 m²) freed by once-through seawater, CWP house (240 m²) added → net −660 m². Intake/outfall are off-island shoreline.
-  burnup_GWd_per_MTU: 42.8         # confirmed rev_3
+  plant_footprint_m2: 19340        # CTW freed by once-through seawater; intake/outfall off-island
+  burnup_GWd_per_MTU: 42.8         # ⚠ rev_3 (21-FA) value — 37-FA depletion re-run pending; interim
+  hm_mass_t: 9.87                  # rev_4: 37-FA heavy-metal loading
   design_life_years: 60            # estimate
   cogen:
     q_th_sold_mwth: 15             # PER §4.1.3 district heat
@@ -27,13 +28,13 @@ categories:
     seismic_sse:         { value: 0.3,   status: confirmed, source: safety_criteria }   # sse_design
     primary_circulation: { value: 1,     status: confirmed, source: design }            # natural circ (FER §8.6.3)
     n_active_components: { value: 2,      status: estimate,  source: derived }           # passive ESF
-    pct:                 { value: null,   status: tbd,       source: openfoam }
-    mdnbr:               { value: null,   status: tbd,       source: openfoam }
-    peaking_factor_3d:   { value: 3.478,  status: confirmed, source: openmc }            # ⚠ > 2.5 LCO (pre de-peak)
-    mtc:                 { value: -35.9,  status: confirmed, source: openmc }
+    pct:                 { value: null,   status: tbd,         source: openfoam }          # LOCA PCT pending (F3); steady operating clad 349°C (TH report)
+    mdnbr:               { value: 1.56,   status: provisional, source: openfoam }          # rev_4 TH report; contingent on high-stat peaking (F1↔N6)
+    peaking_factor_3d:   { value: 2.00,   status: design_target, source: openmc }          # rev_4 de-peaked target (≤2.5 LCO); high-stat confirmation pending — was 3.478 (21-FA)
+    mtc:                 { value: -35.9,  status: provisional, source: openmc }            # ⚠ rev_3 21-FA value; 37-FA re-run pending (SBF ⇒ stays <0)
   economic:
-    refuel_cycle:        { value: 16,     status: estimate,  source: derived }           # ~479 EFPD / 0.95
-    cycle_length_efpd:   { value: 479,    status: confirmed, source: openmc }
+    refuel_cycle:        { value: 16,     status: provisional, source: derived }           # ~479 EFPD / 0.95 — 37-FA depletion pending
+    cycle_length_efpd:   { value: 479,    status: provisional, source: openmc }            # ⚠ rev_3 21-FA; 37-FA depletion re-run pending
   safeguards:
     sbf_score:           { value: 3,      status: confirmed, source: design }            # fully SBF
     epz_class:           { value: 1,      status: estimate,  source: safety_criteria }   # 0.5 km plant boundary
@@ -41,6 +42,6 @@ categories:
   sustainability:
     design_life:         { value: 60,     status: estimate,  source: design }
   efficiency:
-    burnup:              { value: 42.8,   status: confirmed, source: openmc }
+    burnup:              { value: 42.8,   status: provisional, source: openmc }           # ⚠ rev_3 21-FA; 37-FA depletion re-run pending
     capacity_factor:     { value: 0.95,   status: estimate,  source: design }
-    linear_heat_rate:    { value: 11.3,   status: estimate,  source: derived }           # 125 MWth / ~11088 m fuel
+    linear_heat_rate:    { value: 12.8,   status: confirmed, source: openfoam }           # rev_4: hot-pin peak 12.8 kW/m (TH report); was 11.3 est

@@ -291,12 +291,14 @@ def main():
             p(f"- {r}: feasible")
     p("")
 
-    # de-peaked Aegis-40 scenario for the comparison (post-mitigation target)
+    # rev_4: the de-peaking is now built into the design (edge-pin + ring zoning).
+    # Aegis-40 peaking input is the de-peaked design target F_Q=2.00 (≤2.50 LCO) and
+    # passes the gate directly; no scenario substitution needed.
     vals_fe = {r: dict(vals[r]) for r in REACTORS}
-    vals_fe["aegis40"]["peaking_factor_3d"] = 2.30
-    p("> For the comparison below, Aegis-40 peaking is set to the **post-de-peak target "
-      "2.30** (≤2.50 LCO) — the as-run 3.478 trips the gate above (consistent with "
-      "`safety/safety_criteria` `f_q_total` / `open_item: peaking_recompute`).\n")
+    p("> Aegis-40 peaking is the **rev_4 de-peaked design target F_Q ≈ 2.00** (≤2.50 LCO) — "
+      "the 37-FA core + edge-pin/ring de-peaking replaces the rev_3 (21-FA) as-run 3.478. "
+      "The gate now passes; the value awaits OpenMC high-stat confirmation (`open_item: "
+      "peaking_recompute`; `safety/SIMULATION_ANALYSIS_PLAN.md` F1↔N6).\n")
 
     # 2. pairwise wFOM (Aegis-40 vs each reference)
     p("## 2. Pairwise wFOM — Aegis-40 vs references")

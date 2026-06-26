@@ -1,13 +1,13 @@
 # Aegis-40 wFOM — analysis report
-*Generated 2026-06-19 by fom/wfom.py. Weights: default_pending_supervisor (PLAN §1.2 q1 — supervisor approval pending).*
+*Generated 2026-06-26 by fom/wfom.py. Weights: default_pending_supervisor (PLAN §1.2 q1 — supervisor approval pending).*
 
 ## 1. Hard-constraint gate (PLAN §5.3)
-- **aegis40: DESIGN_FAILED** → peaking_factor_3d=3.478 hard_ceiling 2.5
+- aegis40: feasible
 - carem25: feasible
 - smart: feasible
 - nuscale_voygr: feasible
 
-> For the comparison below, Aegis-40 peaking is set to the **post-de-peak target 2.30** (≤2.50 LCO) — the as-run 3.478 trips the gate above (consistent with `safety/safety_criteria` `f_q_total` / `open_item: peaking_recompute`).
+> Aegis-40 peaking is the **rev_4 de-peaked design target F_Q ≈ 2.00** (≤2.50 LCO) — the 37-FA core + edge-pin/ring de-peaking replaces the rev_3 (21-FA) as-run 3.478. The gate now passes; the value awaits OpenMC high-stat confirmation (`open_item: peaking_recompute`; `safety/SIMULATION_ANALYSIS_PLAN.md` F1↔N6).
 
 ## 2. Pairwise wFOM — Aegis-40 vs references
 wFOM > 0 ⇒ Aegis-40 scores higher on the weighted aggregate. Per-pair renormalization over parameters populated in **both** reactors.
@@ -85,7 +85,7 @@ Each reactor scored against a fixed benchmark of regulatory limits + good-design
 
 | Reactor | wFOM vs standards | #params |
 |---|---|---|
-| aegis40 | **-0.174** | 20 |
+| aegis40 | **-0.192** | 21 |
 | carem25 | **-0.481** | 17 |
 | smart | **-0.462** | 16 |
 | nuscale_voygr | **+0.231** | 17 |

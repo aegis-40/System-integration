@@ -18,20 +18,23 @@
 
 ## 2. Reactor envelope (the constraint that sets everything)
 
-From `Aegis-40 2D test/geometry.xml`:
+> **⚠ rev_4 re-baseline (2026-06-26):** Samira's neutronics core grew from **21 FA → 37 FA** (7-wide octagon, 12 control-rod clusters; `docs/aegis40_neutronics_FER.ipynb`), and active height **1.90 m → 2.00 m**. The 37-FA core is ~1.76× the 21-FA fuel area, so the **RPV diameter, core-barrel OD, RXB internal dimensions and SFP rack size below are now UNDERSIZED and must be re-derived** for 37 FA + 12 CRA. The values below are the superseded 21-FA envelope, kept until the 37-FA geometry is re-cut. `[REWORK — 37-FA RPV/RXB/SFP sizing]`
 
-| Component | Value |
-|---|---|
-| RPV outer diameter | **2.44 m** |
-| RPV inner diameter | 2.26 m |
-| Core barrel OD | 1.94 m |
-| Core barrel ID | 1.85 m |
-| Active fuel height | 1.90 m |
-| Modeled total RPV height (heads excluded) | 2.35 m |
-| Estimated total RPV height including heads + lower plenum `[ASSUMED]` | ~4.8 m |
-| Downcomer radial gap | 0.16 m |
+From `Aegis-40 2D test/geometry.xml` (**21-FA, superseded — see note above**):
 
-These numbers drive RXB internal dimensions (refueling machine reach, crane clearance, polar crane radius).
+| Component | Value (21-FA, superseded) | rev_4 (37-FA) |
+|---|---|---|
+| RPV outer diameter | 2.44 m | `[REWORK — larger for 37 FA]` |
+| RPV inner diameter | 2.26 m | `[REWORK]` |
+| Core barrel OD | 1.94 m | `[REWORK]` |
+| Core barrel ID | 1.85 m | `[REWORK]` |
+| Active fuel height | ~~1.90 m~~ | **2.00 m** (locked, 37-FA) |
+| Modeled total RPV height (heads excluded) | 2.35 m | `[REWORK — +0.10 m active]` |
+| Estimated total RPV height incl. heads + plenum `[ASSUMED]` | ~4.8 m | `[REWORK]` |
+| Downcomer radial gap | 0.16 m | TBD |
+| Heavy-metal loading | — | **9.87 tHM** (37 FA) |
+
+These numbers drive RXB internal dimensions (refueling machine reach, crane clearance, polar crane radius) — **all to be re-derived for the 37-FA core.**
 
 ---
 

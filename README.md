@@ -87,9 +87,9 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 | # | Decision | Locked on | Why |
 |---|---|---|---|
 | 1 | Cladding = **Zircaloy-4** | 2026-05-26 | PWR-standard. FER Table 1's Zr-2 was illustrative. |
-| 2 | Three-zone UO₂ at **4.95 / 4.70 / 4.40 wt% U-235** (max 4.95) | 2026-06-03 (rev_3) | **Supersedes the 2.6/3.0/3.4 baseline** — Samira relaxed it to chase high burnup / waste-intensity score. Max 4.95 ≤ 5.0 LEU ceiling (tight). See `safety/openmc_rev3_alignment.md`. |
-| 3 | **Soluble-boron-free** | 2026-06-02 | Confirmed in rev_3. Drives hybrid Gd+Er BA + ↑ rod worth (15 226 pcm ARO) + ↑ DAS weight. |
-| 4 | Burnable absorber: **hybrid Gd₂O₃ 8 wt% (×32 rods) + Er₂O₃ 0.5 wt% (×16)** | 2026-06-03 (rev_3) | **Supersedes "Er replacing Gd"** — rev_3 is Gd-dominant (radially zoned to flatten power), Er as slow flat hold-down + cold SDM for the long SBF cycle. |
+| 2 | Three-zone UO₂ **4.95 / 4.70 / 4.40 wt%** + **edge-pin 3.6 wt% + ring zoning** (de-peaking) | 2026-06-26 (rev_4) | Max 4.95 ≤ 5.0 LEU. The edge-pin de-rate + assembly-ring zoning are the boron-free de-peaking measures. See `safety/safety_criteria.yaml` design_basis. |
+| 3 | **Soluble-boron-free** | 2026-06-02 | Confirmed. Drives Gd+Er BA + ↑ rod worth + ↑ DAS weight. |
+| 4 | Burnable absorber: **Gd₂O₃ 6 wt% (×20 rods, ring-zoned) + Er₂O₃ 0.5 wt% (×16)** | 2026-06-26 (rev_4) | Gd reduced from 8 wt%×32 (over-loaded k_eff) to 6 wt%×20, ring-zoned to flatten power. Er unchanged. |
 | 5 | **EFW** = gravity-driven, no pumps (not AFW) | 2026-05-27 | Genuinely passive; matches 72 h grace claim. |
 | 6 | Lead accident for §8.6 = **Loss of Heat Sink** | 2026-05-28 | Exercises passive decay-heat removal (iPWR USP). |
 | 7 | **Three-island site scheme** (Nuclear / Conventional / Industrial) | 2026-06-02 | Standard PWR practice + cogen H₂ isolation. |
@@ -102,7 +102,7 @@ This repository is the **system-integration scope**: it ties the subsystem physi
 | # | Item | Owner | Blocks |
 |---|---|---|---|
 | 1 | Long depletion with Er₂O₃ → MTC, void, ARO worth, cycle length at BOL/MOC/EOC | Samira | 5 rows in `safety/safety_criteria.yaml`; FOM inputs |
-| 2 | ~~Fuel-assembly count (21 vs 240)~~ → **RESOLVED: 21 FA, 17×17 lattice** (rev_3) | ✅ Samira | RXB sized for 21 FA confirmed correct |
+| 2 | ~~Fuel-assembly count~~ → **rev_4: 37 FA, 7-wide octagon, 12 CRA, 12.8 MPa** (supersedes 21-FA rev_3) | ✅ Samira | **RXB/SFP re-sizing for 37 FA pending** (`building_list.md` flagged [REWORK]) |
 | 3 | First hot-channel MDNBR + steady-state PCT | OpenFOAM team | 2 hard-constraint normalizers; FOM scoring |
 | 4 | ~~Critical-piping NPS~~ → **sizes in FER draft Table 8.10-2** (MSL 2×DN250, FWL 2×DN200, DHRS 2×DN100, ECCS 2×DN80; surge eliminated) → `layout/critical_piping_table.md` | Adilbek confirms | R6 ◐ closed `[FER-DRAFT]` |
 | 5 | TES/SOE footprint + H₂ inventory | Alisher | industrial-island sizing + stand-off |

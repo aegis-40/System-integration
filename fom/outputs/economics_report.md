@@ -1,5 +1,5 @@
 # Aegis-40 — Economic evaluation (FER §8.12 working model)
-*Generated 2026-06-25 by fom/economics.py. Discount central 7%; prices supervisor-pending defaults.*
+*Generated 2026-06-26 by fom/economics.py. Discount central 7%; prices supervisor-pending defaults.*
 
 > **Reliability key:** *ours* = computed from the Aegis-40 design; *cited* = literature/market input (capital, O&M, unit fuel prices) that cannot be derived and is swept in sensitivity. Capital is the dominant, most-uncertain term → reported as a **band**, never a point (OECD-NEA practice).
 

@@ -1,6 +1,7 @@
 # FER Draft — Aegis-40 — Safety, I&C & Layout sections (§8.5–8.8, §8.10)
 
-*Consolidated draft r4, 2026-06-25. Owner: Azamhon (3S / I&C / FOM / layout).*
+*Consolidated draft r5, 2026-06-26. Owner: Azamhon (3S / I&C / FOM / layout).*
+*r5 re-baselines to the **rev_4 37-FA core** (`docs/aegis40_neutronics_FER.ipynb`): 37 FA, 12.8 MPa, Gd 6 wt%×20, edge-pin + ring de-peaking → Table 8.5-1 + peaking status rewritten; folds in the **OpenFOAM TH results** (`docs/Aegis40_TH_report.docx`: MDNBR 1.56, fuel 734 °C, natural circulation at H_tc 4 m). Neutronic result values are [SIM-PENDING] high-stat. Full plan: `safety/SIMULATION_ANALYSIS_PLAN.md`.*
 *Supersedes `docs/FER_Aegis40_8.5-8.7_draft.md` (r2) and the team's `FER_Aegis40_8.8-8.10.docx` for these sections — folds in the 2026-06-19 team decisions (**once-through seawater (C2)**, **TCES zeolite-13X (C3)**, UHS correction).*
 *r4 responds to the reviewer audit: **§8.5** event-analysis matrix (8.5.2b) + coastal-hazard analysis (8.5.2c); **§8.6** six simplified event trees (8.6.5: SBLOCA, MSLB, rod-withdrawal/ATWS, SGTR, fuel-handling, marine-intake-blockage); **§8.7** trip-setpoint table (Table 8.7-1) + response-time budget closing the "≤500 ms" TBD (8.7.2a); **§8.8** six-field subsections brought into the report (8.8.1–8.8.8).*
 
@@ -48,35 +49,39 @@ The two analyzed event trees map onto this scheme: **LOHS** spans AOO→DEC-A, a
 
 ### 8.5.2 Principal criteria and demonstrated margins
 
-Table 8.5-1 presents the principal criteria with values demonstrated by the locked core design (OpenMC rev_3, 21-assembly 17×17 core, three-zone 4.95/4.70/4.40 wt% U-235, hybrid Gd₂O₃+Er₂O₃ burnable absorber, soluble-boron-free).
+Table 8.5-1 presents the principal criteria for the locked core design (**rev_4: OpenMC 37-assembly 7-wide octagonal core, 12 control-rod clusters, 12.8 MPa, 200 cm active, three-zone 4.95/4.70/4.40 wt% + FA-perimeter edge-pin 3.6 wt% + ring zoning for boron-free de-peaking, Gd₂O₃ 6 wt%×20 + Er₂O₃ 0.5 wt%×16, soluble-boron-free**). Neutronic result values (k_eff, coefficients, SDM, peaking, burnup, cycle) are being re-run on this 37-FA core — **medium statistics done, high statistics (STAT_FINAL) running** — so they carry *[SIM-PENDING]* until the high-stat pass lands; the thermal-hydraulic results below are from the completed OpenFOAM study (`docs/Aegis40_TH_report.docx`).
 
 **Table 8.5-1. Principal safety criteria and demonstrated values.**
 
-| Criterion | Limit | Demonstrated (rev_3) | Margin | Source |
+| Criterion | Limit | Value (rev_4, 37-FA) | Margin | Source |
 |---|---|---|---|---|
-| Shutdown margin (stuck rod) | ≥ 1 % Δk/k | **12.4 %** | ×12 | NRC SRP 4.3 |
-| Moderator temperature coeff. (HFP) | < 0 | **−35.9 pcm/K** | strongly negative | GDC-11 |
-| Doppler coefficient | < 0 | **−1.84 pcm/K** | negative | GDC-11 |
-| Void coefficient | < 0 | **−214 pcm/%void** | strongly negative | GDC-11 |
-| Control-rod worth (ARO) | ≥ 5 % Δk/k | **15 226 pcm** | ×3 | SRP 4.3 |
-| Max reactivity insertion rate | ≤ 7.5e-4 Δk/k/s | **1.5e-5** | ×50 | ANSI/ANS-58.21 |
-| F_Q(Z) total peaking | ≤ 2.50 (LCO) | **3.478 as-run — EXCEEDS** | **⚠ see note** | NUREG-1431 LCO 3.2.1 |
-| F_ΔH radial peaking | ≤ 1.65 (LCO) | **2.268 as-run — EXCEEDS** | **⚠ see note** | NUREG-1431 LCO 3.2.2 |
-| MDNBR (steady / AOO) | ≥ 1.3 | **[SIM-PENDING — OpenFOAM hot-channel; gated by peaking re-tally]** | — | SRP 4.4 / 15.0 |
-| PCT (LOCA envelope) | ≤ 1204 °C | **[SIM-PENDING — same run]** | — | 10 CFR 50.46(b)(1) |
-| Cladding oxidation / H₂ generation | ≤ 17 % / ≤ 1 % | [SIM-PENDING] | — | 50.46(b)(2,3) |
-| Primary design pressure | ≤ 17.2 MPa | 15.5 MPa operating | per ASME III NB | ASME III |
-| Containment design pressure | ≤ 0.414 MPa | [ANALYSIS-PENDING — P/T response] | — | SSR-2/1 Req 56 |
-| **Safety ultimate-heat-sink grace** | ≥ 72 h passive, **no seawater/AC** | 72 h by design intent | — | SSR-2/1 Req 53 |
-| Peak-rod discharge burnup | ≤ 62 GWd/MTU | **42.8 GWd/MTU** | 31 % | SRP 4.2 |
-| Max enrichment | ≤ 5.0 wt% | **4.95 wt%** | 0.05 wt% — see note | 10 CFR 50 LEU |
-| Cycle length | ≥ 365 EFPD | **479 EFPD** | +31 % | competition target |
+| Shutdown margin (stuck rod) | ≥ 1 % Δk/k | *[SIM-PENDING — 37-FA re-run]* | — | NRC SRP 4.3 |
+| Moderator temperature coeff. (HFP) | < 0 | *[SIM-PENDING]* (SBF ⇒ strongly negative by design) | — | GDC-11 |
+| Doppler coefficient | < 0 | *[SIM-PENDING]* (UO₂ ⇒ negative by design) | — | GDC-11 |
+| Void coefficient | < 0 | *[SIM-PENDING]* (under-moderated ⇒ negative) | — | GDC-11 |
+| Control-rod worth (ARO) | ≥ 5 % Δk/k | *[SIM-PENDING — 37-FA, 12 CRA]* | — | SRP 4.3 |
+| Max reactivity insertion rate | ≤ 7.5e-4 Δk/k/s | **1.5e-5** (CRDM design input) | ×50 | ANSI/ANS-58.21 |
+| F_Q(Z) total peaking | ≤ 2.50 (LCO) | **2.00 design target** (de-peaked) *[SIM-PENDING high-stat]* | +20 % | NUREG-1431 LCO 3.2.1 |
+| F_ΔH radial peaking | ≤ 1.65 (LCO) | **1.55 design target** (de-peaked) *[SIM-PENDING high-stat]* | +6 % | NUREG-1431 LCO 3.2.2 |
+| MDNBR (steady) | ≥ 1.3 | **1.56** (OpenFOAM, nat-circ design point) | **+20 %** ✅ | SRP 4.4 / 15.0 |
+| MDNBR (AOO transient) | ≥ 1.3 | *[SIM-PENDING — OpenFOAM transient F2]* | — | SRP 15.0 |
+| Peak fuel centreline (steady) | < 2590 °C | **734 °C** (OpenFOAM) | ≫ margin ✅ | NRC SRP 4.2 |
+| Peak clad (steady operating) | — | **349 °C** (OpenFOAM, subcooled-boiling) | — | — |
+| PCT (LOCA envelope) | ≤ 1204 °C | *[SIM-PENDING — SBLOCA transient F3]* (operating 349 ≪ 1204) | — | 10 CFR 50.46(b)(1) |
+| Cladding oxidation / H₂ generation | ≤ 17 % / ≤ 1 % | *[SIM-PENDING — F3]* | — | 50.46(b)(2,3) |
+| Primary design pressure | ≤ 14.1 MPa | 12.8 MPa operating | 110 % per ASME III | ASME III |
+| Containment design pressure | ≤ 0.414 MPa | [ANALYSIS-PENDING — P/T response F6] | — | SSR-2/1 Req 56 |
+| **Safety ultimate-heat-sink grace** | ≥ 72 h passive, **no seawater/AC** | 72 h by design intent *[F5 transient pending]* | — | SSR-2/1 Req 53 |
+| Natural-circulation flow | adequate at design point | **G 542, MDNBR 1.56 at H_tc 4 m** (OpenFOAM) ✅ | — | iPWR design |
+| Peak-rod discharge burnup | ≤ 62 GWd/MTU | *[SIM-PENDING — 37-FA depletion]* (rev_3 was 42.8) | — | SRP 4.2 |
+| Max enrichment | ≤ 5.0 wt% | **4.95 wt%** (design input) | 0.05 wt% — see note | 10 CFR 50 LEU |
+| Cycle length | ≥ 365 EFPD | *[SIM-PENDING — 37-FA depletion]* (rev_3 was 479) | — | competition target |
 | SSE | ≥ 0.3 g | 0.3 g design basis | — | RG 1.60; SSG-9 |
 | **Coastal external hazard** | protected to site DBFL | [ANALYSIS-PENDING — Sinop surge/tsunami study] | — | SSR-1; SSG-9 |
-| Boundary dose (DBA, 0–2 h) | ≤ 0.25 Sv TEDE | [ANALYSIS-PENDING — dispersion from rev_3 source term 1.2e17 Bq] | — | 10 CFR 100.11 |
+| Boundary dose (DBA, 0–2 h) | ≤ 0.25 Sv TEDE | [ANALYSIS-PENDING — dispersion O1] | — | 10 CFR 100.11 |
 | CDF / LRF | < 1e-7 / < 1e-8 /ry | partial: LOHS ~1e-8 + SBO ~1e-11 (§8.6) | — | RG 1.174 |
 
-**Peaking flag (governing open item).** The rev_3 as-run OpenMC peaking factors **exceed the PWR LCOs** (F_Q 3.478 > 2.50; F_ΔH 2.268 > 1.65). Both are hard constraints; the design is formally **provisional** until `open_item: peaking_recompute` resolves whether these are real or a RegularMesh pin-tally artifact (cell ≠ pin pitch + inter-FA water-gap dilution). If real after a pin-aligned re-tally, the SBF Gd-zoned loading must be de-peaked (IFBA / finer Gd zoning / pin-level enrichment grading) before MDNBR and LOCA PCT can be confirmed. **No safety claim downstream of peaking may be certified until this closes** (Samira, due now). This is disclosed, not hidden.
+**Peaking status (rev_4 — the de-peaking is now in the design).** The rev_3 (21-FA) as-run peaking exceeded the LCOs (F_Q 3.478, F_ΔH 2.268). The rev_4 37-FA design **resolves this at the input level**: (i) the larger 37-assembly core halves the per-pin power (peak linear power 24.6 → 12.8 kW/m); (ii) boron-free de-peaking is built in — FA-perimeter edge-pin de-rate (3.6 wt%), assembly-ring enrichment zoning {4.95/4.70/4.40/4.00}, and Gd ring-zoning; (iii) the tally artifact is removed (pin-by-pin reconstruction; F_Q reported as the separable F_ΔH·F_z). The design-target peaking is **F_Q 2.00 / F_ΔH 1.55**, and the OpenFOAM hot-channel study computed at that peaking gives **MDNBR 1.56 (PASS, +20 %)** with peak fuel only 734 °C. **Remaining:** the OpenMC high-statistics run (STAT_FINAL) must confirm F_Q ≈ 2.0 / F_ΔH ≈ 1.55 on the 37-FA core — the MDNBR PASS is contingent on it (the **F1↔N6 coupling**, `safety/SIMULATION_ANALYSIS_PLAN.md`). The design is no longer gate-failing by construction; it awaits the high-stat confirmation. This is disclosed, not hidden.
 
 **Enrichment margin note.** The 4.95 wt% peak zone deliberately approaches the 5.0 wt% LEU ceiling to maximise discharge burnup. The remaining 0.05 wt% equals a typical fabrication tolerance (±0.05 wt%); the fuel spec therefore requires an asymmetric band (−0.10/+0.00 wt%) **[VERIFY — to be stated in the mechanical/fuel section]**.
 
@@ -373,8 +378,8 @@ Built area ~9 000 m² across the three islands; total occupied site ~250 × 300 
 
 These are **not** in this scope but are summarized so the reviewer sees the whole story and the safety/layout dependencies are explicit.
 
-- **§8.1 General description / Table 1** — 40 MWe / 125 MWth integral PWR, 21-FA 17×17 core, 60 y life, cogen (district heat + H₂). Codes/standards list anchored on IAEA SSR-2/1, SSG-52, TECDOC-1936 + NRC SRP/NUREG-1431. *Owner: team lead; safety criteria here feed Table 1.*
-- **§8.2 Core Design** *(Samira)* — rev_3 OpenMC: BOL k_eff 1.0264, three-zone enrichment, hybrid Gd+Er, 479 EFPD, 42.8 GWd/MTU. **Governing open item: the peaking re-tally (§8.5.2)** — its outcome gates the safety case.
+- **§8.1 General description / Table 1** — 40 MWe / 125 MWth integral PWR, **37-FA 17×17 core (rev_4)**, 12.8 MPa, 60 y life, cogen (district heat + H₂). Codes/standards anchored on IAEA SSR-2/1, SSG-52, TECDOC-1936 + NRC SRP/NUREG-1431. *Owner: team lead; safety criteria here feed Table 1.*
+- **§8.2 Core Design** *(Samira)* — **rev_4 OpenMC: 37-FA 7-wide octagonal core, 12 CRA, Gd 6 wt%×20 + Er 0.5 wt%×16, edge-pin + ring de-peaking, 12.8 MPa.** Neutronic results (k_eff, coefficients, SDM, peaking, burnup, cycle) re-running at high statistics (medium done). **Governing item: high-stat confirmation of F_Q ≈ 2.0 / F_ΔH ≈ 1.55** — feeds the OpenFOAM MDNBR (1.56) PASS.
 - **§8.3 Fuel & Material** *(Samira / mechanical)* — Zircaloy-4 clad; fuel-performance + core-structural demonstration owed (`open_item: fuel_core_structural`). Asymmetric enrichment tolerance to be stated (§8.5.2).
 - **§8.4 Cooling Circuit** *(Adilbek)* — primary natural circulation; secondary saturated steam 7.17 MPa; **the seawater once-through condenser/CCWS described in §8.10.2 is the secondary-side terminus** — final NPS/velocity and condenser back-pressure with cold Black Sea intake are his to confirm (efficiency can only improve vs a cooling-tower baseline).
 - **§8.9 Energy Conversion & Integrated Systems** *(Alisher)* — turbine/generator + the **TCES + SOE cogeneration** plant. TCES technology is now locked (zeolite-13X, §8.10.3); the load-following control philosophy is in §8.7.5; the Req 35 isolation is §8.8.9. Outstanding: TCES bed sizing/round-trip η + the SOE tritium budget.

@@ -1,5 +1,7 @@
 # OpenMC rev_3 ↔ Safety Criteria Alignment Check
 
+> **⚠ SUPERSEDED 2026-06-26 — this document describes the 21-FA rev_3 core.** Samira's design moved to a **37-FA, 7-wide octagonal core at 12.8 MPa** (`docs/aegis40_neutronics_FER.ipynb`). The design INPUTS are re-baselined in `safety/safety_criteria.yaml` (`design_basis`, rev_4); the neutronic RESULT values below (k_eff 1.0264, MTC −35.9, SDM 12.4 %, F_q 3.478, F_ΔH 2.268, burnup 42.8, 479 EFPD) are **21-FA values and are no longer current** — they are being re-run on the 37-FA core (medium-stat done, high-stat running). Read this file as history. The active simulation/analysis plan is `safety/SIMULATION_ANALYSIS_PLAN.md`.
+
 *Cross-check of Samira's locked neutronics design (`aegis-40/OpenMC`, rev_3, 2026-06-03, OpenMC 0.15.3) against this repo's W1 safety criteria and locked decisions.*
 *Run by Azamhon, 2026-06-08. Source repo cloned to `../aegis-40-OpenMC` (sibling, not vendored).*
 
