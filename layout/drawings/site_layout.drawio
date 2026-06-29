@@ -1,0 +1,180 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="Aegis-40 Compact Site Layout" id="aegis40-site-spine">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== Title ===== -->
+        <mxCell id="title" value="Aegis-40 — Compact In-Line Site Layout (rev_4, C1 resolved)&#10;Spine: Storage → Reactor → Turbine → TCES → SOE · scale ~1:170 (6 px/m) · North up" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1b2a36;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Black Sea (shoreline, south) ===== -->
+        <mxCell id="sea" value="BLACK SEA — once-through seawater (intake + outfall)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#bfe6ec;strokeColor=#16808c;align=left;verticalAlign=top;fontColor=#16808c;fontSize=11;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="100" y="932" width="1010" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Protected-Area fence (nuclear block) ===== -->
+        <mxCell id="pa" value="PROTECTED AREA (Seismic Cat I)" style="rounded=0;html=1;dashed=1;fillColor=none;strokeColor=#b3261e;align=left;verticalAlign=top;fontColor=#b3261e;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="102" y="116" width="414" height="552" as="geometry" />
+        </mxCell>
+        <!-- ===== Vital-Area fence (turbine block) ===== -->
+        <mxCell id="va" value="VITAL AREA (Cat II)" style="rounded=0;html=1;dashed=1;fillColor=none;strokeColor=#9a6700;align=left;verticalAlign=top;fontColor=#9a6700;fontSize=11;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="456" y="398" width="336" height="384" as="geometry" />
+        </mxCell>
+        <mxCell id="ns" value="NON-SAFETY (cogen tail)" style="text;html=1;align=left;fontColor=#2d6a4f;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="666" y="350" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== THE SPINE ===================== -->
+        <mxCell id="sfb" value="SFB&#10;Storage / Spent Fuel&#10;450 m² · Cat I" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="132" y="428" width="150" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="rxb" value="RXB — Reactor Building&#10;625 m² · Cat I" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#aad4f5;strokeColor=#0d3550;fontColor=#0d3550;fontSize=11;fontStyle=1;verticalAlign=top;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="300" y="392" width="150" height="150" as="geometry" />
+        </mxCell>
+        <!-- containment Ø15 m + internal IRWST pool + core -->
+        <mxCell id="cont" value="" style="ellipse;html=1;dashed=1;fillColor=#dff0fb;strokeColor=#0d3550;" vertex="1" parent="1">
+          <mxGeometry x="330" y="422" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="irwst" value="IRWST&#10;pool" style="ellipse;html=1;fillColor=#bfe6ec;strokeColor=#16808c;fontColor=#16808c;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="354" y="446" width="42" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="core" value="" style="ellipse;html=1;fillColor=#7fb5e0;strokeColor=#0d3550;" vertex="1" parent="1">
+          <mxGeometry x="366" y="458" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="tb" value="TB — Turbine Building&#10;40 MWe · 600 m² · Cat II" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe8b3;strokeColor=#9a6700;fontColor=#5c3d00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="468" y="416" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tces" value="TCES&#10;Thermochemical store&#10;zeolite-13X · 900 m²" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d8f3dc;strokeColor=#2d6a4f;fontColor=#1d4634;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="666" y="380" width="180" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="soe" value="SOE&#10;Electrolyser (H₂ gen)&#10;625 m²" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d8f3dc;strokeColor=#2d6a4f;fontColor=#1d4634;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="864" y="404" width="150" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- transfer canal SFB<->RXB -->
+        <mxCell id="canal" value="" style="rounded=0;html=1;fillColor=#d6ecfb;strokeColor=#2471a3;" vertex="1" parent="1">
+          <mxGeometry x="282" y="460" width="18" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- seismic gap (RXB | TB) -->
+        <mxCell id="gap" value="seismic gap ≥75 mm" style="endArrow=none;html=1;dashed=1;strokeColor=#0d3550;fontColor=#0d3550;fontSize=10;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="459" y="380" as="sourcePoint" />
+            <mxPoint x="459" y="548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===================== NORTH FLANK ===================== -->
+        <mxCell id="wmb" value="WMB — Waste Mgmt&#10;375 m² · stack ≥30 m" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="132" y="140" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="stack" value="" style="rounded=0;html=1;fillColor=#1b4965;strokeColor=#1b4965;" vertex="1" parent="1">
+          <mxGeometry x="270" y="130" width="6" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ab" value="AB — Auxiliary&#10;500 m² · Cat I" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="132" y="266" width="150" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="cb" value="CB — Control Building&#10;MCR · I&amp;C div A–D · 750 m²" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="312" y="212" width="180" height="144" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== SOUTH FLANK ===================== -->
+        <mxCell id="dgb" value="DGB&#10;2× EDG · 150 m²" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="312" y="584" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw" value="Switchyard + Main Transformers&#10;50 MVA · 33 kV · Cat II" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff3d6;strokeColor=#9a6700;fontColor=#5c3d00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="468" y="596" width="300" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="cwp" value="CWP&#10;circ-water pumps" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfe8ff;strokeColor=#1b4965;fontColor=#0d3550;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="564" y="788" width="72" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="wsb" value="WSB&#10;Workshop / Service" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ededed;strokeColor=#888888;fontColor=#444444;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="864" y="608" width="120" height="84" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== H₂ STORAGE YARD (SE corner, set back) ===================== -->
+        <mxCell id="h2" value="H₂ STORAGE YARD&#10;NFPA 2 · set back to SE corner&#10;600 m²" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffdede;strokeColor=#b3261e;fontColor=#b3261e;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="788" width="144" height="120" as="geometry" />
+        </mxCell>
+        <!-- stand-off line RXB -> H2 -->
+        <mxCell id="standoff" value="H₂ stand-off ≈ 123 m (&gt; 100 m bound · NFPA 2 / RG 1.91)" style="endArrow=none;html=1;dashed=1;strokeColor=#b3261e;strokeWidth=2;fontColor=#b3261e;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="467" as="sourcePoint" />
+            <mxPoint x="1032" y="848" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===================== PROCESS LINES ===================== -->
+        <!-- main steam / process heat corridor -->
+        <mxCell id="steam" value="main steam → TB → process heat → TCES/SOE" style="endArrow=classic;html=1;strokeColor=#c0392b;strokeWidth=3;fontColor=#c0392b;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="450" y="467" as="sourcePoint" />
+            <mxPoint x="666" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- generator output to switchyard -->
+        <mxCell id="genout" value="gen output" style="endArrow=classic;html=1;strokeColor=#cc9900;strokeWidth=2;fontColor=#cc9900;fontSize=9;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="558" y="536" as="sourcePoint" />
+            <mxPoint x="558" y="596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- condenser circ water to sea -->
+        <mxCell id="circ" value="circ water → sea" style="endArrow=classic;html=1;strokeColor=#16808c;strokeWidth=2;fontColor=#16808c;fontSize=9;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="536" as="sourcePoint" />
+            <mxPoint x="600" y="932" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===================== LEGEND ===================== -->
+        <mxCell id="legbox" value="" style="rounded=0;html=1;fillColor=#ffffff;strokeColor=#9aa6b0;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="120" width="300" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="legt" value="ZONES" style="text;html=1;fontStyle=1;fontSize=12;fontColor=#1b2a36;" vertex="1" parent="1">
+          <mxGeometry x="1165" y="130" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1" value="" style="rounded=0;fillColor=#cfe8ff;strokeColor=#1b4965;" vertex="1" parent="1"><mxGeometry x="1165" y="156" width="22" height="14" as="geometry"/></mxCell>
+        <mxCell id="lg1t" value="Nuclear (Cat I, Protected Area)" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="155" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="lg2" value="" style="rounded=0;fillColor=#ffe8b3;strokeColor=#9a6700;" vertex="1" parent="1"><mxGeometry x="1165" y="178" width="22" height="14" as="geometry"/></mxCell>
+        <mxCell id="lg2t" value="Turbine (Cat II, Vital Area)" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="177" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="lg3" value="" style="rounded=0;fillColor=#d8f3dc;strokeColor=#2d6a4f;" vertex="1" parent="1"><mxGeometry x="1165" y="200" width="22" height="14" as="geometry"/></mxCell>
+        <mxCell id="lg3t" value="Cogen tail (non-safety)" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="199" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="lg4" value="" style="rounded=0;fillColor=#ffdede;strokeColor=#b3261e;" vertex="1" parent="1"><mxGeometry x="1165" y="222" width="22" height="14" as="geometry"/></mxCell>
+        <mxCell id="lg4t" value="H₂ (NFPA 2, set back)" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="221" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="lg5" value="" style="rounded=0;fillColor=#bfe6ec;strokeColor=#16808c;" vertex="1" parent="1"><mxGeometry x="1165" y="244" width="22" height="14" as="geometry"/></mxCell>
+        <mxCell id="lg5t" value="Seawater / IRWST pool" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="243" width="240" height="16" as="geometry"/></mxCell>
+
+        <mxCell id="legl" value="LINES" style="text;html=1;fontStyle=1;fontSize=12;fontColor=#1b2a36;" vertex="1" parent="1">
+          <mxGeometry x="1165" y="278" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ll1" value="" style="endArrow=none;strokeColor=#c0392b;strokeWidth=3;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1165" y="312" as="sourcePoint"/><mxPoint x="1190" y="312" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll1t" value="Main steam / process heat" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="304" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="ll2" value="" style="endArrow=none;strokeColor=#16808c;strokeWidth=3;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1165" y="334" as="sourcePoint"/><mxPoint x="1190" y="334" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll2t" value="Circulating water → sea" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="326" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="ll3" value="" style="endArrow=none;strokeColor=#cc9900;strokeWidth=3;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1165" y="356" as="sourcePoint"/><mxPoint x="1190" y="356" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll3t" value="Generator output" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="348" width="240" height="16" as="geometry"/></mxCell>
+        <mxCell id="ll4" value="" style="endArrow=none;dashed=1;strokeColor=#b3261e;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1165" y="378" as="sourcePoint"/><mxPoint x="1190" y="378" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll4t" value="H₂ stand-off (~123 m)" style="text;html=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1195" y="370" width="240" height="16" as="geometry"/></mxCell>
+
+        <mxCell id="legn" value="Spine W→E:  SFB → RXB → ⟂gap → TB → TCES → SOE&#10;North flank:  WMB · AB · CB&#10;South flank:  DGB · Switchyard · CWP · WSB&#10;Site ~160 × 120 m — inside the 500 m EPZ" style="text;html=1;align=left;fontSize=11;fontColor=#33414d;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1165" y="404" width="270" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- North arrow -->
+        <mxCell id="north" value="↑ N" style="text;html=1;align=center;fontSize=18;fontStyle=1;fontColor=#1b2a36;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="60" width="50" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- footer note -->
+        <mxCell id="note" value="Compact in-line spine (C1 resolved 2026-06-26). Positions schematic — await survey. Detail: planning/COMPACT_LAYOUT_PROPOSAL.md" style="text;html=1;align=left;fontSize=10;fontColor=#55606a;" vertex="1" parent="1">
+          <mxGeometry x="100" y="1030" width="1000" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
