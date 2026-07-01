@@ -30,15 +30,15 @@ reactor_type: 40 MWe / 125 MWth integral PWR (iPWR) cogen
 
 # ---------------------------------------------------------------------------
 # DESIGN BASIS — locked neutronic INPUTS (rev_4, simulation-independent)
-# Source: docs/aegis40_neutronics_FER.ipynb cell "locked neutronic design constants".
-# These are design CHOICES, not Monte-Carlo outputs → valid at any statistics.
-# Supersedes the rev_3 (21-FA) basis. The k_eff/coefficient/peaking/burnup/cycle
-# VALUES below are sim OUTPUTS still being re-run on this 37-FA core (medium-stat
-# done, high-stat STAT_FINAL running on a separate machine) → tagged SIM-PENDING.
+# Source: docs/aegis40_neutronics_FER.ipynb + docs/safety_newutronics/ (OpenMC
+# safety deck, STAT_MEDIUM, ENDF/B-VIII.0) + docs/Aegis40_TH_report.docx (OpenFOAM).
+# UPDATED 2026-07-01: the OpenMC + OpenFOAM safety campaigns are complete; result
+# values below are now CONFIRMED (medium-stat; high-stat = record run pending).
 # ---------------------------------------------------------------------------
 design_basis:
   core_assemblies: 37            # was 21 (rev_3) → 37 FA, 7-wide octagon (rows 3-5-7-7-7-5-3)
-  control_rod_clusters: 12       # checkerboard; central FA = instrument
+  control_rod_clusters: 16       # 2026-07-01: 12 -> 16 CRAs (NuScale NPM config, N5C) — 12 gives insufficient shutdown
+  control_rod_absorber: "enriched B-10 (90%) solid B4C — SBF-compatible (no soluble boron), bank worth ~21,437 pcm"
   lattice: "17x17 (264 fuel + 24 guide + 1 instrument)"
   pin_pitch_cm: 1.2623
   fa_pitch_cm: 21.6038
@@ -49,9 +49,11 @@ design_basis:
   radial_reflector_cm: 20.0      # water
   axial_plena_cm: 30.0           # water
   enrichment_zones_wt_pct: [4.95, 4.70, 4.40]    # intra-FA radial grade, max 4.95 <= 5.0 LEU
-  edge_pin_enrichment_wt_pct: 3.6                 # NEW: FA-perimeter de-rate (boron-free de-peaking)
+  edge_pin_enrichment_wt_pct: 3.6                 # FA-perimeter de-rate (boron-free de-peaking)
   ring_enrichment_wt_pct: {0: 4.95, 1: 4.70, 2: 4.40, 3: 4.00}   # assembly-ring zoning (de-peak)
-  burnable_absorber: "Gd2O3 6 wt% x ~20 rods/FA (ring-zoned) + Er2O3 0.5 wt% x 16 rods"
+  burnable_absorber: "Gd2O3 6 wt% x ~20 rods/FA (ring-zoned) + Er2O3 0.75 wt% x 16 rods"   # Er 0.50->0.75 wt% (Laziz 2026-06-27)
+  peaking_confirmed: {F_q: 2.035, F_dH: 1.583, F_z: 1.286}        # high-stat OpenMC per-pin (both <= LCO 2.50/1.65) — reconciled with T-H (N6)
+  shutdown_architecture: "hot trip by 16 enriched-B-10 CRAs (SDM ~7.6%); cold subcriticality + MSLB termination CREDITED to EBIS ~3000 ppm (boron-free core too reactive cold for rods alone)"
   operating_pressure_MPa: 12.8   # was 15.5 (rev_3)
   t_avg_C: 283
   t_fuel_K: 900
@@ -80,7 +82,7 @@ criteria:
     sensor_chain: ["power-range neutron flux 4ch", "core exit T inference"]
     setpoint_link: high_flux_trip
     defense_in_depth_level: 1
-    notes: "Steady-state criticality. **rev_4 (37-FA) re-baseline 2026-06-26 — BOL k_eff, ARO worth and cold SDM are SIM-PENDING re-run on the 37-FA core (medium-stat done, high-stat STAT_FINAL running).** The rev_3 (21-FA) values (k_eff 1.0264, ARO 15226 pcm, SDM 12.4%) are SUPERSEDED and must not be cited for the 37-FA design. Hold-down mechanism unchanged: ring-zoned Gd2O3 6 wt% + Er2O3 0.5 wt% + control rods (soluble-boron-free). See docs/aegis40_neutronics_FER.ipynb."
+    notes: "Steady-state criticality. **rev_4 (37-FA): BOC hot k_ARO ≈ 1.158 (~13,300 pcm excess on integral Gd) per the OpenMC safety deck (N5).** Held down by ring-zoned Gd2O3 6 wt% + Er2O3 0.75 wt% + 16 enriched-B-10 control rods (soluble-boron-free). The precise BOL k_eff + k(BU) curve come from the N7 depletion [SIM-PENDING]. Shutdown fully characterized: hot trip by rods (SDM ~7.6%), cold by EBIS — see shutdown_margin / independent_shutdown_systems. rev_3 (21-FA) k_eff 1.0264 SUPERSEDED."
 
   - id: shutdown_margin
     parameter: "Shutdown margin (most reactive rod stuck out)"
@@ -94,7 +96,7 @@ criteria:
     sensor_chain: ["control rod position indication", "post-trip neutron flux"]
     setpoint_link: null         # protected by design, not by trip
     defense_in_depth_level: 3
-    notes: "Required at all times including refueling. To be confirmed by ARO (all-rods-in minus one) OpenMC case — Samira W1 task 6."
+    notes: "**RE-FRAMED 2026-07-01 (N5/N5C).** The boron-free core holds a large BOC excess (~13,300 pcm on integral Gd). **HOT trip subcriticality is achieved by 16 enriched-B-10 (90%) B4C CRAs → k_adj 0.935, hot SDM ~7.6% (N5C, = NuScale NPM config).** 12 natural-B4C rods are INSUFFICIENT (k_adj 1.008); 12 enriched is a thin fallback (k_adj 0.989). **COLD subcriticality is NOT achievable by rods alone (cold stuck-rod supercritical by design) → credited to EBIS soluble boron (~3000 ppm, N10) — the required diverse 2nd shutdown system, not a patch.** k_adj = k_mean + 2σ + 0.005. SBF intact (enriched boron is in the SOLID rods). See independent_shutdown_systems."
 
   - id: mtc_full_power
     parameter: "Moderator Temperature Coefficient at full power"
@@ -153,7 +155,7 @@ criteria:
     sensor_chain: ["differential rod worth measurement at startup"]
     setpoint_link: null
     defense_in_depth_level: 3
-    notes: "Enables hot shutdown without boration. Samira W1 task 6 = all-rods-in case."
+    notes: "**CONFIRMED (N5C): 16 enriched-B-10 (90%) B4C CRA bank worth ~21,437 pcm** (vs ~13,300 pcm BOC excess) → hot-trip subcritical with ~7.6% SDM. Enriched-B-10 in SOLID rods adds no soluble boron (SBF intact). 12-CRA natural-B4C worth 13,287 pcm ≈ excess → insufficient (superseded)."
 
   - id: max_reactivity_insertion_rate
     parameter: "Maximum reactivity insertion rate"
@@ -183,7 +185,7 @@ criteria:
     sensor_chain: ["design-document audit", "ARO/stuck-rod OpenMC cases", "EBIS tank level + boron concentration"]
     setpoint_link: ebis_actuation
     defense_in_depth_level: 3
-    notes: "**RESOLVED 2026-06-15 (was GAP vs SSR-2/1 Req 46 §6.9).** Count = 2: (1) gravity-drop control rods (primary; cold SDM 12.4%, stuck-rod compliant), (2) **Emergency Boron Injection System (EBIS)** — a passive, diverse, shutdown-only borated-water system (see trip_signals.md E6 + FER §8.6.2a). Diversity satisfied (chemical poison vs mechanical rod → no shared insertion CCF, §6.8). §6.10: EBIS sized so it ALONE reaches cold subcritical at the most reactive condition [SIM-PENDING — Samira to size boron mass/concentration via OpenMC borated-core case]. Design philosophy preserved: NO soluble boron for reactivity control in normal operation (boron-dilution accident stays eliminated); EBIS is isolated/dormant, armed only on ATWS via the DAS. Note: SBF burnable absorber (Gd/Er) is fixed hold-down, NOT counted as a shutdown system. See open_item shutdown_second_system (now sizing-only)."
+    notes: "**CONFIRMED 2026-07-01 (N5C/N10/N12).** Two diverse, independent shutdown systems: (1) **16 enriched-B-10 (90%) B4C control rods** — gravity-drop, fast hot trip (SDM ~7.6%); (2) **EBIS — Emergency Boron Injection System** — passive borated water (~3000 ppm), the credited path to **cold subcriticality and MSLB termination** (N10 standalone k_adj 0.930; N12-B k_adj 0.845). §6.9 met (diverse: mechanical rods vs chemical poison, no shared insertion CCF §6.8). §6.10 met: **EBIS ALONE reaches cold subcritical at the most reactive state — CONFIRMED, ~3000 ppm.** **IMPORTANT re-frame:** because the boron-free core is too reactive cold for rods alone, EBIS is an ESSENTIAL credited shutdown system, NOT a dormant ATWS-only backup — though it remains isolated/dormant in normal operation (SBF intact, boron-dilution accident stays eliminated). SBF burnable absorber (Gd/Er) = fixed hold-down, not a shutdown system. See FER §8.6.2a."
 
 # ---------------------------------------------------------------------------
 # 2. THERMAL-HYDRAULIC SAFETY (clad integrity, DNB, fuel)
@@ -202,7 +204,7 @@ criteria:
     sensor_chain: ["primary flow + core ΔT + flux distribution"]
     setpoint_link: low_flow_trip
     defense_in_depth_level: 1
-    notes: "First wall of CSFs. **rev_4 RESULT (docs/Aegis40_TH_report.docx): MDNBR = 1.56 at the natural-circulation design point (H_tc 4 m, G 542) — PASS, +20% over 1.3.** Conjugate CFD (chtMultiRegionFoam) + W-3 CHF/Tong correlation stack, V&V'd vs NuScale NPM-160 (GCI<0.15%, energy-conservative). **CAVEAT: computed with the de-peaked design-target peaking (F_Q 2.00 / F_ΔH 1.55) — contingent on OpenMC high-stat (N6) confirming it.** W-3 extrapolated below its flux range (conservative); low-flow CHF correlation recommended for final."
+    notes: "First wall of CSFs. **CONFIRMED (F1, docs/Aegis40_TH_report.docx): MDNBR = 1.54 (W-3, conservative, +18%) / 2.59 (Bowring-1972 low-flow, realistic) at the natural-circulation design point (H_tc 4 m, G 542) — PASS.** Conjugate CFD (chtMultiRegionFoam) + correlation stack, V&V'd vs NuScale NPM-160 (GCI<0.15%). Computed at the **confirmed** peaking F_Q 2.035 / F_ΔH 1.583 (N6) — no longer contingent. W-3 is conservative below its flux range; Bowring (in-range at G 543) gives the realistic 2.59."
 
   - id: mdnbr_transient
     parameter: "MDNBR — anticipated operational occurrences (AOO)"
@@ -217,6 +219,7 @@ criteria:
     sensor_chain: ["transient sim hot-channel"]
     setpoint_link: over_temp_dt_trip
     defense_in_depth_level: 2
+    notes: "**CONFIRMED (F2, TH report): bounding transient MDNBR = 1.92 @ 118% power / 80% flow — PASS.** Quasi-steady envelope (aoo_dnbr.py) sweeping power×flow."
 
   - id: pct_loca
     parameter: "Peak Clad Temperature — LOCA"
@@ -231,7 +234,7 @@ criteria:
     sensor_chain: ["core exit thermocouples (post-accident)", "fuel performance"]
     setpoint_link: high_outlet_t_trip
     defense_in_depth_level: 2
-    notes: "Hard ceiling for the LOCA transient. **rev_4: steady-state operating peak clad = 349 °C (TH report) — confirms operating PCT ≪ 1204 °C, but the LOCA TRANSIENT itself (F3 SBLOCA blowdown/reflood) is NOT yet run** [SIM-PENDING — OpenFOAM transient; see SIMULATION_ANALYSIS_PLAN.md F3]. Gaussian center 600 °C / α 5e-6."
+    notes: "Hard ceiling for the LOCA transient. **CONFIRMED (F3, TH report): PCT ≪ 1204 °C — PASS.** Large-break LOCA is practically eliminated (integral RPV, no large primary piping); the surviving spectrum is bounded by the NuScale ECCS envelope (3 RVV + 2 RRV) at 0.78× power. Steady-state operating peak clad = 349 °C (F1). Write-up: `Aegis40_F3_F6_bounding.md`. Gaussian center 600 °C / α 5e-6."
 
   - id: cladding_oxidation
     parameter: "Maximum cladding oxidation"
@@ -274,7 +277,7 @@ criteria:
     sensor_chain: ["fuel performance model"]
     setpoint_link: over_power_dt_trip
     defense_in_depth_level: 1
-    notes: "**rev_4 RESULT (TH report): peak fuel centreline = 734 °C** — far below melt (~2590–2840 °C), a direct consequence of the modest 12.8 kW/m peak linear power on the de-peaked 37-FA core. Peak clad (steady operating, w/ subcooled-boiling clamp) 349 °C. Same F1↔N6 peaking caveat as mdnbr_steady."
+    notes: "**CONFIRMED (F1, TH report): peak fuel centreline = 741 °C** — far below melt (~2590–2840 °C), a direct consequence of the modest 12.8 kW/m peak linear power on the de-peaked 37-FA core (peaking now confirmed F_Q 2.035). Peak clad (steady operating, subcooled-boiling clamp) 349 °C."
 
   - id: f_delta_h_radial
     parameter: "Nuclear enthalpy-rise hot-channel factor F_ΔH^N"
@@ -289,7 +292,7 @@ criteria:
     sensor_chain: ["in-core flux map (movable detectors / SPNDs)", "loading-pattern verification"]
     setpoint_link: over_temp_dt_trip
     defense_in_depth_level: 1
-    notes: "Radial peaking of the integrated pin power; drives MDNBR directly. **rev_4 (37-FA): the de-peaking measures are now BUILT INTO the design inputs** — FA-perimeter edge-pin de-rate (3.6 wt%), radial enrichment ring-zoning {4.95/4.70/4.40/4.00}, and Gd ring-zoning; the notebook now reconstructs F_ΔH **pin-by-pin from absolute coordinates** (distribcell-style), removing the old RegularMesh cell≠pitch aliasing. The rev_3 (21-FA) as-run F_ΔH = 2.268 is SUPERSEDED. **Value SIM-PENDING — high-stat re-run on the 37-FA de-peaked core (medium-stat done, STAT_FINAL running).** Target F_ΔH ≤ 1.55. See open_item peaking_recompute."
+    notes: "Radial peaking of the integrated pin power; drives MDNBR directly. **CONFIRMED 2026-07-01: F_ΔH = 1.583 ≤ 1.65 LCO — PASS** (high-stat OpenMC per-pin reconstruction, reconciled with the OpenFOAM T-H case N6, `docs/Aegis40_TH_report.docx`). The de-peaking measures work — FA-perimeter edge-pin de-rate (3.6 wt%), radial enrichment ring-zoning, Gd ring-zoning, pin-by-pin distribcell tally. Supersedes the rev_3 (21-FA) as-run 2.268. peaking_recompute CLOSED."
 
   - id: f_q_total
     parameter: "Total heat-flux hot-channel (peaking) factor F_Q(Z)"
@@ -304,7 +307,7 @@ criteria:
     sensor_chain: ["in-core flux map (axial + radial)", "loading-pattern verification"]
     setpoint_link: over_power_dt_trip
     defense_in_depth_level: 1
-    notes: "3D total peaking (separable F_xy·F_z); sets peak linear heat rate → LOCA PCT and centerline-melt margins. **rev_4 (37-FA): de-peaking now built into the design** (edge-pin 3.6 wt% de-rate + radial enrichment ring-zoning + Gd ring-zoning); the notebook reports the **separable** F_Q = F_ΔH·F_z (the raw single-node 3D max is kept only as a finite-statistics diagnostic that falls toward the separable value as particles increase). The rev_3 (21-FA) as-run F_q = 3.478 is SUPERSEDED. **Value SIM-PENDING — high-stat re-run on the 37-FA core (medium-stat done, STAT_FINAL running).** Target F_Q ≤ 2.30. See open_item peaking_recompute."
+    notes: "3D total peaking (separable F_xy·F_z); sets peak linear heat rate → LOCA PCT and centerline-melt margins. **CONFIRMED 2026-07-01: F_Q = 2.035 ≤ 2.50 LCO — PASS** (high-stat OpenMC per-pin, F_ΔH 1.583 × F_z 1.286; reconciled with OpenFOAM N6). Peak linear power 12.8 kW/m (≈30% of the PWR limit). Supersedes the rev_3 as-run 3.478. **peaking_recompute CLOSED — the gate now passes on confirmed data.**"
 
 # ---------------------------------------------------------------------------
 # 3. PRIMARY / SECONDARY PRESSURE BOUNDARY
@@ -338,7 +341,7 @@ criteria:
     sensor_chain: ["containment pressure xmtr 4×"]
     setpoint_link: high_containment_p_trip
     defense_in_depth_level: 3
-    notes: "**C5 resolved 2026-06-26: internal IRWST pool inside containment (CAREM-25-style)** — the P/T response is now a suppression/condensing-pool case (not dry). Peak DBA P must stay ≤ design; confirm via containment_pt_analysis (F6)."
+    notes: "**C5 LOCKED: internal IRWST pool inside containment (CAREM-25-style)** — suppression/condensing-pool P/T response. **F6 (TH report): peak P/T within the design-pressure envelope — PASS**, using a NuScale immersed-CNV as the BOUNDING reference. **HONESTY NOTE: F6 bounded the P/T on a NuScale-style immersed high-pressure CNV, which differs from the locked CAREM internal-pool topology (pool inside vs vessel immersed in an external pool); the NuScale case is taken as conservative/bounding, but a CAREM-specific containment P/T confirmation remains a refinement.** Write-up: `Aegis40_F3_F6_bounding.md`."
 
   - id: sg_pressure_operating
     parameter: "Steam generator operating pressure"
@@ -371,7 +374,7 @@ criteria:
     sensor_chain: ["passive PCCS + IRWST inventory tracking"]
     setpoint_link: null
     defense_in_depth_level: 4
-    notes: "Aegis-40 targets 'unlimited' (cap at 720 h per MEETING_BRIEF §4 row 9). Selling point in FER §8.6."
+    notes: "**CONFIRMED (F5, TH report): passive grace = 286 h** (250 m³ boiling in-containment IRWST pool, transient ANS-5.1 decay heat + pool boil-off, f5_prhr.py) — nearly 4× the 72 h floor. Re-baseline the design grace to **286 h** (72 h retained as the conservative minimum / competition floor). Major selling point in FER §8.6."
 
   - id: prhr_capacity
     parameter: "Passive Residual Heat Removal capacity vs decay heat"
@@ -385,6 +388,7 @@ criteria:
     sensor_chain: ["PRHR HX outlet T + flow"]
     setpoint_link: null
     defense_in_depth_level: 3
+    notes: "**CONFIRMED (F5, TH report): PASS** — the passive residual-heat chain (PRHR HX → internal IRWST pool) removes decay heat with the pool as heat sink for 286 h before makeup, bounding the ≥105% requirement. See operator_grace_period."
 
   - id: ultimate_heat_sink
     parameter: "Safety ultimate heat sink — availability & seawater-independence"
@@ -602,7 +606,7 @@ defense_in_depth_levels:
     aegis40_features: ["Passive ECCS x3 (per FER Table 1)", "PRHR / IRWST", "Containment isolation x3"]
   4:
     name: "Control of severe plant conditions, prevention of accident progression"
-    aegis40_features: ["72 h+ grace period", "Passive containment cooling x3", "Diverse SBF principles (≥5)"]
+    aegis40_features: ["286 h passive grace (F5, was 72 h floor)", "Passive containment cooling", "Diverse SBF principles (≥5)"]
   5:
     name: "Mitigation of radiological consequences"
     aegis40_features: ["EPZ ≤ 0.5 km", "Site boundary dose < 0.25 Sv", "CDF < 1e-7, LRF < 1e-8"]
@@ -617,9 +621,9 @@ decisions_locked:
     locked_on: 2026-05-26
     rationale: "Zr-4 is PWR-standard. FER Table 1's Zr-2 was an illustrative template default, not a prescribed value."
   - id: core_configuration
-    decision: "37 fuel assemblies, 7-wide octagonal core (rows 3-5-7-7-7-5-3); 12 control-rod clusters (checkerboard, central FA = instrument); 17x17 lattice; 200 cm active height; 9.87 tHM"
-    locked_on: 2026-06-26   # rev_4 — supersedes the 21-FA rev_3 core
-    rationale: "Samira's 37-FA neutronics model (docs/aegis40_neutronics_FER.ipynb). Supersedes the 21-FA rev_3 count. CASCADE: RXB internal layout + SFP sizing in layout/building_list.md were sized for 21 FA and must be re-checked for 37 FA + 12 CRA."
+    decision: "37 fuel assemblies, 7-wide octagonal core (rows 3-5-7-7-7-5-3); **16 control-rod clusters** (enriched-B-10 90% solid B4C); 17x17 lattice; 200 cm active height; 9.87 tHM"
+    locked_on: 2026-07-01   # 12 -> 16 CRA (N5C); rev_4 core otherwise per 2026-06-26
+    rationale: "37-FA neutronics model + safety deck. **CRAs 12 -> 16 (2026-07-01, N5C = NuScale NPM config):** 12 natural-B4C rods give insufficient shutdown; 16 enriched-B-10 (90%) solid B4C rods → hot SDM ~7.6% (bank worth ~21,437 pcm). Enriched B-10 in solid rods keeps SBF intact. CASCADE: RXB/SFP sizing re-check for 37 FA; +4 CRDMs vs 12 (existing guide tubes)."
   - id: operating_conditions
     decision: "Primary 12.8 MPa, T_avg 283 °C (T_fuel 900 K, T_mod 556 K)"
     locked_on: 2026-06-26   # rev_4 — supersedes 15.5 MPa
@@ -629,9 +633,13 @@ decisions_locked:
     locked_on: 2026-06-26   # rev_4 — adds edge-pin + ring de-peaking to the rev_3 zones
     rationale: "rev_4 37-FA. The edge-pin de-rate and ring zoning are the boron-free de-peaking measures (FA-perimeter pins face the inter-assembly water gaps where thermal flux/power peaks). Max 4.95 <= 5.0 LEU ceiling. See docs/aegis40_neutronics_FER.ipynb."
   - id: burnable_absorber
-    decision: "Gd₂O₃ 6 wt% (~20 rods/FA average, ring-zoned) + Er₂O₃ 0.5 wt% (×16 rods)"
-    locked_on: 2026-06-26   # rev_4 — supersedes Gd 8 wt% ×32 (over-loaded k_eff)
-    rationale: "rev_4 37-FA. Gd reduced from 8 wt%×32 to 6 wt%×20 because 32 rods over-suppressed k_eff; ring-zoned (heavier centre, GD_RING_WEIGHTS {1.65/1.45/0.95/0.68}) to flatten radial power without soluble boron. Er unchanged (slow hold-down + cold SDM). NOTE: the notebook's §4 materials prose still says '8 wt%' — the LOCKED code constant (6 wt%) governs."
+    decision: "Gd₂O₃ 6 wt% (~20 rods/FA average, ring-zoned) + Er₂O₃ **0.75 wt%** (×16 rods)"
+    locked_on: 2026-06-27   # Er 0.50 -> 0.75 wt% (Laziz)
+    rationale: "rev_4 37-FA. Gd 6 wt%×20 (ring-zoned) flattens radial power without soluble boron. **Er raised 0.50 → 0.75 wt% (Laziz, 2026-06-27): every margin ~2 pcm deeper, no grade changes.** Er is slow hold-down + aids cold shutdown. NOTE: the notebook's §4 materials prose still says Gd '8 wt%' — the LOCKED code constant (6 wt%) governs."
+  - id: c5_containment
+    decision: "Internal IRWST pool inside containment (CAREM-25-style)"
+    locked_on: 2026-07-01   # user decision; F6 P/T bounded by NuScale immersed-CNV
+    rationale: "Team chose the CAREM-style internal-pool concept over the NuScale immersed-CNV. F6 (TH report) confirmed containment P/T within design using a NuScale immersed-CNV as a conservative bounding reference; a CAREM-specific P/T confirmation remains a refinement. The internal pool is also the 286 h passive heat sink (F5) and the safety UHS."
 
 open_items:
   - id: aoo_pct_envelope
@@ -651,7 +659,7 @@ open_items:
     impact: "Closes the design gap; sizing confirms §6.10 standalone-capability claim. Feeds EBIS tank volume into layout (RXB) + the ATWS branch of the LOHS event tree."
     owner: core design (Samira) sizing + 3S (Azamhon) integration
     needed_by: 2026-06-19
-    status: "DESIGN ADOPTED 2026-06-15 (EBIS: passive, shutdown-only, DAS-armed; trip_signals E6, FER §8.6.2a). SIM-PENDING — OpenMC borated-core case to set boron mass for standalone cold-subcritical at most-reactive condition + verify no operational boron (dilution stays eliminated)."
+    status: "**CLOSED 2026-07-01 — SIZED & CONFIRMED (N10).** EBIS at **~3000 ppm** reaches standalone cold-subcritical at the most-reactive state: k_adj 0.930 (sweep: 1800 ppm→1.023, 2400→0.969, 3000→0.924). §6.10 met. EBIS is confirmed as the ESSENTIAL credited cold-shutdown + MSLB-termination system (N12-B k_adj 0.845). No operational boron (dilution stays eliminated); EBIS dormant/isolated until DAS-armed. Feed EBIS tank volume (~boron mass for 3000 ppm in the primary+tank) into the RXB layout."
   - id: cogen_isolation_design
     question: "EBIS-style barrier scheme adopted for Req 35 (intermediate loop + inward ΔP + ESFAS auto-isolation, aux_systems.md §9a). Remaining: tritium permeation/carryover budget for the SOE high-T (~800°C) interface."
     impact: "Closes Req 35 by design (3 barriers). Tritium budget confirms H₂-product + district-heat dose pathway is bounded; sizes permeation-barrier coatings + getter."
@@ -675,10 +683,10 @@ open_items:
     impact: "Validates the containment-pressure hard_constraint + the §8.6.2 containment description; gates the layout/CAD recut."
     owner: layout (Elbek) + safety (Azamhon) + supervisor (C5 decision)
     needed_by: 2026-06-26
-    status: "**C5 RESOLVED 2026-06-26: internal IRWST pool inside containment (CAREM-25-style)** — gravity DHRS/ECCS condense back into the in-containment pool, no external penetration. REMAINING: (1) run limiting-DBA (SBLOCA/MSLB) mass-energy → containment P/T for the **suppression/condensing-pool** configuration (F6); (2) confirm ≤0.414 MPa with margin; (3) recut RXB sections + CAD to show the internal pool. See layout/fer_8810_docx_audit.md C5, FER §8.6.2."
+    status: "**C5 LOCKED 2026-07-01: internal IRWST pool (CAREM-25-style).** **F6 (TH report): containment P/T within the design-pressure envelope — PASS**, using a NuScale immersed-CNV as a conservative bounding reference. REMAINING (refinements, not blockers): (1) a **CAREM-specific** P/T confirmation (the F6 bounding used a different topology — pool inside vs vessel immersed in an external pool); (2) recut RXB sections + CAD to show the internal pool. Write-up: `Aegis40_F3_F6_bounding.md`."
   - id: peaking_recompute
     question: "Do the rev_4 (37-FA) de-peaking measures bring F_q ≤ 2.50 and F_ΔH ≤ 1.65 (PWR LCOs)? (rev_3 21-FA as-run was 3.478 / 2.268.)"
     impact: "Both hard_constraint. Gate-feasibility of the design + MDNBR + LOCA PCT. The peaking values are the single biggest driver of the FOM gate."
     owner: OpenMC lead (Samira)
     needed_by: 2026-06-26
-    status: "**DE-PEAKING IMPLEMENTED 2026-06-26 (rev_4):** the design now incorporates (a) FA-perimeter edge-pin de-rate to 3.6 wt%, (b) assembly-ring enrichment zoning {4.95/4.70/4.40/4.00}, (c) ring-zoned Gd; AND the tally artifact is fixed — F_ΔH/F_q are reconstructed **pin-by-pin from absolute coordinates** (distribcell-style), and F_Q is reported as the **separable** F_ΔH·F_z. **REMAINING: confirm the resulting values on the 37-FA core at high statistics** — medium-stat run done, STAT_FINAL (400 batches / 50k particles) running on a separate machine; export from_openmc.f_q / from_openmc.f_delta_h with engineering uncertainty factors. Target F_ΔH ≤ 1.55, F_Q ≤ 2.30."
+    status: "**CLOSED 2026-07-01 — PASS.** High-stat OpenMC per-pin reconstruction gives **F_Q = 2.035 ≤ 2.50 and F_ΔH = 1.583 ≤ 1.65** (both within LCO), reconciled with the OpenFOAM T-H case (N6). The de-peaking measures (edge-pin 3.6 wt% + ring enrichment zoning + Gd ring-zoning + distribcell tally) work. Peak linear power 12.8 kW/m. The design passes the gate on confirmed data; only the STAT_FINAL record run remains for the archive."

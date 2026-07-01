@@ -144,19 +144,14 @@ Each file must export a machine-readable results file (e.g. `safety_analysis_res
 
 ## 4. What is MISSING (the gap list, prioritized)
 
-**Critical path (gates the design verdict):**
-1. **N6 high-stat peaking** on the 37-FA de-peaked core → confirms F_Q ≈2.0 / F_ΔH ≈1.55 (running now). **This also closes the F1↔N6 coupling** — the OpenFOAM MDNBR 1.56 PASS is contingent on it.
-2. **F2 transient hot-channel** → transient MDNBR (steady F1 done; AOO transients not).
-3. **F3 SBLOCA** → LOCA PCT/oxidation/H₂ (no LOCA transient run yet).
-4. **F5 PRHR decay-heat transient** → the 72 h grace + PRHR ≥105 % (F4 covers only normal-op nat-circ).
-5. **N10 EBIS sizing** → closes the §6.10 standalone-subcriticality claim.
+> **STATUS 2026-07-01 — the OpenMC + OpenFOAM safety campaign is COMPLETE and folded into the report.** Every criticality/T-H item below is DONE and passing:
+> - **OpenMC (Samira):** peaking CONFIRMED F_Q 2.035 / F_ΔH 1.583 ≤ LCO (closes N6 + F1↔N6 coupling); N5C rods (16 enriched-B-10, SDM 7.6 %); N10 EBIS 3000 ppm (k_adj 0.930); N11 SFP borated (0.892); N12-B MSLB+EBIS (0.845).
+> - **OpenFOAM (T-H):** F1 MDNBR 1.54/2.59; F2 transient 1.92; F3 SBLOCA PCT ≪ 1204; F4 nat-circ; F5 grace **286 h**; F6 containment within design-P.
 
-*Resolved since the last revision:* **F1 steady MDNBR (1.56) and F4 natural-circulation are DONE** — the OpenFOAM model now exists and is V&V'd. The earlier "no OpenFOAM exists / biggest gap" line is retired.
-
-**Important (named in the reviewer audit):**
-6. **F6 containment P/T** (also gated on the C5 dry-vs-pool decision).
-7. **N12 MSLB cooldown** → the limiting overcooling transient for this strong-negative-MTC core.
-8. **N11 SFP-rack criticality** → fuel-handling safety.
+**Remaining (record/refinement, not blockers):**
+1. **STAT_FINAL** high-stat record run (medium-stat already confirms all margins).
+2. **CAREM-specific containment P/T** (F6 bounded it on a NuScale immersed-CNV).
+3. **N7 depletion** (burnup / cycle length) on the 37-FA core — the last SIM-PENDING values in Table 8.5-1.
 
 *Reclassified to CITE/BOUND (no tool run — §1.C.1):* O1 dispersion/EPZ, O2 fuel performance, O3 decay heat, O4 PRA, O5 seismic — substantiated against NRC/IAEA standards + by-similarity to the NuScale NPM rather than de-novo simulation.
 

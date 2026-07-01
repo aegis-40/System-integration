@@ -1,5 +1,5 @@
 # Aegis-40 wFOM — analysis report
-*Generated 2026-06-26 by fom/wfom.py. Weights: default_pending_supervisor (PLAN §1.2 q1 — supervisor approval pending).*
+*Generated 2026-07-01 by fom/wfom.py. Weights: default_pending_supervisor (PLAN §1.2 q1 — supervisor approval pending).*
 
 ## 1. Hard-constraint gate (PLAN §5.3)
 - aegis40: feasible
@@ -85,7 +85,7 @@ Each reactor scored against a fixed benchmark of regulatory limits + good-design
 
 | Reactor | wFOM vs standards | #params |
 |---|---|---|
-| aegis40 | **-0.192** | 21 |
+| aegis40 | **-0.196** | 21 |
 | carem25 | **-0.481** | 17 |
 | smart | **-0.462** | 16 |
 | nuscale_voygr | **+0.231** | 17 |

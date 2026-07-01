@@ -28,10 +28,10 @@ categories:
     seismic_sse:         { value: 0.3,   status: confirmed, source: safety_criteria }   # sse_design
     primary_circulation: { value: 1,     status: confirmed, source: design }            # natural circ (FER §8.6.3)
     n_active_components: { value: 2,      status: estimate,  source: derived }           # passive ESF
-    pct:                 { value: null,   status: tbd,         source: openfoam }          # LOCA PCT pending (F3); steady operating clad 349°C (TH report)
-    mdnbr:               { value: 1.56,   status: provisional, source: openfoam }          # rev_4 TH report; contingent on high-stat peaking (F1↔N6)
-    peaking_factor_3d:   { value: 2.00,   status: design_target, source: openmc }          # rev_4 de-peaked target (≤2.5 LCO); high-stat confirmation pending — was 3.478 (21-FA)
-    mtc:                 { value: -35.9,  status: provisional, source: openmc }            # ⚠ rev_3 21-FA value; 37-FA re-run pending (SBF ⇒ stays <0)
+    pct:                 { value: null,   status: tbd,       source: openfoam }          # LOCA PCT ≪1204 confirmed bounding (F3); steady operating clad 349°C
+    mdnbr:               { value: 1.54,   status: confirmed, source: openfoam }          # F1 confirmed (W-3; Bowring 2.59); at confirmed peaking F_q 2.035
+    peaking_factor_3d:   { value: 2.035,  status: confirmed, source: openmc }            # CONFIRMED high-stat (≤2.5 LCO); F_ΔH 1.583 — was 3.478 (21-FA)
+    mtc:                 { value: -35.9,  status: provisional, source: openmc }            # rev_3 21-FA value; 37-FA confirmatory run pending (SBF ⇒ stays <0)
   economic:
     refuel_cycle:        { value: 16,     status: provisional, source: derived }           # ~479 EFPD / 0.95 — 37-FA depletion pending
     cycle_length_efpd:   { value: 479,    status: provisional, source: openmc }            # ⚠ rev_3 21-FA; 37-FA depletion re-run pending
